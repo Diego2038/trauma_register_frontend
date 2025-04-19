@@ -14,11 +14,16 @@ class AuthProvider extends ChangeNotifier {
 
   bool get isAuthenticated => _isAuthenticated;
 
-  AuthStatus authStatus = AuthStatus.notAuthenticated;
+  AuthStatus authStatus = AuthStatus.none;
 
-  Future<bool> login({ required String username, required String password }) async {
-    final response = await AuthService.login(username: username, password: password);
+  AuthProvider() {
+    _checkAuthStatus();
+  }
 
+  Future<bool> login(
+      {required String username, required String password}) async {
+    final response =
+        await AuthService.login(username: username, password: password);
 
     if (response != null) {
       authStatus = AuthStatus.authenticated;
@@ -38,4 +43,20 @@ class AuthProvider extends ChangeNotifier {
     NavigationService.navigateAndRemoveUntil(AppRouter.login);
   }
 
+  Future<bool> verifyToken() async {
+    final isValid = await AuthService.verifyToken();
+    if (isValid) {
+      authStatus = AuthStatus.authenticated;
+      _isAuthenticated = true;
+    } else {
+      authStatus = AuthStatus.notAuthenticated;
+      _isAuthenticated = false;
+    }
+    return isValid;
+  }
+
+  Future<void> _checkAuthStatus() async {
+    await verifyToken();
+    notifyListeners();
+  }
 }

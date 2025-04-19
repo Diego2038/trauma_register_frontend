@@ -46,120 +46,88 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: AppColors.base,
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(
+          width: double.infinity,
+          height: 60,
+          child: H1(
+            text: "Inicio de sesión",
+            color: AppColors.white,
+          ),
+        ),
+        const SizedBox(
+          width: double.infinity,
+          height: 20,
+          child: H6(
+            text: "Bienvenido al portal de registro de traumas",
+            color: AppColors.grey200,
+          ),
+        ),
+        const SizedBox(height: 37),
+        const SizedBox(
+          width: double.infinity,
+          child: H4(
+            text: "Usuario",
+            color: AppColors.white,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        customInput(
+          controller: _emailController,
+          hintText: "Ingrese su correo electrónico",
+        ),
+        const SizedBox(height: 37),
+        const SizedBox(
+          width: double.infinity,
+          child: H4(
+            text: "Contraseña",
+            color: AppColors.white,
+          ),
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        customInput(
+          controller: _passwordController,
+          hintText: "Ingrese su contraseña",
+          obscureText: true,
+        ),
+        const SizedBox(height: 37),
+        Center(
+          child: Column(
             children: [
-              Expanded(
-                child: Container(
-                  color: AppColors.white,
-                  height: double.infinity,
-                  child: Image.asset(
-                    'assets/images/huv_simple_logo.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
+              CustomButton(
+                size: CustomSize.h4,
+                height: 34,
+                width: 305,
+                centerButtonContent: true,
+                text: "Ingresar",
+                onPressed: () async {
+                  await _login(context.mounted ? context : context);
+                },
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 0,
-                    left: 50,
-                    right: 50,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        width: double.infinity,
-                        height: 60,
-                        child: H1(
-                          text: "Inicio de sesión",
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: double.infinity,
-                        height: 20,
-                        child: H6(
-                          text: "Bienvenido al portal de registro de traumas",
-                          color: AppColors.grey200,
-                        ),
-                      ),
-                      const SizedBox(height: 37),
-                      const SizedBox(
-                        width: double.infinity,
-                        child: H4(
-                          text: "Usuario",
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      customInput(
-                        controller: _emailController,
-                        hintText: "Ingrese su correo electrónico",
-                      ),
-                      const SizedBox(height: 37),
-                      const SizedBox(
-                        width: double.infinity,
-                        child: H4(
-                          text: "Contraseña",
-                          color: AppColors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      customInput(
-                        controller: _passwordController,
-                        hintText: "Ingrese su contraseña",
-                        obscureText: true,
-                      ),
-                      const SizedBox(height: 37),
-                      Center(
-                        child: Column(
-                          children: [
-                            CustomButton(
-                              size: CustomSize.h4,
-                              height: 34,
-                              width: 305,
-                              centerButtonContent: true,
-                              text: "Ingresar",
-                              onPressed: () async {
-                                await _login(
-                                    context.mounted ? context : context);
-                              },
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: SizedBox(
-                                height: 25,
-                                child: _isError
-                                    ? const H6(
-                                        text:
-                                            "Usuario o contraseña no válidas, por favor intente nuevamente",
-                                        color: AppColors.errorLogin,
-                                      )
-                                    : null,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: SizedBox(
+                  height: 25,
+                  child: _isError
+                      ? const H6(
+                          text:
+                              "Usuario o contraseña no válidas, por favor intente nuevamente",
+                          color: AppColors.errorLogin,
+                        )
+                      : null,
                 ),
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 
@@ -172,7 +140,7 @@ class _LoginViewState extends State<LoginView> {
     return Container(
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(
-          color: Colors.black.withOpacity(0.25), 
+          color: Colors.black.withOpacity(0.25),
           offset: const Offset(4, 4),
           blurRadius: 4,
         ),
@@ -215,4 +183,3 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 }
-

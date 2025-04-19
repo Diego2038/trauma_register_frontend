@@ -1,8 +1,8 @@
-
 import 'dart:convert';
 
 import 'package:trauma_register_frontend/core/helpers/endpoint_helper.dart';
 import 'package:trauma_register_frontend/core/helpers/local_storage.dart';
+import 'package:trauma_register_frontend/data/models/http_response/custom_http_response.dart';
 import 'package:trauma_register_frontend/data/models/user/user_model.dart';
 
 class AuthService {
@@ -10,7 +10,7 @@ class AuthService {
     required String username,
     required String password,
   }) async {
-    final response = await EndpointHelper.postRequest(
+    final CustomHttpResponse response = await EndpointHelper.postRequest(
       path: "/user/login/",
       data: {
         "username": username,
@@ -19,11 +19,11 @@ class AuthService {
       token: null, // No se necesita token para iniciar sesión
     );
 
-    if ( response.statusCode == 200 ) {
-      final responseJson = response.data as Map<String,dynamic>;
+    if (response.statusCode == 200) {
+      final responseJson = response.data as Map<String, dynamic>;
       final token = responseJson["token"] as String;
       final tokenRefresh = responseJson["token_refresh"] as String;
-      final userJson = responseJson["user"] as Map<String,dynamic>;
+      final userJson = responseJson["user"] as Map<String, dynamic>;
       final user = UserModel.fromJson(userJson);
 
       await LocalStorage.prefs.setString('token', token);
@@ -37,5 +37,14 @@ class AuthService {
 
   static Future<void> logOut() async {
     LocalStorage.prefs.clear();
+  }
+
+  static Future<bool> verifyToken() async {
+    final String? token = LocalStorage.prefs.getString('token');
+    final CustomHttpResponse response = await EndpointHelper.getRequest(
+      path: "/user/verify-token/",
+      token: token,
+    );
+    return response.statusCode == 200;
   }
 }

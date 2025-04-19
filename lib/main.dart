@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/helpers/local_storage.dart';
 import 'package:trauma_register_frontend/core/routes/app_router.dart';
+import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/data/services/navigation_service.dart';
+import 'package:trauma_register_frontend/presentation/layouts/home_layout.dart';
+import 'package:trauma_register_frontend/presentation/layouts/login_layout.dart';
 import 'package:trauma_register_frontend/presentation/providers/auth_provider.dart';
 import 'package:trauma_register_frontend/presentation/providers/stats_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
@@ -30,8 +33,14 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({
+    super.key,
+  });
+
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: true);
+    final authenticated = authProvider.authStatus;
     return MaterialApp(
       title: 'Flutter App',
       navigatorKey: NavigationService.navigatorKey,
@@ -39,8 +48,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: AppRouter.login,
       initialRoute: '/',
-      builder: (_, child) {
-        return child ?? Container(color: Colors.blueAccent,); // Evita que el widget sea null
+      builder: (BuildContext context, Widget? child) {
+        if (authenticated == AuthStatus.none) {
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.base),
+          );
+        }
+        if (authenticated == AuthStatus.notAuthenticated) {
+          return LoginLayout(child: child!);
+        }
+        return HomeLayout(child: child!);
       },
     );
   }
