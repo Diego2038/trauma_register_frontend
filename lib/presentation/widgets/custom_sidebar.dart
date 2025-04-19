@@ -126,6 +126,7 @@ class SidebarItem extends StatelessWidget {
             CustomButton(
               size: CustomSize.h3,
               icon: icon,
+              height: 40,
               width: isExpanded ? 292 : null,
               text: isExpanded ? text : null,
               showShadow: false,
