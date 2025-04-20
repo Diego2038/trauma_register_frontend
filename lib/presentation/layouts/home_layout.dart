@@ -37,7 +37,6 @@ class _HomeLayoutState extends State<HomeLayout> {
                 const CustomNavbar(),
                 Expanded(
                   child: Container(
-                    color: Colors.green,
                     child: widget.child,
                   ),
                 ),

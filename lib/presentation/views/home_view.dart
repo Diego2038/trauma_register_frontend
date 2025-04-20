@@ -1,68 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:trauma_register_frontend/core/routes/app_router.dart';
-import 'package:trauma_register_frontend/data/services/navigation_service.dart';
-import '../providers/auth_provider.dart';
+import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_button.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () {
-              Provider.of<AuthProvider>(context, listen: false).logout();
-              NavigationService.navigateTo(AppRouter.login);
-            },
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          const Center(child: Text("Bienvenido al Home")),
-          ElevatedButton.icon(
-            onPressed: () {
-              Provider.of<AuthProvider>(context, listen: false).logout();
-            },
-            icon: const Icon(Icons.exit_to_app),
-            label: const Text('Cerrar sesión'),
-            style: ElevatedButton.styleFrom(
-              
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8), // Bordes redondeados
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            ),
-          ),
-          createCustomButton(text: 'Vista paciente', redirect: AppRouter.patientDataView),
-          createCustomButton(text: 'Estadísticas', redirect: AppRouter.simpleStatsView),
-        ],
-      ),
-    );
-  }
-
-  Widget createCustomButton({required String text, required String redirect}) {
     return Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: ElevatedButton.icon(
-              onPressed: () {
-                NavigationService.navigateTo(redirect);
-              },
-              icon: const Icon(Icons.exit_to_app),
-              label: Text(text),
-              style: ElevatedButton.styleFrom(
-                
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8), // Bordes redondeados
+      padding: const EdgeInsets.all(30),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              runSpacing: 45,
+              spacing: 45,
+              children: [
+                CustomButton(
+                  size: CustomSize.h2,
+                  width: 380,
+                  icon: Icons.person_search_outlined,
+                  text: 'Gestión de paciente',
+                  onPressed: () async {
+                    print("a");
+                  },
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              ),
+                CustomButton(
+                  size: CustomSize.h2,
+                  width: 380,
+                  icon: Icons.pie_chart,
+                  text: 'Consultar gráfico',
+                  onPressed: () async {
+                    print("a");
+                  },
+                ),
+                CustomButton(
+                  size: CustomSize.h2,
+                  width: 380,
+                  icon: Icons.upload_file_outlined,
+                  text: 'Carga masiva',
+                  onPressed: () async {
+                    print("a");
+                  },
+                ),
+              ],
             ),
+          ),
+        ],
+      ),
     );
   }
 }
