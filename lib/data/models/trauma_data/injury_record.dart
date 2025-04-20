@@ -1,25 +1,24 @@
-//TODO: Queda pendiente ver bien el tipo de dato de todos los atributos
 class InjuryRecord {
     final int? id;
     final String? consumoDeAlcohol;
-    final dynamic valorDeAlcoholemia;
+    final double? valorDeAlcoholemia;
     final String? unidadDeAlcohol;
     final String? otraSustanciaDeAbuso;
-    final dynamic direccionNombreDelLugar;
+    final String? direccionNombreDelLugar;
     final String? ciudadDeEventoDeLaLesion;
-    final dynamic condadoDeLesiones;
+    final String? condadoDeLesiones;
     final String? estadoProvinciaDeLesiones;
     final String? paisDeLesiones;
-    final dynamic codigoPostalDeLesiones;
+    final String? codigoPostalDeLesiones;
     final DateTime? fechaYHoraDelEvento;
     final bool? accidenteDeTrafico;
-    final dynamic tipoDeVehiculo;
-    final dynamic ocupante;
-    final dynamic velocidadDeColision;
-    final dynamic scq;
+    final String? tipoDeVehiculo;
+    final String? ocupante;
+    final String? velocidadDeColision;
+    final int? scq;
     final bool? caida;
-    final dynamic alturaMetros;
-    final dynamic tipoDeSuperficie;
+    final double? alturaMetros;
+    final String? tipoDeSuperficie;
     final int? traumaRegisterRecordId;
 
     InjuryRecord({
@@ -49,24 +48,24 @@ class InjuryRecord {
     InjuryRecord copyWith({
         int? id,
         String? consumoDeAlcohol,
-        dynamic valorDeAlcoholemia,
+        double? valorDeAlcoholemia,
         String? unidadDeAlcohol,
         String? otraSustanciaDeAbuso,
-        dynamic direccionNombreDelLugar,
+        String? direccionNombreDelLugar,
         String? ciudadDeEventoDeLaLesion,
-        dynamic condadoDeLesiones,
+        String? condadoDeLesiones,
         String? estadoProvinciaDeLesiones,
         String? paisDeLesiones,
-        dynamic codigoPostalDeLesiones,
+        String? codigoPostalDeLesiones,
         DateTime? fechaYHoraDelEvento,
         bool? accidenteDeTrafico,
-        dynamic tipoDeVehiculo,
-        dynamic ocupante,
-        dynamic velocidadDeColision,
-        dynamic scq,
+        String? tipoDeVehiculo,
+        String? ocupante,
+        String? velocidadDeColision,
+        int? scq,
         bool? caida,
-        dynamic alturaMetros,
-        dynamic tipoDeSuperficie,
+        double? alturaMetros,
+        String? tipoDeSuperficie,
         int? traumaRegisterRecordId,
     }) => 
         InjuryRecord(
@@ -96,7 +95,7 @@ class InjuryRecord {
     factory InjuryRecord.fromJson(Map<String, dynamic> json) => InjuryRecord(
         id: json["id"],
         consumoDeAlcohol: json["consumo_de_alcohol"],
-        valorDeAlcoholemia: json["valor_de_alcoholemia"],
+        valorDeAlcoholemia: json["valor_de_alcoholemia"]?.toDouble(),
         unidadDeAlcohol: json["unidad_de_alcohol"],
         otraSustanciaDeAbuso: json["otra_sustancia_de_abuso"],
         direccionNombreDelLugar: json["direccion_nombre_del_lugar"],
@@ -112,7 +111,7 @@ class InjuryRecord {
         velocidadDeColision: json["velocidad_de_colision"],
         scq: json["scq"],
         caida: json["caida"],
-        alturaMetros: json["altura_metros"],
+        alturaMetros: json["altura_metros"]?.toDouble(),
         tipoDeSuperficie: json["tipo_de_superficie"],
         traumaRegisterRecordId: json["trauma_register_record_id"],
     );

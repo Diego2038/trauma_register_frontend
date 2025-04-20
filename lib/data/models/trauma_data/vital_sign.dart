@@ -7,10 +7,10 @@ class VitalSign {
     final int? presionArterialDiastolica;
     final int? frecuenciaRespiratoria;
     final String? calificadorDeFrecuenciaRespiratoria;
-    final String? temperaturaCelsius;
-    final String? pesoKg;
-    final String? alturaMetros;
-    final String? saturacionDeOxigeno;
+    final double? temperaturaCelsius;
+    final double? pesoKg;
+    final double? alturaMetros;
+    final double? saturacionDeOxigeno;
     final String? perdidaDeConciencia;
     final String? duracionDePerdidaDeConciencia;
     final int? gcsMotora;
@@ -52,10 +52,10 @@ class VitalSign {
         int? presionArterialDiastolica,
         int? frecuenciaRespiratoria,
         String? calificadorDeFrecuenciaRespiratoria,
-        String? temperaturaCelsius,
-        String? pesoKg,
-        String? alturaMetros,
-        String? saturacionDeOxigeno,
+        double? temperaturaCelsius,
+        double? pesoKg,
+        double? alturaMetros,
+        double? saturacionDeOxigeno,
         String? perdidaDeConciencia,
         String? duracionDePerdidaDeConciencia,
         int? gcsMotora,
@@ -97,10 +97,10 @@ class VitalSign {
         presionArterialDiastolica: json["presion_arterial_diastolica"],
         frecuenciaRespiratoria: json["frecuencia_respiratoria"],
         calificadorDeFrecuenciaRespiratoria: json["calificador_de_frecuencia_respiratoria"],
-        temperaturaCelsius: json["temperatura_celsius"],
-        pesoKg: json["peso_kg"],
-        alturaMetros: json["altura_metros"],
-        saturacionDeOxigeno: json["saturacion_de_oxigeno"],
+        temperaturaCelsius: json["temperatura_celsius"]?.toDouble(),
+        pesoKg: json["peso_kg"]?.toDouble(),
+        alturaMetros: json["altura_metros"]?.toDouble(),
+        saturacionDeOxigeno: json["saturacion_de_oxigeno"]?.toDouble(),
         perdidaDeConciencia: json["perdida_de_conciencia"],
         duracionDePerdidaDeConciencia: json["duracion_de_perdida_de_conciencia"],
         gcsMotora: json["gcs_motora"],

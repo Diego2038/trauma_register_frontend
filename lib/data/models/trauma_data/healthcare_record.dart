@@ -1,5 +1,3 @@
-
-//TODO: Queda pendiente ver bien el tipo de dato de todos los atributos
 class HealthcareRecord {
     final int? id;
     final String? numeroDeHistoriaClinica;
@@ -12,7 +10,7 @@ class HealthcareRecord {
     final bool? alertaEquipoDeTrauma;
     final String? nivelDeAlerta;
     final bool? pacienteAsegurado;
-    final dynamic tipoDeSeguro;
+    final String? tipoDeSeguro;
     final String? motivoDeConsulta;
     final String? inmunizacionContraElTetanos;
     final String? descripcionDelExamenFisico;
@@ -27,82 +25,82 @@ class HealthcareRecord {
     final DateTime? fechaYHoraDeLaDisposicion;
     final int? tiempoEnSalaDeEmergenciasHoras;
     final int? tiempoEnSalaDeEmergenciasMinutos;
-    final dynamic numeroDeReferenciaDelEd;
+    final String? numeroDeReferenciaDelEd;
     final DateTime? fechaDeAdmision;
     final DateTime? fechaYHoraDeAlta;
-    final String? diasDeHospitalizacion;
+    final double? diasDeHospitalizacion;
     final int? uciDias;
     final String? detallesDeHospitalizacion;
     final String? disposicionODestinoDelPacienteDelHospitalizacion;
     final String? donacionDeOrganosDelHospitalizacion;
     final String? autopsiaDelHospitalizacion;
     final String? muertePrevenibleDelHospitalizacion;
-    final dynamic numeroDeReferenciaDelHospitalizacion;
+    final String? numeroDeReferenciaDelHospitalizacion;
     final String? agenciaDeTransporte;
     final String? origenDelTransporte;
     final String? numeroDeRegistroDelTransporte;
-    final dynamic fechaYHoraDeNotificacionPreHospitalaria;
-    final dynamic fechaYHoraDeLlegadaALaEscena;
-    final dynamic fechaYHoraDeSalidaDeLaEscena;
-    final dynamic razonDeLaDemora;
-    final dynamic reporteOFormularioPreHospitalarioEntregado;
-    final dynamic ciudadHospitalMasCercanoAlSitioDelIncidente;
+    final DateTime? fechaYHoraDeNotificacionPreHospitalaria;
+    final DateTime? fechaYHoraDeLlegadaALaEscena;
+    final DateTime? fechaYHoraDeSalidaDeLaEscena;
+    final String? razonDeLaDemora;
+    final bool? reporteOFormularioPreHospitalarioEntregado;
+    final String? ciudadHospitalMasCercanoAlSitioDelIncidente;
     final int? tiempoDeExtricacionHoras;
     final int? tiempoDeExtricacionMinutos;
-    final dynamic duracionDelTransporteHoras;
-    final dynamic duracionDelTransporteMinutos;
-    final dynamic procedimientoRealizado;
-    final dynamic frecuenciaCardiacaEnLaEscena;
-    final dynamic presionArterialSistolicaEnLaEscena;
-    final dynamic presionArterialDiastolicaEnLaEscena;
-    final dynamic frecuenciaRespiratoriaEnLaEscena;
-    final dynamic calificadorDeFrecuenciaRespiratoriaEnLaEscena;
-    final String? temperaturaEnLaEscenaCelsius;
-    final dynamic saturacionDeO2EnLaEscena;
-    final dynamic frecuenciaCardiacaDuranteElTransporte;
-    final dynamic presionArterialSistolicaDeTransporte;
-    final dynamic presionDiastolicaDuranteElTransporte;
-    final dynamic frecuenciaRespiratoriaDuranteElTransporte;
+    final int? duracionDelTransporteHoras;
+    final int? duracionDelTransporteMinutos;
+    final String? procedimientoRealizado;
+    final int? frecuenciaCardiacaEnLaEscena;
+    final int? presionArterialSistolicaEnLaEscena;
+    final int? presionArterialDiastolicaEnLaEscena;
+    final int? frecuenciaRespiratoriaEnLaEscena;
+    final String? calificadorDeFrecuenciaRespiratoriaEnLaEscena;
+    final double? temperaturaEnLaEscenaCelsius;
+    final int? saturacionDeO2EnLaEscena;
+    final int? frecuenciaCardiacaDuranteElTransporte;
+    final int? presionArterialSistolicaDeTransporte;
+    final int? presionDiastolicaDuranteElTransporte;
+    final int? frecuenciaRespiratoriaDuranteElTransporte;
     final String? calificadorDeFrecuenciaRespiratoriaDuranteElTransporte;
-    final String? temperaturaDuranteElTransporteCelsius;
-    final dynamic saturacionDeO2DuranteElTransporte;
-    final dynamic perdidaDeConciencia;
-    final dynamic duracionDePerdidaDeConciencia;
-    final dynamic gcsOcular;
-    final dynamic gcsVerbal;
-    final dynamic gcsMotora;
-    final dynamic gcsTotal;
-    final String? sangreL;
-    final String? coloidesL;
-    final String? cristaloidesL;
-    final dynamic hallazgosClinicosTexto;
-    final dynamic fechaYHoraDeEnvioDeContraReferencia;
-    final dynamic fechaDeAltaDeContrarReferencia;
-    final dynamic hallazgosClinicosExistencia;
-    final dynamic servicioQueAtendio;
-    final dynamic pacienteAdmitido;
-    final dynamic hospitalQueRecibe;
-    final dynamic otroServicio;
-    final dynamic servicioQueRecibe;
-    final dynamic recomendaciones;
-    final dynamic numeroDeReferenciaDeReferenciasSalientes;
-    final dynamic fechaDeEnvioDeReferencia;
-    final dynamic fechaDeReferencia;
-    final dynamic razonDeLaReferencia;
-    final dynamic medicoQueRefiere;
-    final dynamic estadoDeReferencia;
-    final dynamic fechaDeAceptacionDeReferencia;
+    final double? temperaturaDuranteElTransporteCelsius;
+    final int? saturacionDeO2DuranteElTransporte;
+    final int? perdidaDeConciencia;
+    final String? duracionDePerdidaDeConciencia;
+    final int? gcsOcular;
+    final int? gcsVerbal;
+    final int? gcsMotora;
+    final int? gcsTotal;
+    final double? sangreL;
+    final double? coloidesL;
+    final double? cristaloidesL;
+    final String? hallazgosClinicosTexto;
+    final DateTime? fechaYHoraDeEnvioDeContraReferencia;
+    final DateTime? fechaDeAltaDeContrarReferencia;
+    final bool? hallazgosClinicosExistencia;
+    final String? servicioQueAtendio;
+    final bool? pacienteAdmitido;
+    final String? hospitalQueRecibe;
+    final String? otroServicio;
+    final String? servicioQueRecibe;
+    final String? recomendaciones;
+    final String? numeroDeReferenciaDeReferenciasSalientes;
+    final DateTime? fechaDeEnvioDeReferencia;
+    final DateTime? fechaDeReferencia;
+    final String? razonDeLaReferencia;
+    final String? medicoQueRefiere;
+    final String? estadoDeReferencia;
+    final DateTime? fechaDeAceptacionDeReferencia;
     final int? iss;
-    final dynamic kts;
-    final String? rts;
-    final dynamic abdomen;
-    final dynamic torax;
-    final dynamic externo;
+    final int? kts;
+    final double? rts;
+    final int? abdomen;
+    final int? torax;
+    final int? externo;
     final int? extremidades;
-    final dynamic cara;
-    final dynamic cabeza;
-    final dynamic trissContuso;
-    final dynamic trissPenetrante;
+    final int? cara;
+    final int? cabeza;
+    final double? trissContuso;
+    final double? trissPenetrante;
     final int? traumaRegisterRecordId;
 
     HealthcareRecord({
@@ -223,7 +221,7 @@ class HealthcareRecord {
         bool? alertaEquipoDeTrauma,
         String? nivelDeAlerta,
         bool? pacienteAsegurado,
-        dynamic tipoDeSeguro,
+        String? tipoDeSeguro,
         String? motivoDeConsulta,
         String? inmunizacionContraElTetanos,
         String? descripcionDelExamenFisico,
@@ -238,82 +236,82 @@ class HealthcareRecord {
         DateTime? fechaYHoraDeLaDisposicion,
         int? tiempoEnSalaDeEmergenciasHoras,
         int? tiempoEnSalaDeEmergenciasMinutos,
-        dynamic numeroDeReferenciaDelEd,
+        String? numeroDeReferenciaDelEd,
         DateTime? fechaDeAdmision,
         DateTime? fechaYHoraDeAlta,
-        String? diasDeHospitalizacion,
+        double? diasDeHospitalizacion,
         int? uciDias,
         String? detallesDeHospitalizacion,
         String? disposicionODestinoDelPacienteDelHospitalizacion,
         String? donacionDeOrganosDelHospitalizacion,
         String? autopsiaDelHospitalizacion,
         String? muertePrevenibleDelHospitalizacion,
-        dynamic numeroDeReferenciaDelHospitalizacion,
+        String? numeroDeReferenciaDelHospitalizacion,
         String? agenciaDeTransporte,
         String? origenDelTransporte,
         String? numeroDeRegistroDelTransporte,
-        dynamic fechaYHoraDeNotificacionPreHospitalaria,
-        dynamic fechaYHoraDeLlegadaALaEscena,
-        dynamic fechaYHoraDeSalidaDeLaEscena,
-        dynamic razonDeLaDemora,
-        dynamic reporteOFormularioPreHospitalarioEntregado,
-        dynamic ciudadHospitalMasCercanoAlSitioDelIncidente,
+        DateTime? fechaYHoraDeNotificacionPreHospitalaria,
+        DateTime? fechaYHoraDeLlegadaALaEscena,
+        DateTime? fechaYHoraDeSalidaDeLaEscena,
+        String? razonDeLaDemora,
+        bool? reporteOFormularioPreHospitalarioEntregado,
+        String? ciudadHospitalMasCercanoAlSitioDelIncidente,
         int? tiempoDeExtricacionHoras,
         int? tiempoDeExtricacionMinutos,
-        dynamic duracionDelTransporteHoras,
-        dynamic duracionDelTransporteMinutos,
-        dynamic procedimientoRealizado,
-        dynamic frecuenciaCardiacaEnLaEscena,
-        dynamic presionArterialSistolicaEnLaEscena,
-        dynamic presionArterialDiastolicaEnLaEscena,
-        dynamic frecuenciaRespiratoriaEnLaEscena,
-        dynamic calificadorDeFrecuenciaRespiratoriaEnLaEscena,
-        String? temperaturaEnLaEscenaCelsius,
-        dynamic saturacionDeO2EnLaEscena,
-        dynamic frecuenciaCardiacaDuranteElTransporte,
-        dynamic presionArterialSistolicaDeTransporte,
-        dynamic presionDiastolicaDuranteElTransporte,
-        dynamic frecuenciaRespiratoriaDuranteElTransporte,
+        int? duracionDelTransporteHoras,
+        int? duracionDelTransporteMinutos,
+        String? procedimientoRealizado,
+        int? frecuenciaCardiacaEnLaEscena,
+        int? presionArterialSistolicaEnLaEscena,
+        int? presionArterialDiastolicaEnLaEscena,
+        int? frecuenciaRespiratoriaEnLaEscena,
+        String? calificadorDeFrecuenciaRespiratoriaEnLaEscena,
+        double? temperaturaEnLaEscenaCelsius,
+        int? saturacionDeO2EnLaEscena,
+        int? frecuenciaCardiacaDuranteElTransporte,
+        int? presionArterialSistolicaDeTransporte,
+        int? presionDiastolicaDuranteElTransporte,
+        int? frecuenciaRespiratoriaDuranteElTransporte,
         String? calificadorDeFrecuenciaRespiratoriaDuranteElTransporte,
-        String? temperaturaDuranteElTransporteCelsius,
-        dynamic saturacionDeO2DuranteElTransporte,
-        dynamic perdidaDeConciencia,
-        dynamic duracionDePerdidaDeConciencia,
-        dynamic gcsOcular,
-        dynamic gcsVerbal,
-        dynamic gcsMotora,
-        dynamic gcsTotal,
-        String? sangreL,
-        String? coloidesL,
-        String? cristaloidesL,
-        dynamic hallazgosClinicosTexto,
-        dynamic fechaYHoraDeEnvioDeContraReferencia,
-        dynamic fechaDeAltaDeContrarReferencia,
-        dynamic hallazgosClinicosExistencia,
-        dynamic servicioQueAtendio,
-        dynamic pacienteAdmitido,
-        dynamic hospitalQueRecibe,
-        dynamic otroServicio,
-        dynamic servicioQueRecibe,
-        dynamic recomendaciones,
-        dynamic numeroDeReferenciaDeReferenciasSalientes,
-        dynamic fechaDeEnvioDeReferencia,
-        dynamic fechaDeReferencia,
-        dynamic razonDeLaReferencia,
-        dynamic medicoQueRefiere,
-        dynamic estadoDeReferencia,
-        dynamic fechaDeAceptacionDeReferencia,
+        double? temperaturaDuranteElTransporteCelsius,
+        int? saturacionDeO2DuranteElTransporte,
+        int? perdidaDeConciencia,
+        String? duracionDePerdidaDeConciencia,
+        int? gcsOcular,
+        int? gcsVerbal,
+        int? gcsMotora,
+        int? gcsTotal,
+        double? sangreL,
+        double? coloidesL,
+        double? cristaloidesL,
+        String? hallazgosClinicosTexto,
+        DateTime? fechaYHoraDeEnvioDeContraReferencia,
+        DateTime? fechaDeAltaDeContrarReferencia,
+        bool? hallazgosClinicosExistencia,
+        String? servicioQueAtendio,
+        bool? pacienteAdmitido,
+        String? hospitalQueRecibe,
+        String? otroServicio,
+        String? servicioQueRecibe,
+        String? recomendaciones,
+        String? numeroDeReferenciaDeReferenciasSalientes,
+        DateTime? fechaDeEnvioDeReferencia,
+        DateTime? fechaDeReferencia,
+        String? razonDeLaReferencia,
+        String? medicoQueRefiere,
+        String? estadoDeReferencia,
+        DateTime? fechaDeAceptacionDeReferencia,
         int? iss,
-        dynamic kts,
-        String? rts,
-        dynamic abdomen,
-        dynamic torax,
-        dynamic externo,
+        int? kts,
+        double? rts,
+        int? abdomen,
+        int? torax,
+        int? externo,
         int? extremidades,
-        dynamic cara,
-        dynamic cabeza,
-        dynamic trissContuso,
-        dynamic trissPenetrante,
+        int? cara,
+        int? cabeza,
+        double? trissContuso,
+        double? trissPenetrante,
         int? traumaRegisterRecordId,
     }) => 
         HealthcareRecord(
@@ -452,7 +450,7 @@ class HealthcareRecord {
         numeroDeReferenciaDelEd: json["numero_de_referencia_del_ed"],
         fechaDeAdmision: json["fecha_de_admision"] == null ? null : DateTime.parse(json["fecha_de_admision"]),
         fechaYHoraDeAlta: json["fecha_y_hora_de_alta"] == null ? null : DateTime.parse(json["fecha_y_hora_de_alta"]),
-        diasDeHospitalizacion: json["dias_de_hospitalizacion"],
+        diasDeHospitalizacion: json["dias_de_hospitalizacion"]?.toDouble(),
         uciDias: json["uci_dias"],
         detallesDeHospitalizacion: json["detalles_de_hospitalizacion"],
         disposicionODestinoDelPacienteDelHospitalizacion: json["disposicion_o_destino_del_paciente_del_hospitalizacion"],
@@ -463,9 +461,9 @@ class HealthcareRecord {
         agenciaDeTransporte: json["agencia_de_transporte"],
         origenDelTransporte: json["origen_del_transporte"],
         numeroDeRegistroDelTransporte: json["numero_de_registro_del_transporte"],
-        fechaYHoraDeNotificacionPreHospitalaria: json["fecha_y_hora_de_notificacion_pre_hospitalaria"],
-        fechaYHoraDeLlegadaALaEscena: json["fecha_y_hora_de_llegada_a_la_escena"],
-        fechaYHoraDeSalidaDeLaEscena: json["fecha_y_hora_de_salida_de_la_escena"],
+        fechaYHoraDeNotificacionPreHospitalaria: json["fecha_y_hora_de_notificacion_pre_hospitalaria"] == null ? null : DateTime.parse(json["fecha_y_hora_de_notificacion_pre_hospitalaria"]),
+        fechaYHoraDeLlegadaALaEscena: json["fecha_y_hora_de_llegada_a_la_escena"] == null ? null : DateTime.parse(json["fecha_y_hora_de_llegada_a_la_escena"]),
+        fechaYHoraDeSalidaDeLaEscena: json["fecha_y_hora_de_salida_de_la_escena"] == null ? null : DateTime.parse(json["fecha_y_hora_de_salida_de_la_escena"]),
         razonDeLaDemora: json["razon_de_la_demora"],
         reporteOFormularioPreHospitalarioEntregado: json["reporte_o_formulario_pre_hospitalario_entregado"],
         ciudadHospitalMasCercanoAlSitioDelIncidente: json["ciudad_hospital_mas_cercano_al_sitio_del_incidente"],
@@ -479,14 +477,14 @@ class HealthcareRecord {
         presionArterialDiastolicaEnLaEscena: json["presion_arterial_diastolica_en_la_escena"],
         frecuenciaRespiratoriaEnLaEscena: json["frecuencia_respiratoria_en_la_escena"],
         calificadorDeFrecuenciaRespiratoriaEnLaEscena: json["calificador_de_frecuencia_respiratoria_en_la_escena"],
-        temperaturaEnLaEscenaCelsius: json["temperatura_en_la_escena_celsius"],
+        temperaturaEnLaEscenaCelsius: json["temperatura_en_la_escena_celsius"]?.toDouble(),
         saturacionDeO2EnLaEscena: json["saturacion_de_o2_en_la_escena"],
         frecuenciaCardiacaDuranteElTransporte: json["frecuencia_cardiaca_durante_el_transporte"],
         presionArterialSistolicaDeTransporte: json["presion_arterial_sistolica_de_transporte"],
         presionDiastolicaDuranteElTransporte: json["presion_diastolica_durante_el_transporte"],
         frecuenciaRespiratoriaDuranteElTransporte: json["frecuencia_respiratoria_durante_el_transporte"],
         calificadorDeFrecuenciaRespiratoriaDuranteElTransporte: json["calificador_de_frecuencia_respiratoria_durante_el_transporte"],
-        temperaturaDuranteElTransporteCelsius: json["temperatura_durante_el_transporte_celsius"],
+        temperaturaDuranteElTransporteCelsius: json["temperatura_durante_el_transporte_celsius"]?.toDouble(),
         saturacionDeO2DuranteElTransporte: json["saturacion_de_o2_durante_el_transporte"],
         perdidaDeConciencia: json["perdida_de_conciencia"],
         duracionDePerdidaDeConciencia: json["duracion_de_perdida_de_conciencia"],
@@ -494,12 +492,12 @@ class HealthcareRecord {
         gcsVerbal: json["gcs_verbal"],
         gcsMotora: json["gcs_motora"],
         gcsTotal: json["gcs_total"],
-        sangreL: json["sangre_l"],
-        coloidesL: json["coloides_l"],
-        cristaloidesL: json["cristaloides_l"],
+        sangreL: json["sangre_l"]?.toDouble(),
+        coloidesL: json["coloides_l"]?.toDouble(),
+        cristaloidesL: json["cristaloides_l"]?.toDouble(),
         hallazgosClinicosTexto: json["hallazgos_clinicos_texto"],
-        fechaYHoraDeEnvioDeContraReferencia: json["fecha_y_hora_de_envio_de_contra_referencia"],
-        fechaDeAltaDeContrarReferencia: json["fecha_de_alta_de_contrar_referencia"],
+        fechaYHoraDeEnvioDeContraReferencia: json["fecha_y_hora_de_envio_de_contra_referencia"] == null ? null : DateTime.parse(json["fecha_y_hora_de_envio_de_contra_referencia"]),
+        fechaDeAltaDeContrarReferencia: json["fecha_de_alta_de_contrar_referencia"] == null ? null : DateTime.parse(json["fecha_de_alta_de_contrar_referencia"]),
         hallazgosClinicosExistencia: json["hallazgos_clinicos_existencia"],
         servicioQueAtendio: json["servicio_que_atendio"],
         pacienteAdmitido: json["paciente_admitido"],
@@ -508,23 +506,23 @@ class HealthcareRecord {
         servicioQueRecibe: json["servicio_que_recibe"],
         recomendaciones: json["recomendaciones"],
         numeroDeReferenciaDeReferenciasSalientes: json["numero_de_referencia_de_referencias_salientes"],
-        fechaDeEnvioDeReferencia: json["fecha_de_envio_de_referencia"],
-        fechaDeReferencia: json["fecha_de_referencia"],
+        fechaDeEnvioDeReferencia: json["fecha_de_envio_de_referencia"] == null ? null : DateTime.parse(json["fecha_de_envio_de_referencia"]),
+        fechaDeReferencia: json["fecha_de_referencia"] == null ? null : DateTime.parse(json["fecha_de_referencia"]),
         razonDeLaReferencia: json["razon_de_la_referencia"],
         medicoQueRefiere: json["medico_que_refiere"],
         estadoDeReferencia: json["estado_de_referencia"],
-        fechaDeAceptacionDeReferencia: json["fecha_de_aceptacion_de_referencia"],
+        fechaDeAceptacionDeReferencia: json["fecha_de_aceptacion_de_referencia"] == null ? null : DateTime.parse(json["fecha_de_aceptacion_de_referencia"]),
         iss: json["iss"],
         kts: json["kts"],
-        rts: json["rts"],
+        rts: json["rts"]?.toDouble(),
         abdomen: json["abdomen"],
         torax: json["torax"],
         externo: json["externo"],
         extremidades: json["extremidades"],
         cara: json["cara"],
         cabeza: json["cabeza"],
-        trissContuso: json["triss_contuso"],
-        trissPenetrante: json["triss_penetrante"],
+        trissContuso: json["triss_contuso"]?.toDouble(),
+        trissPenetrante: json["triss_penetrante"]?.toDouble(),
         traumaRegisterRecordId: json["trauma_register_record_id"],
     );
 
@@ -569,9 +567,9 @@ class HealthcareRecord {
         "agencia_de_transporte": agenciaDeTransporte,
         "origen_del_transporte": origenDelTransporte,
         "numero_de_registro_del_transporte": numeroDeRegistroDelTransporte,
-        "fecha_y_hora_de_notificacion_pre_hospitalaria": fechaYHoraDeNotificacionPreHospitalaria,
-        "fecha_y_hora_de_llegada_a_la_escena": fechaYHoraDeLlegadaALaEscena,
-        "fecha_y_hora_de_salida_de_la_escena": fechaYHoraDeSalidaDeLaEscena,
+        "fecha_y_hora_de_notificacion_pre_hospitalaria": fechaYHoraDeNotificacionPreHospitalaria?.toIso8601String(),
+        "fecha_y_hora_de_llegada_a_la_escena": fechaYHoraDeLlegadaALaEscena?.toIso8601String(),
+        "fecha_y_hora_de_salida_de_la_escena": fechaYHoraDeSalidaDeLaEscena?.toIso8601String(),
         "razon_de_la_demora": razonDeLaDemora,
         "reporte_o_formulario_pre_hospitalario_entregado": reporteOFormularioPreHospitalarioEntregado,
         "ciudad_hospital_mas_cercano_al_sitio_del_incidente": ciudadHospitalMasCercanoAlSitioDelIncidente,
@@ -604,8 +602,8 @@ class HealthcareRecord {
         "coloides_l": coloidesL,
         "cristaloides_l": cristaloidesL,
         "hallazgos_clinicos_texto": hallazgosClinicosTexto,
-        "fecha_y_hora_de_envio_de_contra_referencia": fechaYHoraDeEnvioDeContraReferencia,
-        "fecha_de_alta_de_contrar_referencia": fechaDeAltaDeContrarReferencia,
+        "fecha_y_hora_de_envio_de_contra_referencia": fechaYHoraDeEnvioDeContraReferencia?.toIso8601String(),
+        "fecha_de_alta_de_contrar_referencia": fechaDeAltaDeContrarReferencia?.toIso8601String(),
         "hallazgos_clinicos_existencia": hallazgosClinicosExistencia,
         "servicio_que_atendio": servicioQueAtendio,
         "paciente_admitido": pacienteAdmitido,
@@ -614,12 +612,12 @@ class HealthcareRecord {
         "servicio_que_recibe": servicioQueRecibe,
         "recomendaciones": recomendaciones,
         "numero_de_referencia_de_referencias_salientes": numeroDeReferenciaDeReferenciasSalientes,
-        "fecha_de_envio_de_referencia": fechaDeEnvioDeReferencia,
-        "fecha_de_referencia": fechaDeReferencia,
+        "fecha_de_envio_de_referencia": fechaDeEnvioDeReferencia?.toIso8601String(),
+        "fecha_de_referencia": "${fechaDeReferencia!.year.toString().padLeft(4, '0')}-${fechaDeReferencia!.month.toString().padLeft(2, '0')}-${fechaDeReferencia!.day.toString().padLeft(2, '0')}",
         "razon_de_la_referencia": razonDeLaReferencia,
         "medico_que_refiere": medicoQueRefiere,
         "estado_de_referencia": estadoDeReferencia,
-        "fecha_de_aceptacion_de_referencia": fechaDeAceptacionDeReferencia,
+        "fecha_de_aceptacion_de_referencia": "${fechaDeAceptacionDeReferencia!.year.toString().padLeft(4, '0')}-${fechaDeAceptacionDeReferencia!.month.toString().padLeft(2, '0')}-${fechaDeAceptacionDeReferencia!.day.toString().padLeft(2, '0')}",
         "iss": iss,
         "kts": kts,
         "rts": rts,

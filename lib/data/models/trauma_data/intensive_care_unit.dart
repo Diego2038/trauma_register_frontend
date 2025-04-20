@@ -4,7 +4,7 @@ class IntensiveCareUnit {
     final DateTime? fechaYHoraDeInicio;
     final DateTime? fechaYHoraDeTermino;
     final String? lugar;
-    final String? icuDays;
+    final double? icuDays;
     final int? traumaRegisterRecordId;
 
     IntensiveCareUnit({
@@ -23,7 +23,7 @@ class IntensiveCareUnit {
         DateTime? fechaYHoraDeInicio,
         DateTime? fechaYHoraDeTermino,
         String? lugar,
-        String? icuDays,
+        double? icuDays,
         int? traumaRegisterRecordId,
     }) => 
         IntensiveCareUnit(
@@ -42,7 +42,7 @@ class IntensiveCareUnit {
         fechaYHoraDeInicio: json["fecha_y_hora_de_inicio"] == null ? null : DateTime.parse(json["fecha_y_hora_de_inicio"]),
         fechaYHoraDeTermino: json["fecha_y_hora_de_termino"] == null ? null : DateTime.parse(json["fecha_y_hora_de_termino"]),
         lugar: json["lugar"],
-        icuDays: json["icu_days"],
+        icuDays: json["icu_days"]?.toDouble(),
         traumaRegisterRecordId: json["trauma_register_record_id"],
     );
 
