@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/routes/app_router.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/data/services/navigation_service.dart';
 import 'package:trauma_register_frontend/presentation/providers/auth_provider.dart';
@@ -47,7 +48,9 @@ class CustomSidebar extends StatelessWidget {
               isExpanded: isExpanded,
               icon: Icons.home_outlined,
               text: "Inicio",
-              onPressed: () {},
+              onPressed: () {
+                NavigationService.navigateAndRemoveUntil(AppRouter.home);
+              },
             ),
             const SizedBox(height: 40),
             Column(
@@ -56,21 +59,30 @@ class CustomSidebar extends StatelessWidget {
                   isExpanded: isExpanded,
                   icon: Icons.person_search_outlined,
                   text: "Gestión de paciente",
-                  onPressed: () {},
+                  onPressed: () {
+                    NavigationService.navigateAndRemoveUntil(
+                        AppRouter.patientManagementView);
+                  },
                 ),
                 const SizedBox(height: 10),
                 SidebarItem(
                   isExpanded: isExpanded,
                   icon: Icons.pie_chart,
                   text: "Consultar gráficos",
-                  onPressed: () {},
+                  onPressed: () {
+                    NavigationService.navigateAndRemoveUntil(
+                        AppRouter.staticsView);
+                  },
                 ),
                 const SizedBox(height: 10),
                 SidebarItem(
                   isExpanded: isExpanded,
                   icon: Icons.upload_file_outlined,
                   text: "Carga masiva",
-                  onPressed: () {},
+                  onPressed: () {
+                    NavigationService.navigateAndRemoveUntil(
+                        AppRouter.bulkUploadView);
+                  },
                 ),
               ],
             ),
