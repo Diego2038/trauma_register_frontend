@@ -15,7 +15,13 @@ class AppRouter {
   static const simpleStatsView = '/simple-stats-view';
 
   static Handler loginHandler = Handler(handlerFunc: (context, params) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const HomeView();
+    } else {
       return const LoginView();
+    }
   });
 
   static Handler homeHandler = Handler(handlerFunc: (context, params) {
@@ -28,7 +34,8 @@ class AppRouter {
     }
   });
 
-  static Handler patientDataViewHandler = Handler(handlerFunc: (context, params) {
+  static Handler patientDataViewHandler =
+      Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);
 
     if (authProvider.authStatus == AuthStatus.authenticated) {
@@ -39,7 +46,8 @@ class AppRouter {
     }
   });
 
-  static Handler simpleStatsViewHandler = Handler(handlerFunc: (context, params) {
+  static Handler simpleStatsViewHandler =
+      Handler(handlerFunc: (context, params) {
     final authProvider = Provider.of<AuthProvider>(context!);
 
     if (authProvider.authStatus == AuthStatus.authenticated) {
