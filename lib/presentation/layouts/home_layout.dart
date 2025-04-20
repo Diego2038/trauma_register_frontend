@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_navbar.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_sidebar.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -31,9 +32,16 @@ class _HomeLayoutState extends State<HomeLayout> {
             onToggle: _toggleSidebar,
           ),
           Expanded(
-            child: Container(
-              color: Colors.white,
-              child: widget.child,
+            child: Column(
+              children: [
+                const CustomNavbar(),
+                Expanded(
+                  child: Container(
+                    color: Colors.green,
+                    child: widget.child,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
