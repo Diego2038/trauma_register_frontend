@@ -1,6 +1,6 @@
 class Laboratory {
     final int? id;
-    final double? resultadoDeLaboratorio;
+    final String? resultadoDeLaboratorio;
     final DateTime? fechaYHoraDeLaboratorio;
     final String? nombreDelLaboratorio;
     final String? nombreDeLaUnidadDeLaboratorio;
@@ -17,7 +17,7 @@ class Laboratory {
 
     Laboratory copyWith({
         int? id,
-        double? resultadoDeLaboratorio,
+        String? resultadoDeLaboratorio,
         DateTime? fechaYHoraDeLaboratorio,
         String? nombreDelLaboratorio,
         String? nombreDeLaUnidadDeLaboratorio,
@@ -34,7 +34,7 @@ class Laboratory {
 
     factory Laboratory.fromJson(Map<String, dynamic> json) => Laboratory(
         id: json["id"],
-        resultadoDeLaboratorio: json["resultado_de_laboratorio"]?.toDouble(),
+        resultadoDeLaboratorio: json["resultado_de_laboratorio"],
         fechaYHoraDeLaboratorio: json["fecha_y_hora_de_laboratorio"] == null ? null : DateTime.parse(json["fecha_y_hora_de_laboratorio"]),
         nombreDelLaboratorio: json["nombre_del_laboratorio"],
         nombreDeLaUnidadDeLaboratorio: json["nombre_de_la_unidad_de_laboratorio"],

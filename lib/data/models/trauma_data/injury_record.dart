@@ -95,7 +95,7 @@ class InjuryRecord {
     factory InjuryRecord.fromJson(Map<String, dynamic> json) => InjuryRecord(
         id: json["id"],
         consumoDeAlcohol: json["consumo_de_alcohol"],
-        valorDeAlcoholemia: json["valor_de_alcoholemia"]?.toDouble(),
+        valorDeAlcoholemia: double.tryParse(json["valor_de_alcoholemia"].toString()),
         unidadDeAlcohol: json["unidad_de_alcohol"],
         otraSustanciaDeAbuso: json["otra_sustancia_de_abuso"],
         direccionNombreDelLugar: json["direccion_nombre_del_lugar"],
@@ -111,7 +111,7 @@ class InjuryRecord {
         velocidadDeColision: json["velocidad_de_colision"],
         scq: json["scq"],
         caida: json["caida"],
-        alturaMetros: json["altura_metros"]?.toDouble(),
+        alturaMetros: double.tryParse(json["altura_metros"].toString()),
         tipoDeSuperficie: json["tipo_de_superficie"],
         traumaRegisterRecordId: json["trauma_register_record_id"],
     );

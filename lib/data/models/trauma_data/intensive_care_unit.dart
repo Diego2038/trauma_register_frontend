@@ -42,7 +42,7 @@ class IntensiveCareUnit {
         fechaYHoraDeInicio: json["fecha_y_hora_de_inicio"] == null ? null : DateTime.parse(json["fecha_y_hora_de_inicio"]),
         fechaYHoraDeTermino: json["fecha_y_hora_de_termino"] == null ? null : DateTime.parse(json["fecha_y_hora_de_termino"]),
         lugar: json["lugar"],
-        icuDays: json["icu_days"]?.toDouble(),
+        icuDays: double.tryParse(json["icu_days"].toString()),
         traumaRegisterRecordId: json["trauma_register_record_id"],
     );
 
