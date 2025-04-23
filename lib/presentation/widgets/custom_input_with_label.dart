@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_size_text.dart';
@@ -9,11 +10,15 @@ class CustomInputWithLabel extends StatelessWidget {
   final String title;
   final String hintText;
   final String text;
+  final double? width;
+  final TextEditingController? controller;
+  final void Function(String)? onChanged;
   final VoidCallback? onPressedRightIcon;
   final IconData? rightIcon;
   final IconData? leftIcon;
   final bool readOnly;
   final int lines;
+  final bool allowOnlyNumbers;
 
   const CustomInputWithLabel({
     super.key,
@@ -21,11 +26,15 @@ class CustomInputWithLabel extends StatelessWidget {
     required this.title,
     required this.hintText,
     required this.text,
+    this.width,
+    this.controller,
+    this.onChanged,
     this.onPressedRightIcon,
     this.rightIcon,
     this.leftIcon,
     this.readOnly = false,
     this.lines = 1,
+    this.allowOnlyNumbers = false,
   }) : assert(
           size == CustomSize.h2 ||
               size == CustomSize.h3 ||
@@ -35,14 +44,17 @@ class CustomInputWithLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        customTitle(),
-        // customHeightSpace(),
-        customInput(),
-      ],
+    return SizedBox(
+      width: width,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          customTitle(),
+          // customHeightSpace(),
+          customInput(),
+        ],
+      ),
     );
   }
 
@@ -73,6 +85,11 @@ class CustomInputWithLabel extends StatelessWidget {
   }
 
   Widget customInput() {
+    final double customSpace = size == CustomSize.h2
+        ? 10
+        : size == CustomSize.h3
+            ? 7
+            : 5;
     final double dimensionSize = size == CustomSize.h2
         ? AppSizeText.h2
         : size == CustomSize.h3
@@ -88,7 +105,14 @@ class CustomInputWithLabel extends StatelessWidget {
       size: dimensionSize,
     );
     return TextField(
-      controller: TextEditingController(text: text),
+      controller: controller,
+      onChanged: onChanged,
+      keyboardType: allowOnlyNumbers ? TextInputType.number : null,
+      inputFormatters: allowOnlyNumbers
+          ? [
+              FilteringTextInputFormatter.digitsOnly,
+            ]
+          : null,
       maxLines: lines,
       minLines: lines,
       readOnly: readOnly,
@@ -108,7 +132,10 @@ class CustomInputWithLabel extends StatelessWidget {
         ),
         prefixIcon: leftIcon != null
             ? Padding(
-                padding: const EdgeInsets.only(left: 5),
+                padding: EdgeInsets.only(
+                  left: 5,
+                  right: customSpace,
+                ),
                 child: Icon(
                   leftIcon,
                   color: AppColors.grey200,
