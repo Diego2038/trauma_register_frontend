@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/custom/time_of_day.dart';
+
 class HealthcareRecord {
     final int? id;
     final String? numeroDeHistoriaClinica;
@@ -65,7 +67,7 @@ class HealthcareRecord {
     final double? temperaturaDuranteElTransporteCelsius;
     final int? saturacionDeO2DuranteElTransporte;
     final int? perdidaDeConciencia;
-    final String? duracionDePerdidaDeConciencia;
+    final TimeOfDay? duracionDePerdidaDeConciencia;
     final int? gcsOcular;
     final int? gcsVerbal;
     final int? gcsMotora;
@@ -276,7 +278,7 @@ class HealthcareRecord {
         double? temperaturaDuranteElTransporteCelsius,
         int? saturacionDeO2DuranteElTransporte,
         int? perdidaDeConciencia,
-        String? duracionDePerdidaDeConciencia,
+        TimeOfDay? duracionDePerdidaDeConciencia,
         int? gcsOcular,
         int? gcsVerbal,
         int? gcsMotora,
@@ -487,7 +489,7 @@ class HealthcareRecord {
         temperaturaDuranteElTransporteCelsius: double.tryParse(json["temperatura_durante_el_transporte_celsius"].toString()),
         saturacionDeO2DuranteElTransporte: json["saturacion_de_o2_durante_el_transporte"],
         perdidaDeConciencia: json["perdida_de_conciencia"],
-        duracionDePerdidaDeConciencia: json["duracion_de_perdida_de_conciencia"],
+        duracionDePerdidaDeConciencia: json["duracion_de_perdida_de_conciencia"] == null ? null : TimeOfDay.fromString(json["duracion_de_perdida_de_conciencia"]),
         gcsOcular: json["gcs_ocular"],
         gcsVerbal: json["gcs_verbal"],
         gcsMotora: json["gcs_motora"],
@@ -593,7 +595,7 @@ class HealthcareRecord {
         "temperatura_durante_el_transporte_celsius": temperaturaDuranteElTransporteCelsius,
         "saturacion_de_o2_durante_el_transporte": saturacionDeO2DuranteElTransporte,
         "perdida_de_conciencia": perdidaDeConciencia,
-        "duracion_de_perdida_de_conciencia": duracionDePerdidaDeConciencia,
+        "duracion_de_perdida_de_conciencia": duracionDePerdidaDeConciencia.toString(),
         "gcs_ocular": gcsOcular,
         "gcs_verbal": gcsVerbal,
         "gcs_motora": gcsMotora,

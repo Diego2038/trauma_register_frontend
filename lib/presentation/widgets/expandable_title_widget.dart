@@ -21,6 +21,7 @@ class ExpandableTitleWidget extends StatelessWidget {
     final traumaDataProvider =
         Provider.of<TraumaDataProvider>(context, listen: true);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         InkWell(
           onTap: () {

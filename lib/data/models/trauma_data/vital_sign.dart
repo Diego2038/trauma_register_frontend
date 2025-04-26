@@ -1,3 +1,6 @@
+
+import 'package:trauma_register_frontend/data/models/custom/time_of_day.dart';
+
 class VitalSign {
     final int? recordId;
     final DateTime? fechaYHoraDeSignosVitales;
@@ -12,7 +15,7 @@ class VitalSign {
     final double? alturaMetros;
     final double? saturacionDeOxigeno;
     final String? perdidaDeConciencia;
-    final String? duracionDePerdidaDeConciencia;
+    final TimeOfDay? duracionDePerdidaDeConciencia;
     final int? gcsMotora;
     final int? gcsOcular;
     final int? gcsVerbal;
@@ -57,7 +60,7 @@ class VitalSign {
         double? alturaMetros,
         double? saturacionDeOxigeno,
         String? perdidaDeConciencia,
-        String? duracionDePerdidaDeConciencia,
+        TimeOfDay? duracionDePerdidaDeConciencia,
         int? gcsMotora,
         int? gcsOcular,
         int? gcsVerbal,
@@ -102,7 +105,7 @@ class VitalSign {
         alturaMetros: double.tryParse(json["altura_metros"].toString()),
         saturacionDeOxigeno: double.tryParse(json["saturacion_de_oxigeno"].toString()),
         perdidaDeConciencia: json["perdida_de_conciencia"],
-        duracionDePerdidaDeConciencia: json["duracion_de_perdida_de_conciencia"],
+        duracionDePerdidaDeConciencia: json["duracion_de_perdida_de_conciencia"] == null ? null : TimeOfDay.fromString(json["duracion_de_perdida_de_conciencia"]),
         gcsMotora: json["gcs_motora"],
         gcsOcular: json["gcs_ocular"],
         gcsVerbal: json["gcs_verbal"],

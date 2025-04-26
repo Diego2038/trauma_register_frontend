@@ -11,6 +11,7 @@ class CustomInputWithLabel extends StatelessWidget {
   final String hintText;
   final String text;
   final double? width;
+  final double? height;
   final TextEditingController? controller;
   final void Function(String)? onChanged;
   final VoidCallback? onPressedRightIcon;
@@ -27,6 +28,7 @@ class CustomInputWithLabel extends StatelessWidget {
     required this.hintText,
     required this.text,
     this.width,
+    this.height,
     this.controller,
     this.onChanged,
     this.onPressedRightIcon,
@@ -46,8 +48,10 @@ class CustomInputWithLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
+      height: height,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           customTitle(),
@@ -105,7 +109,7 @@ class CustomInputWithLabel extends StatelessWidget {
       size: dimensionSize,
     );
     return TextField(
-      controller: controller,
+      controller: controller ?? TextEditingController(text: text),
       onChanged: onChanged,
       keyboardType: allowOnlyNumbers ? TextInputType.number : null,
       inputFormatters: allowOnlyNumbers
