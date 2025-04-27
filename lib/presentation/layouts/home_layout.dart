@@ -16,10 +16,10 @@ class HomeLayout extends StatefulWidget {
 class _HomeLayoutState extends State<HomeLayout> {
   bool _isSidebarExpanded = true;
 
-  void _toggleSidebar() {
-    setState(() {
-      _isSidebarExpanded = !_isSidebarExpanded;
-    });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _determineIsSidebarExpandValue();
   }
 
   @override
@@ -109,5 +109,17 @@ class _HomeLayoutState extends State<HomeLayout> {
         ),
       ],
     );
+  }
+
+  void _toggleSidebar() {
+    setState(() {
+      _isSidebarExpanded = !_isSidebarExpanded;
+    });
+  }
+
+  void _determineIsSidebarExpandValue() {
+    final size = MediaQuery.of(context).size;
+    final bool isMobileView = size.width < 768;
+    _isSidebarExpanded = !isMobileView;
   }
 }
