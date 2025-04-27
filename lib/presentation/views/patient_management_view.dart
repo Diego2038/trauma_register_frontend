@@ -35,7 +35,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
         final traumaDataProvider =
             Provider.of<TraumaDataProvider>(context, listen: false);
         const traumaDataProviderCount =
-            23; // Number of ExpandableTitleWidget widgets
+            24; // Number of ExpandableTitleWidget widgets
 
         // Initialize the expansion state (we only do this once)
         if (traumaDataProviderCount !=
@@ -453,7 +453,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones por armas de fuego",
-          index: 11,
+          index: 13,
           expandedWidget: patientData.firearmInjury == null ||
                   patientData.firearmInjury!.isEmpty
               ? noDataWidget
@@ -476,7 +476,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones penetrantes",
-          index: 13,
+          index: 14,
           expandedWidget: patientData.penetratingInjury == null ||
                   patientData.penetratingInjury!.isEmpty
               ? noDataWidget
@@ -499,7 +499,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones por envenenamiento",
-          index: 14,
+          index: 15,
           expandedWidget: patientData.poisoningInjury == null ||
                   patientData.poisoningInjury!.isEmpty
               ? noDataWidget
@@ -522,7 +522,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones violentas",
-          index: 15,
+          index: 16,
           expandedWidget: patientData.violenceInjury == null ||
                   patientData.violenceInjury!.isEmpty
               ? noDataWidget
@@ -545,7 +545,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Dispositivos utilizados en accidente de tránsito",
-          index: 16,
+          index: 17,
           expandedWidget:
               patientData.device == null || patientData.device!.isEmpty
                   ? noDataWidget
@@ -568,7 +568,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Exámenes de laboratorio",
-          index: 17,
+          index: 18,
           expandedWidget:
               patientData.laboratory == null || patientData.laboratory!.isEmpty
                   ? noDataWidget
@@ -591,7 +591,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Exámenes físicos producto por lesión de partes del cuerpo",
-          index: 18,
+          index: 19,
           expandedWidget: patientData.physicalExamBodyPartInjury == null ||
                   patientData.physicalExamBodyPartInjury!.isEmpty
               ? noDataWidget
@@ -615,7 +615,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Procedimientos realizados",
-          index: 19,
+          index: 20,
           expandedWidget:
               patientData.procedure == null || patientData.procedure!.isEmpty
                   ? noDataWidget
@@ -638,7 +638,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Procedimientos prehospitalarios realizados",
-          index: 20,
+          index: 21,
           expandedWidget: patientData.prehospitalProcedure == null ||
                   patientData.prehospitalProcedure!.isEmpty
               ? noDataWidget
@@ -661,7 +661,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Modo de transporte",
-          index: 21,
+          index: 22,
           expandedWidget: patientData.transportationMode == null ||
                   patientData.transportationMode!.isEmpty
               ? noDataWidget
@@ -684,7 +684,7 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Signos vitales",
-          index: 22,
+          index: 23,
           expandedWidget:
               patientData.vitalSign == null || patientData.vitalSign!.isEmpty
                   ? noDataWidget
