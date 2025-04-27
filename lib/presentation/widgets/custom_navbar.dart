@@ -7,7 +7,11 @@ import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/user/user_model.dart';
 
 class CustomNavbar extends StatelessWidget {
-  const CustomNavbar({super.key});
+  final VoidCallback? onMenuTap;
+  const CustomNavbar({
+    super.key,
+    this.onMenuTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +26,14 @@ class CustomNavbar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(
           children: [
+            if (onMenuTap != null)
+              IconButton(
+                icon: const Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+                onPressed: onMenuTap,
+              ),
             const Spacer(),
             HeaderText(
               text: "Usuario: ${user.username}",

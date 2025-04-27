@@ -13,11 +13,13 @@ import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart'
 class CustomSidebar extends StatelessWidget {
   final bool isExpanded;
   final VoidCallback onToggle;
+  final bool contractWithTap;
 
   const CustomSidebar({
     super.key,
     required this.isExpanded,
     required this.onToggle,
+    this.contractWithTap = false,
   });
 
   @override
@@ -49,6 +51,7 @@ class CustomSidebar extends StatelessWidget {
               icon: Icons.home_outlined,
               text: "Inicio",
               onPressed: () {
+                if (contractWithTap) onToggle();
                 NavigationService.navigateAndRemoveUntil(AppRouter.home);
               },
             ),
@@ -60,6 +63,7 @@ class CustomSidebar extends StatelessWidget {
                   icon: Icons.person_search_outlined,
                   text: "Gestión de paciente",
                   onPressed: () {
+                    if (contractWithTap) onToggle();
                     NavigationService.navigateAndRemoveUntil(
                         AppRouter.patientManagementView);
                   },
@@ -70,6 +74,7 @@ class CustomSidebar extends StatelessWidget {
                   icon: Icons.pie_chart,
                   text: "Consultar gráficos",
                   onPressed: () {
+                    if (contractWithTap) onToggle();
                     NavigationService.navigateAndRemoveUntil(
                         AppRouter.staticsView);
                   },
@@ -80,6 +85,7 @@ class CustomSidebar extends StatelessWidget {
                   icon: Icons.upload_file_outlined,
                   text: "Carga masiva",
                   onPressed: () {
+                    if (contractWithTap) onToggle();
                     NavigationService.navigateAndRemoveUntil(
                         AppRouter.bulkUploadView);
                   },
@@ -93,6 +99,7 @@ class CustomSidebar extends StatelessWidget {
               text: "Cerrar sesión",
               onPressed: () {
                 final context = NavigationService.navigatorKey.currentContext!;
+                if (contractWithTap) onToggle();
                 CustomModal.showModal(
                   context: context,
                   minHeight: 260,
