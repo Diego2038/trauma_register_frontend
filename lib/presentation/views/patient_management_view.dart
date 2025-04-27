@@ -24,6 +24,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
   bool isLoading = false;
   PatientData? patientData;
   bool isMounted = false;
+  bool allowEditFields = false;
 
   TextEditingController controller = TextEditingController();
 
@@ -91,6 +92,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                 if (patientData != null && startSearch && !isLoading)
                   _ContentDataPatient(
                     patientData: patientData!,
+                    allowEditFields: allowEditFields,
                     customSize: CustomSize.h5,
                   ),
               ],
@@ -174,10 +176,12 @@ class _PatientManagementViewState extends State<PatientManagementView> {
 class _ContentDataPatient extends StatelessWidget {
   final PatientData patientData;
   final CustomSize customSize;
+  final bool allowEditFields;
 
   const _ContentDataPatient({
     required this.patientData,
-    required this.customSize,
+    required this.customSize, 
+    required this.allowEditFields,
   });
 
   @override
@@ -193,6 +197,7 @@ class _ContentDataPatient extends StatelessWidget {
             children: patientDataContent(
               customSize: customSize,
               patientData: patientData,
+              allowEditFields: allowEditFields,
             ),
           ),
         ),
@@ -206,6 +211,7 @@ class _ContentDataPatient extends StatelessWidget {
                   children: healthcareRecordContent(
                     customSize: customSize,
                     healthcareRecord: patientData.healthcareRecord!,
+                    allowEditFields: allowEditFields,
                   ),
                 ),
         ),
@@ -219,6 +225,7 @@ class _ContentDataPatient extends StatelessWidget {
                   children: injuryRecordContent(
                     customSize: customSize,
                     injuryRecord: patientData.injuryRecord!,
+                    allowEditFields: allowEditFields,
                   ),
                 ),
         ),
@@ -238,6 +245,7 @@ class _ContentDataPatient extends StatelessWidget {
                               children: collisionContent(
                                 collision: collision,
                                 customSize: customSize,
+                                allowEditFields: allowEditFields,
                               ),
                             ),
                           )
@@ -260,6 +268,7 @@ class _ContentDataPatient extends StatelessWidget {
                               children: drugAbuseContent(
                                 drugAbuse: drugAbuse,
                                 customSize: customSize,
+                                allowEditFields: allowEditFields,
                               ),
                             ),
                           )
@@ -283,6 +292,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: vitalSignGcsQualifierContent(
                             vitalSignGcsQualifier: vitalSignGcsQualifier,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -306,6 +316,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: hospitalizationVariableContent(
                             hospitalizationVariable: hospitalizationVariable,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -329,6 +340,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: hospitalizationComplicationContent(
                             hospitalizationComplication:
                                 hospitalizationComplication,
+                                allowEditFields: allowEditFields,
                             customSize: customSize,
                           ),
                         ),
@@ -353,6 +365,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: traumaRegisterIcd10Content(
                             traumaRegisterIcd10: traumaRegisterIcd10,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -376,6 +389,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: intensiveCareUnitContent(
                             intensiveCareUnit: intensiveCareUnit,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -399,6 +413,7 @@ class _ContentDataPatient extends StatelessWidget {
                               children: imagingContent(
                                 imaging: imaging,
                                 customSize: customSize,
+                                allowEditFields: allowEditFields,
                               ),
                             ),
                           )
@@ -422,6 +437,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: apparentIntentInjuryContent(
                             apparentIntentInjury: apparentIntentInjury,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -445,6 +461,7 @@ class _ContentDataPatient extends StatelessWidget {
                               children: burnInjuryContent(
                                 burnInjury: burnInjury,
                                 customSize: customSize,
+                                allowEditFields: allowEditFields,
                               ),
                             ),
                           )
@@ -468,6 +485,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: firearmInjuryContent(
                             firearmInjury: firearmInjury,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -491,6 +509,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: penetratingInjuryContent(
                             penetratingInjury: penetratingInjury,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -514,6 +533,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: poisoningInjuryContent(
                             poisoningInjury: poisoningInjury,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -537,6 +557,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: violenceInjuryContent(
                             violenceInjury: violenceInjury,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -560,6 +581,7 @@ class _ContentDataPatient extends StatelessWidget {
                               children: deviceContent(
                                 device: device,
                                 customSize: customSize,
+                                allowEditFields: allowEditFields,
                               ),
                             ),
                           )
@@ -583,6 +605,7 @@ class _ContentDataPatient extends StatelessWidget {
                               children: laboratoryContent(
                                 laboratory: laboratory,
                                 customSize: customSize,
+                                allowEditFields: allowEditFields,
                               ),
                             ),
                           )
@@ -606,6 +629,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: physicalExamBodyPartInjuryContent(
                             physicalExamBodyPartInjury:
                                 physicalExamBodyPartInjury,
+                                allowEditFields: allowEditFields,
                             customSize: customSize,
                           ),
                         ),
@@ -630,6 +654,7 @@ class _ContentDataPatient extends StatelessWidget {
                               children: procedureContent(
                                 procedure: procedure,
                                 customSize: customSize,
+                                allowEditFields: allowEditFields,
                               ),
                             ),
                           )
@@ -653,6 +678,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: prehospitalProcedureContent(
                             prehospitalProcedure: prehospitalProcedure,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -676,6 +702,7 @@ class _ContentDataPatient extends StatelessWidget {
                           children: transportationModeContent(
                             transportationMode: transportationMode,
                             customSize: customSize,
+                            allowEditFields: allowEditFields,
                           ),
                         ),
                       )
@@ -699,6 +726,7 @@ class _ContentDataPatient extends StatelessWidget {
                               children: vitalSignContent(
                                 vitalSign: vitalSign,
                                 customSize: customSize,
+                                allowEditFields: allowEditFields,
                               ),
                             ),
                           )
@@ -712,10 +740,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> patientDataContent({
     required PatientData patientData,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Dirección línea 1",
         hintText: "",
         text: patientData.direccionLinea1 ?? "No registra",
@@ -724,6 +754,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Dirección línea 2",
         hintText: "",
         text: patientData.direccionLinea2 ?? "No registra",
@@ -732,6 +763,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Ciudad",
         hintText: "",
         text: patientData.ciudad ?? "No registra",
@@ -740,6 +772,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Cantón / municipio",
         hintText: "",
         text: patientData.cantonMunicipio ?? "No registra",
@@ -748,6 +781,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Provincia / estado",
         hintText: "",
         text: patientData.provinciaEstado ?? "No registra",
@@ -756,6 +790,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Código postal",
         hintText: "",
         text: patientData.codigoPostal ?? "No registra",
@@ -765,6 +800,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "País",
         hintText: "",
         text: patientData.pais ?? "No registra",
@@ -774,6 +810,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Edad",
         hintText: "",
         text: "${patientData.edad ?? "No registra"}",
@@ -783,6 +820,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Unidad de edad",
         hintText: "",
         text: patientData.unidadDeEdad ?? "No registra",
@@ -792,6 +830,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Género",
         hintText: "",
         text: patientData.genero ?? "No registra",
@@ -801,6 +840,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha de nacimiento",
         hintText: "",
         text: patientData.fechaDeNacimiento != null
@@ -813,6 +853,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Ocupación",
         hintText: "",
         text: patientData.ocupacion ?? "No registra",
@@ -821,6 +862,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Estado civil",
         hintText: "",
         text: patientData.estadoCivil ?? "No registra",
@@ -830,6 +872,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Nacionalidad",
         hintText: "",
         text: patientData.nacionalidad ?? "No registra",
@@ -839,6 +882,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Grupo étnico",
         hintText: "",
         text: patientData.grupoEtnico ?? "No registra",
@@ -848,6 +892,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Otro grupo étnico",
         hintText: "",
         text: patientData.otroGrupoEtnico ?? "No registra",
@@ -857,6 +902,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Núm. de identificación",
         hintText: "",
         text: patientData.numDocDeIdentificacion ?? "No registra",
@@ -870,10 +916,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> healthcareRecordContent({
     required HealthcareRecord healthcareRecord,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Número de historia clínica",
         hintText: "",
         text: healthcareRecord.numeroDeHistoriaClinica ?? "No registra",
@@ -883,6 +931,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Hospital",
         hintText: "",
         text: healthcareRecord.hospital ?? "No registra",
@@ -892,6 +941,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de llegada del paciente",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeLlegadaDelPaciente != null
@@ -904,6 +954,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Referido",
         hintText: "",
         text: healthcareRecord.referido != null
@@ -917,6 +968,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Policía notificada",
         hintText: "",
         text: healthcareRecord.policiaNotificada != null
@@ -930,6 +982,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora llegada del médico",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeLlegadaDelMedico != null
@@ -942,6 +995,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de notificación al médico",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeNotificacionAlMedico != null
@@ -954,6 +1008,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Alerta a equipo de trauma",
         hintText: "",
         text: healthcareRecord.alertaEquipoDeTrauma != null
@@ -967,6 +1022,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Nivel de alerta",
         hintText: "",
         text: healthcareRecord.nivelDeAlerta ?? "No registra",
@@ -976,6 +1032,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Paciente asegurado",
         hintText: "",
         text: healthcareRecord.pacienteAsegurado != null
@@ -989,6 +1046,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de seguro",
         hintText: "",
         text: healthcareRecord.tipoDeSeguro ?? "No registra",
@@ -998,6 +1056,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Motivo de consulta",
         hintText: "",
         text: healthcareRecord.motivoDeConsulta ?? "No registra",
@@ -1006,6 +1065,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Inmunización contra el tétanos",
         hintText: "",
         text: healthcareRecord.inmunizacionContraElTetanos ?? "No registra",
@@ -1015,6 +1075,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Descripción del examen físico",
         hintText: "",
         text: healthcareRecord.descripcionDelExamenFisico ?? "No registra",
@@ -1024,6 +1085,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Mecanismo primario",
         hintText: "",
         text: healthcareRecord.mecanismoPrimario ?? "No registra",
@@ -1033,6 +1095,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Número de lesiones seria",
         hintText: "",
         text: healthcareRecord.numeroDeLesionesSerias ?? "No registra",
@@ -1042,6 +1105,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Descripción del diagnóstico",
         hintText: "",
         text: healthcareRecord.descripcionDelDiagnostico ?? "No registra",
@@ -1051,6 +1115,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Disposición o destino del paciente",
         hintText: "",
         text: healthcareRecord.disposicionODestinoDelPaciente ?? "No registra",
@@ -1060,6 +1125,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Donación de órganos",
         hintText: "",
         text: healthcareRecord.donacionDeOrganos ?? "No registra",
@@ -1069,6 +1135,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Autopsia",
         hintText: "",
         text: healthcareRecord.autopsia ?? "No registra",
@@ -1078,6 +1145,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Muerte prevenible",
         hintText: "",
         text: healthcareRecord.muertePrevenible ?? "No registra",
@@ -1087,6 +1155,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de admisión",
         hintText: "",
         text: healthcareRecord.tipoDeAdmision ?? "No registra",
@@ -1096,6 +1165,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de la disposición",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeLaDisposicion != null
@@ -1108,6 +1178,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tiempo en sala de emergencias (horas)",
         hintText: "",
         text:
@@ -1118,6 +1189,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tiempo en sala de emergencias (minutos)",
         hintText: "",
         text:
@@ -1128,6 +1200,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Número de referencia del ED",
         hintText: "",
         text: healthcareRecord.numeroDeReferenciaDelEd ?? "No registra",
@@ -1137,6 +1210,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha de admisión",
         hintText: "",
         text: healthcareRecord.fechaDeAdmision != null
@@ -1149,6 +1223,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de alta",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeAlta != null
@@ -1161,6 +1236,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Días de hospitalización",
         hintText: "",
         text: "${healthcareRecord.diasDeHospitalizacion ?? "No registra"}",
@@ -1170,6 +1246,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Días en UCI",
         hintText: "",
         text: "${healthcareRecord.uciDias ?? "No registra"}",
@@ -1179,6 +1256,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Detalles de hospitalización",
         hintText: "",
         text: healthcareRecord.detallesDeHospitalizacion ?? "No registra",
@@ -1188,6 +1266,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Disposición o destino del paciente (hospitalización)",
         hintText: "",
         text:
@@ -1199,6 +1278,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Donación de órganos (hospitalización)",
         hintText: "",
         text: healthcareRecord.donacionDeOrganosDelHospitalizacion ??
@@ -1209,6 +1289,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Autopsia (hospitalización)",
         hintText: "",
         text: healthcareRecord.autopsiaDelHospitalizacion ?? "No registra",
@@ -1218,6 +1299,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Muerte prevenible (hospitalización)",
         hintText: "",
         text: healthcareRecord.muertePrevenibleDelHospitalizacion ??
@@ -1228,6 +1310,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Número de referencia (hospitalización)",
         hintText: "",
         text: healthcareRecord.numeroDeReferenciaDelHospitalizacion ??
@@ -1238,6 +1321,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Agencia de transporte",
         hintText: "",
         text: healthcareRecord.agenciaDeTransporte ?? "No registra",
@@ -1247,6 +1331,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Origen del transporte",
         hintText: "",
         text: healthcareRecord.origenDelTransporte ?? "No registra",
@@ -1256,6 +1341,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Número de registro del transporte",
         hintText: "",
         text: healthcareRecord.numeroDeRegistroDelTransporte ?? "No registra",
@@ -1265,6 +1351,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de notificación prehospitalaria",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeNotificacionPreHospitalaria != null
@@ -1277,6 +1364,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de llegada a la escena",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeLlegadaALaEscena != null
@@ -1289,6 +1377,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de salida de la escena",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeSalidaDeLaEscena != null
@@ -1301,6 +1390,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Razón de la demora",
         hintText: "",
         text: healthcareRecord.razonDeLaDemora ?? "No registra",
@@ -1310,6 +1400,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Reporte o formulario prehospitalario entregado",
         hintText: "",
         text:
@@ -1324,6 +1415,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Ciudad del hospital más cercano al sitio del incidente",
         hintText: "",
         text: healthcareRecord.ciudadHospitalMasCercanoAlSitioDelIncidente ??
@@ -1334,6 +1426,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tiempo de extricación (horas)",
         hintText: "",
         text: "${healthcareRecord.tiempoDeExtricacionHoras ?? "No registra"}",
@@ -1343,6 +1436,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tiempo de extricación (minutos)",
         hintText: "",
         text: "${healthcareRecord.tiempoDeExtricacionMinutos ?? "No registra"}",
@@ -1352,6 +1446,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Duración del transporte (horas)",
         hintText: "",
         text: "${healthcareRecord.duracionDelTransporteHoras ?? "No registra"}",
@@ -1361,6 +1456,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Duración del transporte (minutos)",
         hintText: "",
         text:
@@ -1371,6 +1467,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Procedimiento realizado",
         hintText: "",
         text: healthcareRecord.procedimientoRealizado ?? "No registra",
@@ -1380,6 +1477,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Frecuencia cardíaca en la escena",
         hintText: "",
         text:
@@ -1390,6 +1488,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Presión arterial sistólica en la escena",
         hintText: "",
         text:
@@ -1400,6 +1499,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Presión arterial diastólica en la escena",
         hintText: "",
         text:
@@ -1410,6 +1510,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Frecuencia respiratoria en la escena",
         hintText: "",
         text:
@@ -1420,6 +1521,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Calificador de frecuencia respiratoria en la escena",
         hintText: "",
         text: healthcareRecord.calificadorDeFrecuenciaRespiratoriaEnLaEscena ??
@@ -1430,6 +1532,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Temperatura en la escena (°C)",
         hintText: "",
         text:
@@ -1441,6 +1544,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Saturación de O₂ en la escena",
         hintText: "",
         text: "${healthcareRecord.saturacionDeO2EnLaEscena ?? "No registra"}",
@@ -1450,6 +1554,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Frecuencia cardíaca durante el transporte",
         hintText: "",
         text:
@@ -1460,6 +1565,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Presión arterial sistólica durante el transporte",
         hintText: "",
         text:
@@ -1470,6 +1576,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Frecuencia respiratoria durante el transporte",
         hintText: "",
         text:
@@ -1480,6 +1587,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Calificador de frecuencia respiratoria durante el transporte",
         hintText: "",
         text: healthcareRecord
@@ -1491,6 +1599,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Temperatura durante el transporte (°C)",
         hintText: "",
         text:
@@ -1502,6 +1611,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Saturación de O₂ durante el transporte",
         hintText: "",
         text:
@@ -1512,6 +1622,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Pérdida de conciencia",
         hintText: "",
         text: "${healthcareRecord.perdidaDeConciencia ?? "No registra"}",
@@ -1521,6 +1632,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Duración de pérdida de conciencia",
         hintText: "",
         text: (healthcareRecord.duracionDePerdidaDeConciencia ?? "No registra")
@@ -1531,6 +1643,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "GCS ocular",
         hintText: "",
         text: "${healthcareRecord.gcsOcular ?? "No registra"}",
@@ -1540,6 +1653,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "GCS verbal",
         hintText: "",
         text: "${healthcareRecord.gcsVerbal ?? "No registra"}",
@@ -1549,6 +1663,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "GCS motora",
         hintText: "",
         text: "${healthcareRecord.gcsMotora ?? "No registra"}",
@@ -1558,6 +1673,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "GCS total",
         hintText: "",
         text: "${healthcareRecord.gcsTotal ?? "No registra"}",
@@ -1567,6 +1683,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Sangre (L)",
         hintText: "",
         text: "${healthcareRecord.sangreL ?? "No registra"}",
@@ -1576,6 +1693,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Coloides (L)",
         hintText: "",
         text: "${healthcareRecord.coloidesL ?? "No registra"}",
@@ -1585,6 +1703,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Cristaloides (L)",
         hintText: "",
         text: "${healthcareRecord.cristaloidesL ?? "No registra"}",
@@ -1594,6 +1713,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Hallazgos clínicos (texto)",
         hintText: "",
         text: healthcareRecord.hallazgosClinicosTexto ?? "No registra",
@@ -1603,6 +1723,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de envío de contrarreferencia",
         hintText: "",
         text: healthcareRecord.fechaYHoraDeEnvioDeContraReferencia != null
@@ -1615,6 +1736,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha de alta de contrarreferencia",
         hintText: "",
         text: healthcareRecord.fechaDeAltaDeContrarReferencia != null
@@ -1628,6 +1750,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Hallazgos clínicos (existencia)",
         hintText: "",
         text: healthcareRecord.hallazgosClinicosExistencia != null
@@ -1641,6 +1764,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Servicio que atendió",
         hintText: "",
         text: healthcareRecord.servicioQueAtendio ?? "No registra",
@@ -1650,6 +1774,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Paciente admitido",
         hintText: "",
         text: healthcareRecord.pacienteAdmitido != null
@@ -1663,6 +1788,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Hospital que recibe",
         hintText: "",
         text: healthcareRecord.hospitalQueRecibe ?? "No registra",
@@ -1672,6 +1798,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Otro servicio",
         hintText: "",
         text: healthcareRecord.otroServicio ?? "No registra",
@@ -1681,6 +1808,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Servicio que recibe",
         hintText: "",
         text: healthcareRecord.servicioQueRecibe ?? "No registra",
@@ -1690,6 +1818,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Recomendaciones",
         hintText: "",
         text: healthcareRecord.recomendaciones ?? "No registra",
@@ -1699,6 +1828,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Número de referencia de referencias salientes",
         hintText: "",
         text: healthcareRecord.numeroDeReferenciaDeReferenciasSalientes ??
@@ -1709,6 +1839,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha de envío de referencia",
         hintText: "",
         text: healthcareRecord.fechaDeEnvioDeReferencia != null
@@ -1722,6 +1853,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha de referencia",
         hintText: "",
         text: healthcareRecord.fechaDeReferencia != null
@@ -1735,6 +1867,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Razón de la referencia",
         hintText: "",
         text: healthcareRecord.razonDeLaReferencia ?? "No registra",
@@ -1744,6 +1877,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Médico que refiere",
         hintText: "",
         text: healthcareRecord.medicoQueRefiere ?? "No registra",
@@ -1753,8 +1887,8 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Estado de la referencia",
-        readOnly: true,
         hintText: "",
         text: healthcareRecord.estadoDeReferencia ?? "No registra",
         lines: 1,
@@ -1763,6 +1897,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha de aceptación de la referencia",
         hintText: "",
         text: healthcareRecord.fechaDeAceptacionDeReferencia != null
@@ -1776,6 +1911,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "ISS",
         hintText: "",
         text: "${healthcareRecord.iss ?? "No registra"}",
@@ -1785,6 +1921,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "KTS",
         hintText: "",
         text: "${healthcareRecord.kts ?? "No registra"}",
@@ -1794,6 +1931,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "RTS",
         hintText: "",
         text: "${healthcareRecord.rts ?? "No registra"}",
@@ -1803,6 +1941,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Abdomen",
         hintText: "",
         text: "${healthcareRecord.abdomen ?? "No registra"}",
@@ -1812,6 +1951,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tórax",
         hintText: "",
         text: "${healthcareRecord.torax ?? "No registra"}",
@@ -1821,6 +1961,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Externo",
         hintText: "",
         text: "${healthcareRecord.externo ?? "No registra"}",
@@ -1830,6 +1971,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Extremidades",
         hintText: "",
         text: "${healthcareRecord.extremidades ?? "No registra"}",
@@ -1839,6 +1981,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Cara",
         hintText: "",
         text: "${healthcareRecord.cara ?? "No registra"}",
@@ -1848,6 +1991,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Cabeza",
         hintText: "",
         text: "${healthcareRecord.cabeza ?? "No registra"}",
@@ -1857,6 +2001,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "TRISS contuso",
         hintText: "",
         text: "${healthcareRecord.trissContuso ?? "No registra"}",
@@ -1866,6 +2011,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "TRISS penetrante",
         hintText: "",
         text: "${healthcareRecord.trissPenetrante ?? "No registra"}",
@@ -1879,10 +2025,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> injuryRecordContent({
     required InjuryRecord injuryRecord,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Consumo de alcohol",
         hintText: "",
         text: injuryRecord.consumoDeAlcohol ?? "No registra",
@@ -1892,6 +2040,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Valor de alcoholemia",
         hintText: "",
         text: "${injuryRecord.valorDeAlcoholemia ?? "No registra"}",
@@ -1901,6 +2050,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Unidad de alcohol",
         hintText: "",
         text: injuryRecord.unidadDeAlcohol ?? "No registra",
@@ -1910,6 +2060,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Otra sustancia de abuso",
         hintText: "",
         text: injuryRecord.otraSustanciaDeAbuso ?? "No registra",
@@ -1919,6 +2070,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Dirección / nombre del lugar",
         hintText: "",
         text: injuryRecord.direccionNombreDelLugar ?? "No registra",
@@ -1928,6 +2080,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Ciudad del evento de la lesión",
         hintText: "",
         text: injuryRecord.ciudadDeEventoDeLaLesion ?? "No registra",
@@ -1937,6 +2090,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Condado de lesiones",
         hintText: "",
         text: injuryRecord.condadoDeLesiones ?? "No registra",
@@ -1946,6 +2100,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Estado / provincia de lesiones",
         hintText: "",
         text: injuryRecord.estadoProvinciaDeLesiones ?? "No registra",
@@ -1955,6 +2110,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "País de lesiones",
         hintText: "",
         text: injuryRecord.paisDeLesiones ?? "No registra",
@@ -1964,6 +2120,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Código postal de lesiones",
         hintText: "",
         text: injuryRecord.codigoPostalDeLesiones ?? "No registra",
@@ -1973,6 +2130,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora del evento",
         hintText: "",
         text: injuryRecord.fechaYHoraDelEvento != null
@@ -1986,6 +2144,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Accidente de tráfico",
         hintText: "",
         text: injuryRecord.accidenteDeTrafico != null
@@ -1999,6 +2158,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de vehículo",
         hintText: "",
         text: injuryRecord.tipoDeVehiculo ?? "No registra",
@@ -2008,6 +2168,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Ocupante",
         hintText: "",
         text: injuryRecord.ocupante ?? "No registra",
@@ -2017,6 +2178,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Velocidad de colisión",
         hintText: "",
         text: injuryRecord.velocidadDeColision ?? "No registra",
@@ -2026,6 +2188,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "SCQ (%)",
         hintText: "",
         text: "${injuryRecord.scq ?? "No registra"}",
@@ -2035,6 +2198,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Caída",
         hintText: "",
         text: injuryRecord.caida != null
@@ -2048,6 +2212,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Altura (metros)",
         hintText: "",
         text: "${injuryRecord.alturaMetros ?? "No registra"}",
@@ -2057,6 +2222,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de superficie",
         hintText: "",
         text: injuryRecord.tipoDeSuperficie ?? "No registra",
@@ -2070,10 +2236,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> collisionContent({
     required Collision collision,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de colisión",
         hintText: "",
         text: collision.tipoDeColision ?? "No registra",
@@ -2086,10 +2254,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> drugAbuseContent({
     required DrugAbuse drugAbuse,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de droga",
         hintText: "",
         text: drugAbuse.tipoDeDroga ?? "No registra",
@@ -2102,10 +2272,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> vitalSignGcsQualifierContent({
     required VitalSignGcsQualifier vitalSignGcsQualifier,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Calificador GCS",
         hintText: "",
         text: vitalSignGcsQualifier.calificadorGcs ?? "No registra",
@@ -2118,10 +2290,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> hospitalizationVariableContent({
     required HospitalizationVariable hospitalizationVariable,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de variable",
         hintText: "",
         text: hospitalizationVariable.tipoDeVariable ?? "No registra",
@@ -2131,6 +2305,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Valor de la variable",
         hintText: "",
         text: hospitalizationVariable.valorDeLaVariable ?? "No registra",
@@ -2140,6 +2315,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de la variable",
         hintText: "",
         text: hospitalizationVariable.fechaYHoraDeLaVariable != null
@@ -2152,6 +2328,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Localización de la variable",
         hintText: "",
         text: hospitalizationVariable.localizacionDeVariable ?? "No registra",
@@ -2165,10 +2342,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> hospitalizationComplicationContent({
     required HospitalizationComplication hospitalizationComplication,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de complicación",
         hintText: "",
         text: hospitalizationComplication.tipoDeComplicacion ?? "No registra",
@@ -2177,6 +2356,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de la complicación",
         hintText: "",
         text: hospitalizationComplication.fechaYHoraDeComplicacion != null
@@ -2189,6 +2369,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Lugar de la complicación",
         hintText: "",
         text: hospitalizationComplication.lugarDeComplicacion ?? "No registra",
@@ -2202,10 +2383,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> traumaRegisterIcd10Content({
     required TraumaRegisterIcd10 traumaRegisterIcd10,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Descripción",
         hintText: "",
         text: traumaRegisterIcd10.descripcion ?? "No registra",
@@ -2214,6 +2397,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Mecanismo ICD",
         hintText: "",
         text: traumaRegisterIcd10.mecanismoIcd ?? "No registra",
@@ -2226,10 +2410,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> intensiveCareUnitContent({
     required IntensiveCareUnit intensiveCareUnit,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo",
         hintText: "",
         text: intensiveCareUnit.tipo ?? "No registra",
@@ -2239,6 +2425,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de inicio",
         hintText: "",
         text: intensiveCareUnit.fechaYHoraDeInicio != null
@@ -2251,6 +2438,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de terminación",
         hintText: "",
         text: intensiveCareUnit.fechaYHoraDeTermino != null
@@ -2263,6 +2451,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Lugar",
         hintText: "",
         text: intensiveCareUnit.lugar ?? "No registra",
@@ -2272,6 +2461,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Días de UCI",
         hintText: "",
         text: "${intensiveCareUnit.icuDays ?? "No registra"}",
@@ -2285,10 +2475,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> imagingContent({
     required Imaging imaging,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de imagen",
         hintText: "",
         text: imaging.tipoDeImagen ?? "No registra",
@@ -2298,6 +2490,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Parte del cuerpo",
         hintText: "",
         text: imaging.parteDelCuerpo ?? "No registra",
@@ -2307,6 +2500,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Opción",
         hintText: "",
         text: imaging.opcion != null
@@ -2319,6 +2513,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Descripción",
         hintText: "",
         text: imaging.descripcion ?? "No registra",
@@ -2331,10 +2526,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> apparentIntentInjuryContent({
     required ApparentIntentInjury apparentIntentInjury,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Intesión aparente",
         hintText: "",
         text: apparentIntentInjury.intencionAparente ?? "No registra",
@@ -2347,10 +2544,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> burnInjuryContent({
     required BurnInjury burnInjury,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de quemadura",
         hintText: "",
         text: burnInjury.tipoDeQuemadura ?? "No registra",
@@ -2359,6 +2558,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Grado de quemadura",
         hintText: "",
         text: burnInjury.gradoDeQuemadura ?? "No registra",
@@ -2371,10 +2571,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> firearmInjuryContent({
     required FirearmInjury firearmInjury,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de arma de fuego",
         hintText: "",
         text: firearmInjury.tipoDeArmaDeFuego ?? "No registra",
@@ -2387,10 +2589,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> penetratingInjuryContent({
     required PenetratingInjury penetratingInjury,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de lesión penetrante",
         hintText: "",
         text: penetratingInjury.tipoDeLesionPenetrante ?? "No registra",
@@ -2403,10 +2607,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> poisoningInjuryContent({
     required PoisoningInjury poisoningInjury,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de envenenamiento",
         hintText: "",
         text: poisoningInjury.tipoDeEnvenenamiento ?? "No registra",
@@ -2419,10 +2625,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> violenceInjuryContent({
     required ViolenceInjury violenceInjury,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de violencia",
         hintText: "",
         text: violenceInjury.tipoDeViolencia ?? "No registra",
@@ -2435,10 +2643,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> deviceContent({
     required Device device,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de dispositivo",
         hintText: "",
         text: device.tipoDeDispositivo ?? "No registra",
@@ -2451,10 +2661,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> laboratoryContent({
     required Laboratory laboratory,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Resultado de laboratorio",
         hintText: "",
         text: laboratory.resultadoDeLaboratorio ?? "No registra",
@@ -2464,6 +2676,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de laboratorio",
         hintText: "",
         text: laboratory.fechaYHoraDeLaboratorio != null
@@ -2476,6 +2689,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Nombre de la prueba de laboratorio",
         hintText: "",
         text: laboratory.nombreDelLaboratorio ?? "No registra",
@@ -2485,6 +2699,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Nombre de la unidad de laboratorio",
         hintText: "",
         text: laboratory.nombreDeLaUnidadDeLaboratorio ?? "No registra",
@@ -2498,10 +2713,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> physicalExamBodyPartInjuryContent({
     required PhysicalExamBodyPartInjury physicalExamBodyPartInjury,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Parte del cuerpo",
         hintText: "",
         text: physicalExamBodyPartInjury.parteDelCuerpo ?? "No registra",
@@ -2510,6 +2727,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Tipo de lesión",
         hintText: "",
         text: physicalExamBodyPartInjury.tipoDeLesion ?? "No registra",
@@ -2522,10 +2740,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> procedureContent({
     required Procedure procedure,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Procedimiento realizado",
         hintText: "",
         text: procedure.procedimientoRealizado ?? "No registra",
@@ -2535,6 +2755,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Lugar",
         hintText: "",
         text: procedure.lugar ?? "No registra",
@@ -2544,6 +2765,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de inicio",
         hintText: "",
         text: procedure.fechaYHoraDeInicio != null
@@ -2556,6 +2778,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de terminación",
         hintText: "",
         text: procedure.fechaYHoraDeTermino != null
@@ -2572,10 +2795,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> prehospitalProcedureContent({
     required PrehospitalProcedure prehospitalProcedure,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Procedimiento realizado",
         hintText: "",
         text: prehospitalProcedure.procedimientoRealizado ?? "No registra",
@@ -2588,10 +2813,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> transportationModeContent({
     required TransportationMode transportationMode,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Modo de transporte",
         hintText: "",
         text: transportationMode.modoDeTransporte ?? "No registra",
@@ -2604,10 +2831,12 @@ class _ContentDataPatient extends StatelessWidget {
   List<Widget> vitalSignContent({
     required VitalSign vitalSign,
     required CustomSize customSize,
+    required bool allowEditFields,
   }) {
     return [
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Fecha y hora de la variable",
         hintText: "",
         text: vitalSign.fechaYHoraDeSignosVitales != null
@@ -2620,6 +2849,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Signos de vida",
         hintText: "",
         text: vitalSign.signosDeVida != null
@@ -2633,6 +2863,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Frecuencia cardiaca",
         hintText: "",
         text: "${vitalSign.frecuenciaCardiaca ?? "No registra"}",
@@ -2642,6 +2873,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Presión arterial sistólica",
         hintText: "",
         text: "${vitalSign.presionArterialSistolica ?? "No registra"}",
@@ -2651,6 +2883,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Presión arterial diastólica",
         hintText: "",
         text: "${vitalSign.presionArterialDiastolica ?? "No registra"}",
@@ -2660,6 +2893,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Frecuencia respiratoria",
         hintText: "",
         text: "${vitalSign.frecuenciaRespiratoria ?? "No registra"}",
@@ -2669,6 +2903,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Calificador de frecuencia respiratoria",
         hintText: "",
         text: vitalSign.calificadorDeFrecuenciaRespiratoria ?? "No registra",
@@ -2678,6 +2913,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Temperatura (celsius)",
         hintText: "",
         text: "${vitalSign.temperaturaCelsius ?? "No registra"}",
@@ -2688,6 +2924,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Peso (kilogramos)",
         hintText: "",
         text: "${vitalSign.pesoKg ?? "No registra"}",
@@ -2701,6 +2938,7 @@ class _ContentDataPatient extends StatelessWidget {
           children: [
             CustomInputWithLabel(
               size: customSize,
+              readOnly: !allowEditFields,
               title: "Altura (metros)",
               hintText: "",
               text: "${vitalSign.alturaMetros ?? "No registra"}",
@@ -2711,6 +2949,7 @@ class _ContentDataPatient extends StatelessWidget {
             const SizedBox(width: 20),
             CustomInputWithLabel(
               size: customSize,
+              readOnly: !allowEditFields,
               title: "Saturación de oxígeno",
               hintText: "",
               text: "${vitalSign.saturacionDeOxigeno ?? "No registra"}",
@@ -2723,6 +2962,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Pérdida de conciencia",
         hintText: "",
         text: vitalSign.perdidaDeConciencia ?? "No registra",
@@ -2732,6 +2972,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "Duración de pérdida de conciencia",
         hintText: "",
         text: (vitalSign.duracionDePerdidaDeConciencia ?? "No registra")
@@ -2742,6 +2983,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "GCS motora",
         hintText: "",
         text: "${vitalSign.gcsMotora ?? "No registra"}",
@@ -2755,6 +2997,7 @@ class _ContentDataPatient extends StatelessWidget {
           children: [
             CustomInputWithLabel(
               size: customSize,
+              readOnly: !allowEditFields,
               title: "GCS ocular",
               hintText: "",
               text: "${vitalSign.gcsOcular ?? "No registra"}",
@@ -2765,6 +3008,7 @@ class _ContentDataPatient extends StatelessWidget {
             const SizedBox(width: 20),
             CustomInputWithLabel(
               size: customSize,
+              readOnly: !allowEditFields,
               title: "GCS verbal",
               hintText: "",
               text: "${vitalSign.gcsVerbal ?? "No registra"}",
@@ -2777,6 +3021,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "GCS total",
         hintText: "",
         text: "${vitalSign.gcsTotal ?? "No registra"}",
@@ -2786,6 +3031,7 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        readOnly: !allowEditFields,
         title: "AVUP",
         hintText: "",
         text: vitalSign.avup ?? "No registra",
