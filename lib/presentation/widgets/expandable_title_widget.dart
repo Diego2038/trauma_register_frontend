@@ -44,7 +44,13 @@ class ExpandableTitleWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              H3(text: title, color: AppColors.base),
+              Expanded(
+                child: H3(
+                  text: title,
+                  color: AppColors.base,
+                  maxLines: 5,
+                ),
+              ),
             ],
           ),
         ),
