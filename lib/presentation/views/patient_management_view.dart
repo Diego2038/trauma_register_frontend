@@ -144,6 +144,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                   child: CustomCheckbox(
                     size: CustomSize.h3,
                     text: "Desplegar todas las secciones",
+                    minWidthToCollapse: 440,
                     onChanged: (bool value) {
                       final traumaDataProvider =
                           Provider.of<TraumaDataProvider>(context,
@@ -2717,7 +2718,6 @@ class _ContentDataPatient extends StatelessWidget {
               width: 100,
               height: 108,
             ),
-        
           ],
         ),
       ),

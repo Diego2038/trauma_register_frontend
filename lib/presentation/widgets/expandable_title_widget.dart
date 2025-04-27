@@ -29,18 +29,22 @@ class ExpandableTitleWidget extends StatelessWidget {
                 .toggleExpansion(index); // Alternar estado de expansión
           },
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.base,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Icon(
-                  traumaDataProvider.getExpansionState(index)
-                      ? Icons.remove
-                      : Icons.add,
-                  color: AppColors.white,
-                  size: 24,
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.base,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Icon(
+                    traumaDataProvider.getExpansionState(index)
+                        ? Icons.remove
+                        : Icons.add,
+                    color: AppColors.white,
+                    size: 24,
+                  ),
                 ),
               ),
               const SizedBox(width: 8),

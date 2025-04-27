@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
@@ -9,6 +8,7 @@ class CustomCheckbox extends StatefulWidget {
   final String text;
   final bool initialValue;
   final Function(bool) onChanged;
+  final double minWidthToCollapse;
 
   const CustomCheckbox({
     super.key,
@@ -16,6 +16,7 @@ class CustomCheckbox extends StatefulWidget {
     required this.text,
     this.initialValue = false,
     required this.onChanged,
+    required this.minWidthToCollapse,
   });
 
   @override
@@ -33,12 +34,23 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Row(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        customCheckbox(size: widget.size),
+        Padding(
+          padding: const EdgeInsets.only(top: 5),
+          child: customCheckbox(size: widget.size),
+        ),
         spaceWidth(size: widget.size),
-        customText(text: widget.text, size: widget.size),
+        Expanded(
+          flex: size.width > widget.minWidthToCollapse ? 0 : 1,
+          child: customText(
+            text: widget.text,
+            size: widget.size,
+          ),
+        ),
       ],
     );
   }
