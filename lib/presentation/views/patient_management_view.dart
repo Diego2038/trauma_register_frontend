@@ -1433,6 +1433,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text:
             "${healthcareRecord.temperaturaEnLaEscenaCelsius ?? "No registra"}",
+        rightIcon: Icons.device_thermostat_outlined,
         lines: 1,
         width: 220,
         height: 124,
@@ -1493,6 +1494,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text:
             "${healthcareRecord.temperaturaDuranteElTransporteCelsius ?? "No registra"}",
+        rightIcon: Icons.device_thermostat_outlined,
         lines: 1,
         width: 220,
         height: 124,
@@ -2678,6 +2680,7 @@ class _ContentDataPatient extends StatelessWidget {
         title: "Temperatura (celsius)",
         hintText: "",
         text: "${vitalSign.temperaturaCelsius ?? "No registra"}",
+        rightIcon: Icons.device_thermostat_outlined,
         lines: 1,
         width: 220,
         height: 124,
@@ -2691,23 +2694,32 @@ class _ContentDataPatient extends StatelessWidget {
         width: 220,
         height: 108,
       ),
-      CustomInputWithLabel(
-        size: customSize,
-        title: "Altura (metros)",
-        hintText: "",
-        text: "${vitalSign.alturaMetros ?? "No registra"}",
-        lines: 1,
-        width: 100,
-        height: 108,
-      ),
-      CustomInputWithLabel(
-        size: customSize,
-        title: "Saturación de oxígeno",
-        hintText: "",
-        text: "${vitalSign.saturacionDeOxigeno ?? "No registra"}",
-        lines: 1,
-        width: 100,
-        height: 108,
+      SizedBox(
+        width: 220,
+        child: Row(
+          children: [
+            CustomInputWithLabel(
+              size: customSize,
+              title: "Altura (metros)",
+              hintText: "",
+              text: "${vitalSign.alturaMetros ?? "No registra"}",
+              lines: 1,
+              width: 100,
+              height: 108,
+            ),
+            const SizedBox(width: 20),
+            CustomInputWithLabel(
+              size: customSize,
+              title: "Saturación de oxígeno",
+              hintText: "",
+              text: "${vitalSign.saturacionDeOxigeno ?? "No registra"}",
+              lines: 1,
+              width: 100,
+              height: 108,
+            ),
+        
+          ],
+        ),
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2737,23 +2749,31 @@ class _ContentDataPatient extends StatelessWidget {
         width: 220,
         height: 108,
       ),
-      CustomInputWithLabel(
-        size: customSize,
-        title: "GCS ocular",
-        hintText: "",
-        text: "${vitalSign.gcsOcular ?? "No registra"}",
-        lines: 1,
-        width: 100,
-        height: 108,
-      ),
-      CustomInputWithLabel(
-        size: customSize,
-        title: "GCS verbal",
-        hintText: "",
-        text: "${vitalSign.gcsVerbal ?? "No registra"}",
-        lines: 1,
-        width: 100,
-        height: 108,
+      SizedBox(
+        width: 220,
+        child: Row(
+          children: [
+            CustomInputWithLabel(
+              size: customSize,
+              title: "GCS ocular",
+              hintText: "",
+              text: "${vitalSign.gcsOcular ?? "No registra"}",
+              lines: 1,
+              width: 100,
+              height: 108,
+            ),
+            const SizedBox(width: 20),
+            CustomInputWithLabel(
+              size: customSize,
+              title: "GCS verbal",
+              hintText: "",
+              text: "${vitalSign.gcsVerbal ?? "No registra"}",
+              lines: 1,
+              width: 100,
+              height: 108,
+            ),
+          ],
+        ),
       ),
       CustomInputWithLabel(
         size: customSize,
