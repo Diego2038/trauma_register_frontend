@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
-import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/trauma_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_checkbox.dart';
@@ -149,7 +148,6 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                       final traumaDataProvider =
                           Provider.of<TraumaDataProvider>(context,
                               listen: false);
-                      print("Valor del value: $value");
                       traumaDataProvider.setAllExpanded(value);
                     },
                   ),
@@ -214,177 +212,497 @@ class _ContentDataPatient extends StatelessWidget {
         ExpandableTitleWidget(
           title: "Registro de lesión",
           index: 2,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.injuryRecord == null
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : CustomContainer(
+                  children: injuryRecordContent(
+                    customSize: customSize,
+                    injuryRecord: patientData.injuryRecord!,
+                  ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Colisiones",
           index: 3,
-          expandedWidget: patientData.healthcareRecord == null
-              ? noDataWidget
-              : const Text("DATOOOOs"),
+          expandedWidget:
+              patientData.collision == null || patientData.collision!.isEmpty
+                  ? noDataWidget
+                  : Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: patientData.collision!
+                          .map(
+                            (collision) => CustomContainer(
+                              children: collisionContent(
+                                collision: collision,
+                                customSize: customSize,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Abusos de drogas",
           index: 4,
-          expandedWidget: patientData.healthcareRecord == null
-              ? noDataWidget
-              : const Text("DATOOOOs"),
+          expandedWidget:
+              patientData.drugAbuse == null || patientData.drugAbuse!.isEmpty
+                  ? noDataWidget
+                  : Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: patientData.drugAbuse!
+                          .map(
+                            (drugAbuse) => CustomContainer(
+                              children: drugAbuseContent(
+                                drugAbuse: drugAbuse,
+                                customSize: customSize,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Calificaciones de signos vitales GCS",
           index: 5,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.vitalSignGcsQualifier == null ||
+                  patientData.vitalSignGcsQualifier!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.vitalSignGcsQualifier!
+                      .map(
+                        (vitalSignGcsQualifier) => CustomContainer(
+                          maxWidth: 600,
+                          children: vitalSignGcsQualifierContent(
+                            vitalSignGcsQualifier: vitalSignGcsQualifier,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Variables de hospitalización",
           index: 6,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.hospitalizationVariable == null ||
+                  patientData.hospitalizationVariable!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.hospitalizationVariable!
+                      .map(
+                        (hospitalizationVariable) => CustomContainer(
+                          maxWidth: 600,
+                          children: hospitalizationVariableContent(
+                            hospitalizationVariable: hospitalizationVariable,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Complicaciones de hospitalización",
           index: 7,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.hospitalizationComplication == null ||
+                  patientData.hospitalizationComplication!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.hospitalizationComplication!
+                      .map(
+                        (hospitalizationComplication) => CustomContainer(
+                          maxWidth: 600,
+                          children: hospitalizationComplicationContent(
+                            hospitalizationComplication:
+                                hospitalizationComplication,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Registros de trauma ICD10",
           index: 8,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.traumaRegisterIcd10 == null ||
+                  patientData.traumaRegisterIcd10!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.traumaRegisterIcd10!
+                      .map(
+                        (traumaRegisterIcd10) => CustomContainer(
+                          maxWidth: 600,
+                          children: traumaRegisterIcd10Content(
+                            traumaRegisterIcd10: traumaRegisterIcd10,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Unidades de cuidados intensivos",
           index: 9,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.intensiveCareUnit == null ||
+                  patientData.intensiveCareUnit!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.intensiveCareUnit!
+                      .map(
+                        (intensiveCareUnit) => CustomContainer(
+                          maxWidth: 600,
+                          children: intensiveCareUnitContent(
+                            intensiveCareUnit: intensiveCareUnit,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Imágenes",
           index: 10,
-          expandedWidget: patientData.healthcareRecord == null
-              ? noDataWidget
-              : const Text("DATOOOOs"),
+          expandedWidget:
+              patientData.imaging == null || patientData.imaging!.isEmpty
+                  ? noDataWidget
+                  : Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: patientData.imaging!
+                          .map(
+                            (imaging) => CustomContainer(
+                              maxWidth: 600,
+                              children: imagingContent(
+                                imaging: imaging,
+                                customSize: customSize,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones intencionales aparentes",
           index: 11,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.apparentIntentInjury == null ||
+                  patientData.apparentIntentInjury!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.apparentIntentInjury!
+                      .map(
+                        (apparentIntentInjury) => CustomContainer(
+                          maxWidth: 600,
+                          children: apparentIntentInjuryContent(
+                            apparentIntentInjury: apparentIntentInjury,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones por quemadura",
           index: 12,
-          expandedWidget: patientData.healthcareRecord == null
-              ? noDataWidget
-              : const Text("DATOOOOs"),
+          expandedWidget:
+              patientData.burnInjury == null || patientData.burnInjury!.isEmpty
+                  ? noDataWidget
+                  : Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: patientData.burnInjury!
+                          .map(
+                            (burnInjury) => CustomContainer(
+                              maxWidth: 600,
+                              children: burnInjuryContent(
+                                burnInjury: burnInjury,
+                                customSize: customSize,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones por armas de fuego",
-          index: 1,
-          expandedWidget: patientData.healthcareRecord == null
+          index: 11,
+          expandedWidget: patientData.firearmInjury == null ||
+                  patientData.firearmInjury!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.firearmInjury!
+                      .map(
+                        (firearmInjury) => CustomContainer(
+                          maxWidth: 600,
+                          children: firearmInjuryContent(
+                            firearmInjury: firearmInjury,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones penetrantes",
           index: 13,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.penetratingInjury == null ||
+                  patientData.penetratingInjury!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.penetratingInjury!
+                      .map(
+                        (penetratingInjury) => CustomContainer(
+                          maxWidth: 600,
+                          children: penetratingInjuryContent(
+                            penetratingInjury: penetratingInjury,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones por envenenamiento",
           index: 14,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.poisoningInjury == null ||
+                  patientData.poisoningInjury!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.poisoningInjury!
+                      .map(
+                        (poisoningInjury) => CustomContainer(
+                          maxWidth: 600,
+                          children: poisoningInjuryContent(
+                            poisoningInjury: poisoningInjury,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Lesiones violentas",
           index: 15,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.violenceInjury == null ||
+                  patientData.violenceInjury!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.violenceInjury!
+                      .map(
+                        (violenceInjury) => CustomContainer(
+                          maxWidth: 600,
+                          children: violenceInjuryContent(
+                            violenceInjury: violenceInjury,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Dispositivos utilizados en accidente de tránsito",
           index: 16,
-          expandedWidget: patientData.healthcareRecord == null
-              ? noDataWidget
-              : const Text("DATOOOOs"),
+          expandedWidget:
+              patientData.device == null || patientData.device!.isEmpty
+                  ? noDataWidget
+                  : Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: patientData.device!
+                          .map(
+                            (device) => CustomContainer(
+                              maxWidth: 600,
+                              children: deviceContent(
+                                device: device,
+                                customSize: customSize,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Exámenes de laboratorio",
           index: 17,
-          expandedWidget: patientData.healthcareRecord == null
-              ? noDataWidget
-              : const Text("DATOOOOs"),
+          expandedWidget:
+              patientData.laboratory == null || patientData.laboratory!.isEmpty
+                  ? noDataWidget
+                  : Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: patientData.laboratory!
+                          .map(
+                            (laboratory) => CustomContainer(
+                              maxWidth: 600,
+                              children: laboratoryContent(
+                                laboratory: laboratory,
+                                customSize: customSize,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Exámenes físicos producto por lesión de partes del cuerpo",
           index: 18,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.physicalExamBodyPartInjury == null ||
+                  patientData.physicalExamBodyPartInjury!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.physicalExamBodyPartInjury!
+                      .map(
+                        (physicalExamBodyPartInjury) => CustomContainer(
+                          maxWidth: 600,
+                          children: physicalExamBodyPartInjuryContent(
+                            physicalExamBodyPartInjury:
+                                physicalExamBodyPartInjury,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Procedimientos realizados",
           index: 19,
-          expandedWidget: patientData.healthcareRecord == null
-              ? noDataWidget
-              : const Text("DATOOOOs"),
+          expandedWidget:
+              patientData.procedure == null || patientData.procedure!.isEmpty
+                  ? noDataWidget
+                  : Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: patientData.procedure!
+                          .map(
+                            (procedure) => CustomContainer(
+                              maxWidth: 600,
+                              children: procedureContent(
+                                procedure: procedure,
+                                customSize: customSize,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Procedimientos prehospitalarios realizados",
           index: 20,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.prehospitalProcedure == null ||
+                  patientData.prehospitalProcedure!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.prehospitalProcedure!
+                      .map(
+                        (prehospitalProcedure) => CustomContainer(
+                          maxWidth: 600,
+                          children: prehospitalProcedureContent(
+                            prehospitalProcedure: prehospitalProcedure,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Modo de transporte",
           index: 21,
-          expandedWidget: patientData.healthcareRecord == null
+          expandedWidget: patientData.transportationMode == null ||
+                  patientData.transportationMode!.isEmpty
               ? noDataWidget
-              : const Text("DATOOOOs"),
+              : Wrap(
+                  runSpacing: 10,
+                  spacing: 10,
+                  children: patientData.transportationMode!
+                      .map(
+                        (transportationMode) => CustomContainer(
+                          maxWidth: 600,
+                          children: transportationModeContent(
+                            transportationMode: transportationMode,
+                            customSize: customSize,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
           title: "Signos vitales",
           index: 22,
-          expandedWidget: patientData.healthcareRecord == null
-              ? noDataWidget
-              : const Text("DATOOOOs"),
+          expandedWidget:
+              patientData.vitalSign == null || patientData.vitalSign!.isEmpty
+                  ? noDataWidget
+                  : Wrap(
+                      runSpacing: 10,
+                      spacing: 10,
+                      children: patientData.vitalSign!
+                          .map(
+                            (vitalSign) => CustomContainer(
+                              maxWidth: 600,
+                              children: vitalSignContent(
+                                vitalSign: vitalSign,
+                                customSize: customSize,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
         ),
       ],
     );
@@ -400,7 +718,6 @@ class _ContentDataPatient extends StatelessWidget {
         title: "Dirección línea 1",
         hintText: "",
         text: patientData.direccionLinea1 ?? "No registra",
-        // text: patientData.direccionLinea1 ?? "No registra",
         lines: 2,
         width: 220,
       ),
@@ -678,16 +995,13 @@ class _ContentDataPatient extends StatelessWidget {
         width: 220,
         height: 124,
       ),
-      SizedBox(
-        width: double.infinity,
-        child: CustomInputWithLabel(
-          size: customSize,
-          title: "Motivo de consulta",
-          hintText: "",
-          text: healthcareRecord.motivoDeConsulta ?? "No registra",
-          lines: 10,
-          width: 460,
-        ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Motivo de consulta",
+        hintText: "",
+        text: healthcareRecord.motivoDeConsulta ?? "No registra",
+        lines: 10,
+        // width: 460,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -704,7 +1018,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.descripcionDelExamenFisico ?? "No registra",
         lines: 15,
-        width: double.infinity,
+        // width: double.infinity,
         // height: 124,
       ),
       CustomInputWithLabel(
@@ -731,7 +1045,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.descripcionDelDiagnostico ?? "No registra",
         lines: 5,
-        width: double.infinity,
+        // width: double.infinity,
         // height: 124,
       ),
       CustomInputWithLabel(
@@ -868,7 +1182,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.detallesDeHospitalizacion ?? "No registra",
         lines: 5,
-        width: double.infinity,
+        // width: double.infinity,
         // height: 124,
       ),
       CustomInputWithLabel(
@@ -1059,7 +1373,7 @@ class _ContentDataPatient extends StatelessWidget {
         title: "Procedimiento realizado",
         hintText: "",
         text: healthcareRecord.procedimientoRealizado ?? "No registra",
-        lines: 1,
+        lines: 2,
         width: 220,
         height: 124,
       ),
@@ -1206,7 +1520,8 @@ class _ContentDataPatient extends StatelessWidget {
         size: customSize,
         title: "Duración de pérdida de conciencia",
         hintText: "",
-        text: (healthcareRecord.duracionDePerdidaDeConciencia ?? "No registra").toString(),
+        text: (healthcareRecord.duracionDePerdidaDeConciencia ?? "No registra")
+            .toString(),
         lines: 1,
         width: 220,
         height: 124,
@@ -1280,7 +1595,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.hallazgosClinicosTexto ?? "No registra",
         lines: 5,
-        width: double.infinity,
+        // width: double.infinity,
         // height: 124,
       ),
       CustomInputWithLabel(
@@ -1421,7 +1736,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.razonDeLaReferencia ?? "No registra",
         lines: 5,
-        width: double.infinity,
+        // width: double.infinity,
         // height: 124,
       ),
       CustomInputWithLabel(
@@ -1494,6 +1809,15 @@ class _ContentDataPatient extends StatelessWidget {
       ),
       CustomInputWithLabel(
         size: customSize,
+        title: "Tórax",
+        hintText: "",
+        text: "${healthcareRecord.torax ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
         title: "Externo",
         hintText: "",
         text: "${healthcareRecord.externo ?? "No registra"}",
@@ -1545,6 +1869,909 @@ class _ContentDataPatient extends StatelessWidget {
         lines: 1,
         width: 220,
         height: 124,
+      ),
+    ];
+  }
+
+  List<Widget> injuryRecordContent({
+    required InjuryRecord injuryRecord,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Consumo de alcohol",
+        hintText: "",
+        text: injuryRecord.consumoDeAlcohol ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Valor de alcoholemia",
+        hintText: "",
+        text: "${injuryRecord.valorDeAlcoholemia ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Unidad de alcohol",
+        hintText: "",
+        text: injuryRecord.unidadDeAlcohol ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Otra sustancia de abuso",
+        hintText: "",
+        text: injuryRecord.otraSustanciaDeAbuso ?? "No registra",
+        lines: 2,
+        width: 460,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Dirección / nombre del lugar",
+        hintText: "",
+        text: injuryRecord.direccionNombreDelLugar ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Ciudad del evento de la lesión",
+        hintText: "",
+        text: injuryRecord.ciudadDeEventoDeLaLesion ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Condado de lesiones",
+        hintText: "",
+        text: injuryRecord.condadoDeLesiones ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Estado / provincia de lesiones",
+        hintText: "",
+        text: injuryRecord.estadoProvinciaDeLesiones ?? "No registra",
+        lines: 1,
+        width: 440,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "País de lesiones",
+        hintText: "",
+        text: injuryRecord.paisDeLesiones ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Código postal de lesiones",
+        hintText: "",
+        text: injuryRecord.codigoPostalDeLesiones ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora del evento",
+        hintText: "",
+        text: injuryRecord.fechaYHoraDelEvento != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(injuryRecord.fechaYHoraDelEvento!)
+            : "No registra",
+        // rightIcon: Icons.calendar_month_outlined,
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Accidente de tráfico",
+        hintText: "",
+        text: injuryRecord.accidenteDeTrafico != null
+            ? injuryRecord.accidenteDeTrafico!
+                ? 'Sí'
+                : 'No'
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de vehículo",
+        hintText: "",
+        text: injuryRecord.tipoDeVehiculo ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Ocupante",
+        hintText: "",
+        text: injuryRecord.ocupante ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Velocidad de colisión",
+        hintText: "",
+        text: injuryRecord.velocidadDeColision ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "SCQ (%)",
+        hintText: "",
+        text: "${injuryRecord.scq ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Caída",
+        hintText: "",
+        text: injuryRecord.caida != null
+            ? injuryRecord.caida!
+                ? 'Sí'
+                : 'No'
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Altura (metros)",
+        hintText: "",
+        text: "${injuryRecord.alturaMetros ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de superficie",
+        hintText: "",
+        text: injuryRecord.tipoDeSuperficie ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+    ];
+  }
+
+  List<Widget> collisionContent({
+    required Collision collision,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de colisión",
+        hintText: "",
+        text: collision.tipoDeColision ?? "No registra",
+        lines: 2,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> drugAbuseContent({
+    required DrugAbuse drugAbuse,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de droga",
+        hintText: "",
+        text: drugAbuse.tipoDeDroga ?? "No registra",
+        lines: 2,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> vitalSignGcsQualifierContent({
+    required VitalSignGcsQualifier vitalSignGcsQualifier,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Calificador GCS",
+        hintText: "",
+        text: vitalSignGcsQualifier.calificadorGcs ?? "No registra",
+        lines: 2,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> hospitalizationVariableContent({
+    required HospitalizationVariable hospitalizationVariable,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de variable",
+        hintText: "",
+        text: hospitalizationVariable.tipoDeVariable ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 94,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Valor de la variable",
+        hintText: "",
+        text: hospitalizationVariable.valorDeLaVariable ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 94,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora de la variable",
+        hintText: "",
+        text: hospitalizationVariable.fechaYHoraDeLaVariable != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(hospitalizationVariable.fechaYHoraDeLaVariable!)
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 153,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Localización de la variable",
+        hintText: "",
+        text: hospitalizationVariable.localizacionDeVariable ?? "No registra",
+        lines: 3,
+        width: 220,
+        height: 153,
+      ),
+    ];
+  }
+
+  List<Widget> hospitalizationComplicationContent({
+    required HospitalizationComplication hospitalizationComplication,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de complicación",
+        hintText: "",
+        text: hospitalizationComplication.tipoDeComplicacion ?? "No registra",
+        lines: 2,
+        width: 460,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora de la complicación",
+        hintText: "",
+        text: hospitalizationComplication.fechaYHoraDeComplicacion != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(hospitalizationComplication.fechaYHoraDeComplicacion!)
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Lugar de la complicación",
+        hintText: "",
+        text: hospitalizationComplication.lugarDeComplicacion ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 124,
+      ),
+    ];
+  }
+
+  List<Widget> traumaRegisterIcd10Content({
+    required TraumaRegisterIcd10 traumaRegisterIcd10,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Descripción",
+        hintText: "",
+        text: traumaRegisterIcd10.descripcion ?? "No registra",
+        lines: 4,
+        width: 460,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Mecanismo ICD",
+        hintText: "",
+        text: traumaRegisterIcd10.mecanismoIcd ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> intensiveCareUnitContent({
+    required IntensiveCareUnit intensiveCareUnit,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo",
+        hintText: "",
+        text: intensiveCareUnit.tipo ?? "No registra",
+        lines: 2,
+        width: 460,
+        height: 94,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora de inicio",
+        hintText: "",
+        text: intensiveCareUnit.fechaYHoraDeInicio != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(intensiveCareUnit.fechaYHoraDeInicio!)
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora de terminación",
+        hintText: "",
+        text: intensiveCareUnit.fechaYHoraDeTermino != null
+            ? DateFormat('dd/MM/yyyy')
+                .format(intensiveCareUnit.fechaYHoraDeTermino!)
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Lugar",
+        hintText: "",
+        text: intensiveCareUnit.lugar ?? "No registra",
+        lines: 3,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Días de UCI",
+        hintText: "",
+        text: "${intensiveCareUnit.icuDays ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+    ];
+  }
+
+  List<Widget> imagingContent({
+    required Imaging imaging,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de imagen",
+        hintText: "",
+        text: imaging.tipoDeImagen ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 94,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Parte del cuerpo",
+        hintText: "",
+        text: imaging.parteDelCuerpo ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 94,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Opción",
+        hintText: "",
+        text: imaging.opcion != null
+            ? imaging.opcion!
+                ? 'Sí'
+                : 'No'
+            : "No registra",
+        lines: 1,
+        width: 220,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Descripción",
+        hintText: "",
+        text: imaging.descripcion ?? "No registra",
+        lines: 9,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> apparentIntentInjuryContent({
+    required ApparentIntentInjury apparentIntentInjury,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Intesión aparente",
+        hintText: "",
+        text: apparentIntentInjury.intencionAparente ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> burnInjuryContent({
+    required BurnInjury burnInjury,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de quemadura",
+        hintText: "",
+        text: burnInjury.tipoDeQuemadura ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Grado de quemadura",
+        hintText: "",
+        text: burnInjury.gradoDeQuemadura ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> firearmInjuryContent({
+    required FirearmInjury firearmInjury,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de arma de fuego",
+        hintText: "",
+        text: firearmInjury.tipoDeArmaDeFuego ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> penetratingInjuryContent({
+    required PenetratingInjury penetratingInjury,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de lesión penetrante",
+        hintText: "",
+        text: penetratingInjury.tipoDeLesionPenetrante ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> poisoningInjuryContent({
+    required PoisoningInjury poisoningInjury,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de envenenamiento",
+        hintText: "",
+        text: poisoningInjury.tipoDeEnvenenamiento ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> violenceInjuryContent({
+    required ViolenceInjury violenceInjury,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de violencia",
+        hintText: "",
+        text: violenceInjury.tipoDeViolencia ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> deviceContent({
+    required Device device,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de dispositivo",
+        hintText: "",
+        text: device.tipoDeDispositivo ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> laboratoryContent({
+    required Laboratory laboratory,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Resultado de laboratorio",
+        hintText: "",
+        text: laboratory.resultadoDeLaboratorio ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora de laboratorio",
+        hintText: "",
+        text: laboratory.fechaYHoraDeLaboratorio != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(laboratory.fechaYHoraDeLaboratorio!)
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Nombre de la prueba de laboratorio",
+        hintText: "",
+        text: laboratory.nombreDelLaboratorio ?? "No registra",
+        lines: 3,
+        width: 220,
+        height: 154,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Nombre de la unidad de laboratorio",
+        hintText: "",
+        text: laboratory.nombreDeLaUnidadDeLaboratorio ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 154,
+      ),
+    ];
+  }
+
+  List<Widget> physicalExamBodyPartInjuryContent({
+    required PhysicalExamBodyPartInjury physicalExamBodyPartInjury,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Parte del cuerpo",
+        hintText: "",
+        text: physicalExamBodyPartInjury.parteDelCuerpo ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Tipo de lesión",
+        hintText: "",
+        text: physicalExamBodyPartInjury.tipoDeLesion ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> procedureContent({
+    required Procedure procedure,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Procedimiento realizado",
+        hintText: "",
+        text: procedure.procedimientoRealizado ?? "No registra",
+        lines: 4,
+        width: 220,
+        height: 184,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Lugar",
+        hintText: "",
+        text: procedure.lugar ?? "No registra",
+        lines: 4,
+        width: 220,
+        height: 184,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora de inicio",
+        hintText: "",
+        text: procedure.fechaYHoraDeInicio != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(procedure.fechaYHoraDeInicio!)
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora de terminación",
+        hintText: "",
+        text: procedure.fechaYHoraDeTermino != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(procedure.fechaYHoraDeTermino!)
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+    ];
+  }
+
+  List<Widget> prehospitalProcedureContent({
+    required PrehospitalProcedure prehospitalProcedure,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Procedimiento realizado",
+        hintText: "",
+        text: prehospitalProcedure.procedimientoRealizado ?? "No registra",
+        lines: 2,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> transportationModeContent({
+    required TransportationMode transportationMode,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Modo de transporte",
+        hintText: "",
+        text: transportationMode.modoDeTransporte ?? "No registra",
+        lines: 1,
+        width: 460,
+      ),
+    ];
+  }
+
+  List<Widget> vitalSignContent({
+    required VitalSign vitalSign,
+    required CustomSize customSize,
+  }) {
+    return [
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Fecha y hora de la variable",
+        hintText: "",
+        text: vitalSign.fechaYHoraDeSignosVitales != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(vitalSign.fechaYHoraDeSignosVitales!)
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Signos de vida",
+        hintText: "",
+        text: vitalSign.signosDeVida != null
+            ? vitalSign.signosDeVida!
+                ? 'Sí'
+                : 'No'
+            : "No registra",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Frecuencia cardiaca",
+        hintText: "",
+        text: "${vitalSign.frecuenciaCardiaca ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Presión arterial sistólica",
+        hintText: "",
+        text: "${vitalSign.presionArterialSistolica ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Presión arterial diastólica",
+        hintText: "",
+        text: "${vitalSign.presionArterialDiastolica ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Frecuencia respiratoria",
+        hintText: "",
+        text: "${vitalSign.frecuenciaRespiratoria ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Calificador de frecuencia respiratoria",
+        hintText: "",
+        text: vitalSign.calificadorDeFrecuenciaRespiratoria ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Temperatura (celsius)",
+        hintText: "",
+        text: "${vitalSign.temperaturaCelsius ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 124,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Peso (kilogramos)",
+        hintText: "",
+        text: "${vitalSign.pesoKg ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Altura (metros)",
+        hintText: "",
+        text: "${vitalSign.alturaMetros ?? "No registra"}",
+        lines: 1,
+        width: 100,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Saturación de oxígeno",
+        hintText: "",
+        text: "${vitalSign.saturacionDeOxigeno ?? "No registra"}",
+        lines: 1,
+        width: 100,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Pérdida de conciencia",
+        hintText: "",
+        text: vitalSign.perdidaDeConciencia ?? "No registra",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "Duración de pérdida de conciencia",
+        hintText: "",
+        text: (vitalSign.duracionDePerdidaDeConciencia ?? "No registra")
+            .toString(),
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "GCS motora",
+        hintText: "",
+        text: "${vitalSign.gcsMotora ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "GCS ocular",
+        hintText: "",
+        text: "${vitalSign.gcsOcular ?? "No registra"}",
+        lines: 1,
+        width: 100,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "GCS verbal",
+        hintText: "",
+        text: "${vitalSign.gcsVerbal ?? "No registra"}",
+        lines: 1,
+        width: 100,
+        height: 108,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "GCS total",
+        hintText: "",
+        text: "${vitalSign.gcsTotal ?? "No registra"}",
+        lines: 1,
+        width: 220,
+        height: 94,
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        title: "AVUP",
+        hintText: "",
+        text: vitalSign.avup ?? "No registra",
+        lines: 2,
+        width: 220,
+        height: 94,
       ),
     ];
   }

@@ -3,16 +3,18 @@ import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 
 class CustomContainer extends StatelessWidget {
   final List<Widget> children;
+  final double? maxWidth;
   const CustomContainer({
     super.key,
     required this.children,
+    this.maxWidth,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
-      constraints: const BoxConstraints(),
+      constraints: BoxConstraints(maxWidth: maxWidth ?? double.infinity),
       decoration: BoxDecoration(
         color: AppColors.base50,
         border: Border.all(
