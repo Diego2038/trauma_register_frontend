@@ -25,6 +25,14 @@ class _PatientManagementViewState extends State<PatientManagementView> {
   PatientData? patientData;
   bool isMounted = false;
   bool allowEditFields = false;
+  bool freeSize = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final size = MediaQuery.of(context).size;
+    freeSize = size.width < 585;
+  }
 
   TextEditingController controller = TextEditingController();
 
@@ -93,6 +101,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                   _ContentDataPatient(
                     patientData: patientData!,
                     allowEditFields: allowEditFields,
+                    freeSize: freeSize,
                     customSize: CustomSize.h5,
                   ),
               ],
@@ -177,11 +186,13 @@ class _ContentDataPatient extends StatelessWidget {
   final PatientData patientData;
   final CustomSize customSize;
   final bool allowEditFields;
+  final bool freeSize;
 
   const _ContentDataPatient({
     required this.patientData,
     required this.customSize, 
     required this.allowEditFields,
+    required this.freeSize,
   });
 
   @override
@@ -236,21 +247,24 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget:
               patientData.collision == null || patientData.collision!.isEmpty
                   ? noDataWidget
-                  : Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: patientData.collision!
-                          .map(
-                            (collision) => CustomContainer(
-                              children: collisionContent(
-                                collision: collision,
-                                customSize: customSize,
-                                allowEditFields: allowEditFields,
+                  : SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: patientData.collision!
+                            .map(
+                              (collision) => CustomContainer(
+                                children: collisionContent(
+                                  collision: collision,
+                                  customSize: customSize,
+                                  allowEditFields: allowEditFields,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                  ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -259,21 +273,24 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget:
               patientData.drugAbuse == null || patientData.drugAbuse!.isEmpty
                   ? noDataWidget
-                  : Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: patientData.drugAbuse!
-                          .map(
-                            (drugAbuse) => CustomContainer(
-                              children: drugAbuseContent(
-                                drugAbuse: drugAbuse,
-                                customSize: customSize,
-                                allowEditFields: allowEditFields,
+                  : SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: patientData.drugAbuse!
+                            .map(
+                              (drugAbuse) => CustomContainer(
+                                children: drugAbuseContent(
+                                  drugAbuse: drugAbuse,
+                                  customSize: customSize,
+                                  allowEditFields: allowEditFields,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                  ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -282,22 +299,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.vitalSignGcsQualifier == null ||
                   patientData.vitalSignGcsQualifier!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.vitalSignGcsQualifier!
-                      .map(
-                        (vitalSignGcsQualifier) => CustomContainer(
-                          maxWidth: 600,
-                          children: vitalSignGcsQualifierContent(
-                            vitalSignGcsQualifier: vitalSignGcsQualifier,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.vitalSignGcsQualifier!
+                        .map(
+                          (vitalSignGcsQualifier) => CustomContainer(
+                            maxWidth: 600,
+                            children: vitalSignGcsQualifierContent(
+                              vitalSignGcsQualifier: vitalSignGcsQualifier,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -306,22 +326,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.hospitalizationVariable == null ||
                   patientData.hospitalizationVariable!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.hospitalizationVariable!
-                      .map(
-                        (hospitalizationVariable) => CustomContainer(
-                          maxWidth: 600,
-                          children: hospitalizationVariableContent(
-                            hospitalizationVariable: hospitalizationVariable,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.hospitalizationVariable!
+                        .map(
+                          (hospitalizationVariable) => CustomContainer(
+                            maxWidth: 600,
+                            children: hospitalizationVariableContent(
+                              hospitalizationVariable: hospitalizationVariable,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -330,23 +353,26 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.hospitalizationComplication == null ||
                   patientData.hospitalizationComplication!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.hospitalizationComplication!
-                      .map(
-                        (hospitalizationComplication) => CustomContainer(
-                          maxWidth: 600,
-                          children: hospitalizationComplicationContent(
-                            hospitalizationComplication:
-                                hospitalizationComplication,
-                                allowEditFields: allowEditFields,
-                            customSize: customSize,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.hospitalizationComplication!
+                        .map(
+                          (hospitalizationComplication) => CustomContainer(
+                            maxWidth: 600,
+                            children: hospitalizationComplicationContent(
+                              hospitalizationComplication:
+                                  hospitalizationComplication,
+                                  allowEditFields: allowEditFields,
+                              customSize: customSize,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -355,22 +381,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.traumaRegisterIcd10 == null ||
                   patientData.traumaRegisterIcd10!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.traumaRegisterIcd10!
-                      .map(
-                        (traumaRegisterIcd10) => CustomContainer(
-                          maxWidth: 600,
-                          children: traumaRegisterIcd10Content(
-                            traumaRegisterIcd10: traumaRegisterIcd10,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.traumaRegisterIcd10!
+                        .map(
+                          (traumaRegisterIcd10) => CustomContainer(
+                            maxWidth: 600,
+                            children: traumaRegisterIcd10Content(
+                              traumaRegisterIcd10: traumaRegisterIcd10,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -379,22 +408,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.intensiveCareUnit == null ||
                   patientData.intensiveCareUnit!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.intensiveCareUnit!
-                      .map(
-                        (intensiveCareUnit) => CustomContainer(
-                          maxWidth: 600,
-                          children: intensiveCareUnitContent(
-                            intensiveCareUnit: intensiveCareUnit,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.intensiveCareUnit!
+                        .map(
+                          (intensiveCareUnit) => CustomContainer(
+                            maxWidth: 600,
+                            children: intensiveCareUnitContent(
+                              intensiveCareUnit: intensiveCareUnit,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -403,22 +435,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget:
               patientData.imaging == null || patientData.imaging!.isEmpty
                   ? noDataWidget
-                  : Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: patientData.imaging!
-                          .map(
-                            (imaging) => CustomContainer(
-                              maxWidth: 600,
-                              children: imagingContent(
-                                imaging: imaging,
-                                customSize: customSize,
-                                allowEditFields: allowEditFields,
+                  : SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: patientData.imaging!
+                            .map(
+                              (imaging) => CustomContainer(
+                                maxWidth: 600,
+                                children: imagingContent(
+                                  imaging: imaging,
+                                  customSize: customSize,
+                                  allowEditFields: allowEditFields,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                  ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -427,22 +462,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.apparentIntentInjury == null ||
                   patientData.apparentIntentInjury!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.apparentIntentInjury!
-                      .map(
-                        (apparentIntentInjury) => CustomContainer(
-                          maxWidth: 600,
-                          children: apparentIntentInjuryContent(
-                            apparentIntentInjury: apparentIntentInjury,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.apparentIntentInjury!
+                        .map(
+                          (apparentIntentInjury) => CustomContainer(
+                            maxWidth: 600,
+                            children: apparentIntentInjuryContent(
+                              apparentIntentInjury: apparentIntentInjury,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -451,22 +489,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget:
               patientData.burnInjury == null || patientData.burnInjury!.isEmpty
                   ? noDataWidget
-                  : Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: patientData.burnInjury!
-                          .map(
-                            (burnInjury) => CustomContainer(
-                              maxWidth: 600,
-                              children: burnInjuryContent(
-                                burnInjury: burnInjury,
-                                customSize: customSize,
-                                allowEditFields: allowEditFields,
+                  : SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: patientData.burnInjury!
+                            .map(
+                              (burnInjury) => CustomContainer(
+                                maxWidth: 600,
+                                children: burnInjuryContent(
+                                  burnInjury: burnInjury,
+                                  customSize: customSize,
+                                  allowEditFields: allowEditFields,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                  ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -475,22 +516,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.firearmInjury == null ||
                   patientData.firearmInjury!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.firearmInjury!
-                      .map(
-                        (firearmInjury) => CustomContainer(
-                          maxWidth: 600,
-                          children: firearmInjuryContent(
-                            firearmInjury: firearmInjury,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.firearmInjury!
+                        .map(
+                          (firearmInjury) => CustomContainer(
+                            maxWidth: 600,
+                            children: firearmInjuryContent(
+                              firearmInjury: firearmInjury,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -499,22 +543,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.penetratingInjury == null ||
                   patientData.penetratingInjury!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.penetratingInjury!
-                      .map(
-                        (penetratingInjury) => CustomContainer(
-                          maxWidth: 600,
-                          children: penetratingInjuryContent(
-                            penetratingInjury: penetratingInjury,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.penetratingInjury!
+                        .map(
+                          (penetratingInjury) => CustomContainer(
+                            maxWidth: 600,
+                            children: penetratingInjuryContent(
+                              penetratingInjury: penetratingInjury,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -523,22 +570,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.poisoningInjury == null ||
                   patientData.poisoningInjury!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.poisoningInjury!
-                      .map(
-                        (poisoningInjury) => CustomContainer(
-                          maxWidth: 600,
-                          children: poisoningInjuryContent(
-                            poisoningInjury: poisoningInjury,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.poisoningInjury!
+                        .map(
+                          (poisoningInjury) => CustomContainer(
+                            maxWidth: 600,
+                            children: poisoningInjuryContent(
+                              poisoningInjury: poisoningInjury,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -547,22 +597,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.violenceInjury == null ||
                   patientData.violenceInjury!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.violenceInjury!
-                      .map(
-                        (violenceInjury) => CustomContainer(
-                          maxWidth: 600,
-                          children: violenceInjuryContent(
-                            violenceInjury: violenceInjury,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.violenceInjury!
+                        .map(
+                          (violenceInjury) => CustomContainer(
+                            maxWidth: 600,
+                            children: violenceInjuryContent(
+                              violenceInjury: violenceInjury,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -571,22 +624,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget:
               patientData.device == null || patientData.device!.isEmpty
                   ? noDataWidget
-                  : Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: patientData.device!
-                          .map(
-                            (device) => CustomContainer(
-                              maxWidth: 600,
-                              children: deviceContent(
-                                device: device,
-                                customSize: customSize,
-                                allowEditFields: allowEditFields,
+                  : SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: patientData.device!
+                            .map(
+                              (device) => CustomContainer(
+                                maxWidth: 600,
+                                children: deviceContent(
+                                  device: device,
+                                  customSize: customSize,
+                                  allowEditFields: allowEditFields,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                  ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -595,22 +651,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget:
               patientData.laboratory == null || patientData.laboratory!.isEmpty
                   ? noDataWidget
-                  : Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: patientData.laboratory!
-                          .map(
-                            (laboratory) => CustomContainer(
-                              maxWidth: 600,
-                              children: laboratoryContent(
-                                laboratory: laboratory,
-                                customSize: customSize,
-                                allowEditFields: allowEditFields,
+                  : SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: patientData.laboratory!
+                            .map(
+                              (laboratory) => CustomContainer(
+                                maxWidth: 600,
+                                children: laboratoryContent(
+                                  laboratory: laboratory,
+                                  customSize: customSize,
+                                  allowEditFields: allowEditFields,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                  ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -619,23 +678,26 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.physicalExamBodyPartInjury == null ||
                   patientData.physicalExamBodyPartInjury!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.physicalExamBodyPartInjury!
-                      .map(
-                        (physicalExamBodyPartInjury) => CustomContainer(
-                          maxWidth: 600,
-                          children: physicalExamBodyPartInjuryContent(
-                            physicalExamBodyPartInjury:
-                                physicalExamBodyPartInjury,
-                                allowEditFields: allowEditFields,
-                            customSize: customSize,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.physicalExamBodyPartInjury!
+                        .map(
+                          (physicalExamBodyPartInjury) => CustomContainer(
+                            maxWidth: 600,
+                            children: physicalExamBodyPartInjuryContent(
+                              physicalExamBodyPartInjury:
+                                  physicalExamBodyPartInjury,
+                                  allowEditFields: allowEditFields,
+                              customSize: customSize,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -644,22 +706,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget:
               patientData.procedure == null || patientData.procedure!.isEmpty
                   ? noDataWidget
-                  : Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: patientData.procedure!
-                          .map(
-                            (procedure) => CustomContainer(
-                              maxWidth: 600,
-                              children: procedureContent(
-                                procedure: procedure,
-                                customSize: customSize,
-                                allowEditFields: allowEditFields,
+                  : SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: patientData.procedure!
+                            .map(
+                              (procedure) => CustomContainer(
+                                maxWidth: 600,
+                                children: procedureContent(
+                                  procedure: procedure,
+                                  customSize: customSize,
+                                  allowEditFields: allowEditFields,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                  ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -668,22 +733,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.prehospitalProcedure == null ||
                   patientData.prehospitalProcedure!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.prehospitalProcedure!
-                      .map(
-                        (prehospitalProcedure) => CustomContainer(
-                          maxWidth: 600,
-                          children: prehospitalProcedureContent(
-                            prehospitalProcedure: prehospitalProcedure,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.prehospitalProcedure!
+                        .map(
+                          (prehospitalProcedure) => CustomContainer(
+                            maxWidth: 600,
+                            children: prehospitalProcedureContent(
+                              prehospitalProcedure: prehospitalProcedure,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -692,22 +760,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget: patientData.transportationMode == null ||
                   patientData.transportationMode!.isEmpty
               ? noDataWidget
-              : Wrap(
-                  runSpacing: 10,
-                  spacing: 10,
-                  children: patientData.transportationMode!
-                      .map(
-                        (transportationMode) => CustomContainer(
-                          maxWidth: 600,
-                          children: transportationModeContent(
-                            transportationMode: transportationMode,
-                            customSize: customSize,
-                            allowEditFields: allowEditFields,
+              : SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: patientData.transportationMode!
+                        .map(
+                          (transportationMode) => CustomContainer(
+                            maxWidth: 600,
+                            children: transportationModeContent(
+                              transportationMode: transportationMode,
+                              customSize: customSize,
+                              allowEditFields: allowEditFields,
+                            ),
                           ),
-                        ),
-                      )
-                      .toList(),
-                ),
+                        )
+                        .toList(),
+                  ),
+              ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -716,22 +787,25 @@ class _ContentDataPatient extends StatelessWidget {
           expandedWidget:
               patientData.vitalSign == null || patientData.vitalSign!.isEmpty
                   ? noDataWidget
-                  : Wrap(
-                      runSpacing: 10,
-                      spacing: 10,
-                      children: patientData.vitalSign!
-                          .map(
-                            (vitalSign) => CustomContainer(
-                              maxWidth: 600,
-                              children: vitalSignContent(
-                                vitalSign: vitalSign,
-                                customSize: customSize,
-                                allowEditFields: allowEditFields,
+                  : SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                        runSpacing: 10,
+                        spacing: 10,
+                        children: patientData.vitalSign!
+                            .map(
+                              (vitalSign) => CustomContainer(
+                                maxWidth: 600,
+                                children: vitalSignContent(
+                                  vitalSign: vitalSign,
+                                  customSize: customSize,
+                                  allowEditFields: allowEditFields,
+                                ),
                               ),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
+                  ),
         ),
       ],
     );
@@ -750,7 +824,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.direccionLinea1 ?? "No registra",
         lines: 2,
-        width: 220,
+        width: freeSize ? null : 220,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -759,7 +833,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.direccionLinea2 ?? "No registra",
         lines: 2,
-        width: 220,
+        width: freeSize ? null : 220,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -768,7 +842,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.ciudad ?? "No registra",
         lines: 2,
-        width: 220,
+        width: freeSize ? null : 220,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -777,7 +851,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.cantonMunicipio ?? "No registra",
         lines: 2,
-        width: 220,
+        width: freeSize ? null : 220,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -786,7 +860,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.provinciaEstado ?? "No registra",
         lines: 2,
-        width: 220,
+        width: freeSize ? null : 220,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -795,7 +869,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.codigoPostal ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -805,7 +879,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.pais ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -815,7 +889,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${patientData.edad ?? "No registra"}",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -825,7 +899,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.unidadDeEdad ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -835,7 +909,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.genero ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -848,7 +922,7 @@ class _ContentDataPatient extends StatelessWidget {
             : "No registra",
         rightIcon: Icons.calendar_month_outlined,
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -858,7 +932,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.ocupacion ?? "No registra",
         lines: 2,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -867,7 +941,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.estadoCivil ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -877,7 +951,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.nacionalidad ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -887,7 +961,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.grupoEtnico ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -897,7 +971,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.otroGrupoEtnico ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
       CustomInputWithLabel(
@@ -907,7 +981,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: patientData.numDocDeIdentificacion ?? "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
         height: 94,
       ),
     ];
@@ -926,8 +1000,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.numeroDeHistoriaClinica ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -936,8 +1010,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.hospital ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -949,8 +1023,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(healthcareRecord.fechaYHoraDeLlegadaDelPaciente!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -963,8 +1037,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -977,8 +1051,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -990,8 +1064,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(healthcareRecord.fechaYHoraDeLlegadaDelMedico!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1003,8 +1077,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(healthcareRecord.fechaYHoraDeNotificacionAlMedico!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1017,8 +1091,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1027,8 +1101,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.nivelDeAlerta ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1041,8 +1115,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1051,8 +1125,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.tipoDeSeguro ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1061,7 +1135,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.motivoDeConsulta ?? "No registra",
         lines: 10,
-        // width: 460,
+        // width: freeSize ? null : 460,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1070,8 +1144,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.inmunizacionContraElTetanos ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1080,8 +1154,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.descripcionDelExamenFisico ?? "No registra",
         lines: 15,
-        // width: double.infinity,
-        // height: 124,
+        // width: freeSize ? null : double.infinity,
+        // height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1090,8 +1164,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.mecanismoPrimario ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1100,8 +1174,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.numeroDeLesionesSerias ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1110,8 +1184,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.descripcionDelDiagnostico ?? "No registra",
         lines: 5,
-        // width: double.infinity,
-        // height: 124,
+        // width: freeSize ? null : double.infinity,
+        // height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1120,8 +1194,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.disposicionODestinoDelPaciente ?? "No registra",
         lines: 1,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1130,8 +1204,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.donacionDeOrganos ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1140,8 +1214,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.autopsia ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1150,8 +1224,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.muertePrevenible ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1160,8 +1234,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.tipoDeAdmision ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1173,8 +1247,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(healthcareRecord.fechaYHoraDeLaDisposicion!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1184,8 +1258,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.tiempoEnSalaDeEmergenciasHoras ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1195,8 +1269,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.tiempoEnSalaDeEmergenciasMinutos ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1205,8 +1279,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.numeroDeReferenciaDelEd ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1218,8 +1292,8 @@ class _ContentDataPatient extends StatelessWidget {
             : "No registra",
         rightIcon: Icons.calendar_month_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1231,8 +1305,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(healthcareRecord.fechaYHoraDeAlta!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1241,8 +1315,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.diasDeHospitalizacion ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1251,8 +1325,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.uciDias ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1261,8 +1335,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.detallesDeHospitalizacion ?? "No registra",
         lines: 5,
-        // width: double.infinity,
-        // height: 124,
+        // width: freeSize ? null : double.infinity,
+        // height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1273,8 +1347,8 @@ class _ContentDataPatient extends StatelessWidget {
             healthcareRecord.disposicionODestinoDelPacienteDelHospitalizacion ??
                 "No registra",
         lines: 1,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1284,8 +1358,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: healthcareRecord.donacionDeOrganosDelHospitalizacion ??
             "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1294,8 +1368,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.autopsiaDelHospitalizacion ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1305,8 +1379,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: healthcareRecord.muertePrevenibleDelHospitalizacion ??
             "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1316,8 +1390,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: healthcareRecord.numeroDeReferenciaDelHospitalizacion ??
             "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1326,8 +1400,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.agenciaDeTransporte ?? "No registra",
         lines: 2,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1336,8 +1410,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.origenDelTransporte ?? "No registra",
         lines: 2,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1346,8 +1420,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.numeroDeRegistroDelTransporte ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1359,8 +1433,8 @@ class _ContentDataPatient extends StatelessWidget {
                 healthcareRecord.fechaYHoraDeNotificacionPreHospitalaria!)
             : "No registra",
         lines: 1,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1372,8 +1446,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(healthcareRecord.fechaYHoraDeLlegadaALaEscena!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1385,8 +1459,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(healthcareRecord.fechaYHoraDeSalidaDeLaEscena!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1395,8 +1469,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.razonDeLaDemora ?? "No registra",
         lines: 2,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1410,8 +1484,8 @@ class _ContentDataPatient extends StatelessWidget {
                     : 'No'
                 : "No registra",
         lines: 1,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1421,8 +1495,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: healthcareRecord.ciudadHospitalMasCercanoAlSitioDelIncidente ??
             "No registra",
         lines: 2,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1431,8 +1505,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.tiempoDeExtricacionHoras ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1441,8 +1515,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.tiempoDeExtricacionMinutos ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1451,8 +1525,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.duracionDelTransporteHoras ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1462,8 +1536,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.duracionDelTransporteMinutos ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1472,8 +1546,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.procedimientoRealizado ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1483,8 +1557,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.frecuenciaCardiacaEnLaEscena ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1494,8 +1568,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.presionArterialSistolicaEnLaEscena ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1505,8 +1579,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.presionArterialDiastolicaEnLaEscena ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1516,8 +1590,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.frecuenciaRespiratoriaEnLaEscena ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1527,8 +1601,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: healthcareRecord.calificadorDeFrecuenciaRespiratoriaEnLaEscena ??
             "No registra",
         lines: 2,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1539,8 +1613,8 @@ class _ContentDataPatient extends StatelessWidget {
             "${healthcareRecord.temperaturaEnLaEscenaCelsius ?? "No registra"}",
         rightIcon: Icons.device_thermostat_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1549,8 +1623,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.saturacionDeO2EnLaEscena ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1560,8 +1634,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.frecuenciaCardiacaDuranteElTransporte ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1571,8 +1645,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.presionArterialSistolicaDeTransporte ?? "No registra"}",
         lines: 1,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1582,8 +1656,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.frecuenciaRespiratoriaDuranteElTransporte ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1594,8 +1668,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .calificadorDeFrecuenciaRespiratoriaDuranteElTransporte ??
             "No registra",
         lines: 2,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1606,8 +1680,8 @@ class _ContentDataPatient extends StatelessWidget {
             "${healthcareRecord.temperaturaDuranteElTransporteCelsius ?? "No registra"}",
         rightIcon: Icons.device_thermostat_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1617,8 +1691,8 @@ class _ContentDataPatient extends StatelessWidget {
         text:
             "${healthcareRecord.saturacionDeO2DuranteElTransporte ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1627,8 +1701,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.perdidaDeConciencia ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1638,8 +1712,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: (healthcareRecord.duracionDePerdidaDeConciencia ?? "No registra")
             .toString(),
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1648,8 +1722,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.gcsOcular ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1658,8 +1732,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.gcsVerbal ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1668,8 +1742,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.gcsMotora ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1678,8 +1752,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.gcsTotal ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1688,8 +1762,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.sangreL ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1698,8 +1772,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.coloidesL ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1708,8 +1782,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.cristaloidesL ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1718,8 +1792,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.hallazgosClinicosTexto ?? "No registra",
         lines: 5,
-        // width: double.infinity,
-        // height: 124,
+        // width: freeSize ? null : double.infinity,
+        // height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1731,8 +1805,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(healthcareRecord.fechaYHoraDeEnvioDeContraReferencia!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1745,8 +1819,8 @@ class _ContentDataPatient extends StatelessWidget {
             : "No registra",
         rightIcon: Icons.calendar_month_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1759,8 +1833,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1769,8 +1843,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.servicioQueAtendio ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1783,8 +1857,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1793,8 +1867,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.hospitalQueRecibe ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1803,8 +1877,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.otroServicio ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1813,8 +1887,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.servicioQueRecibe ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1823,8 +1897,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.recomendaciones ?? "No registra",
         lines: 2,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1834,8 +1908,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: healthcareRecord.numeroDeReferenciaDeReferenciasSalientes ??
             "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1848,8 +1922,8 @@ class _ContentDataPatient extends StatelessWidget {
             : "No registra",
         rightIcon: Icons.calendar_month_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1862,8 +1936,8 @@ class _ContentDataPatient extends StatelessWidget {
             : "No registra",
         rightIcon: Icons.calendar_month_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1872,8 +1946,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.razonDeLaReferencia ?? "No registra",
         lines: 5,
-        // width: double.infinity,
-        // height: 124,
+        // width: freeSize ? null : double.infinity,
+        // height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1882,8 +1956,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.medicoQueRefiere ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1892,8 +1966,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: healthcareRecord.estadoDeReferencia ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1906,8 +1980,8 @@ class _ContentDataPatient extends StatelessWidget {
             : "No registra",
         rightIcon: Icons.calendar_month_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1916,8 +1990,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.iss ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1926,8 +2000,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.kts ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1936,8 +2010,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.rts ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1946,8 +2020,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.abdomen ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1956,8 +2030,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.torax ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1966,8 +2040,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.externo ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1976,8 +2050,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.extremidades ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1986,8 +2060,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.cara ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1996,8 +2070,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.cabeza ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2006,8 +2080,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.trissContuso ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2016,8 +2090,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${healthcareRecord.trissPenetrante ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
     ];
   }
@@ -2035,8 +2109,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.consumoDeAlcohol ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2045,8 +2119,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${injuryRecord.valorDeAlcoholemia ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2055,8 +2129,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.unidadDeAlcohol ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2065,8 +2139,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.otraSustanciaDeAbuso ?? "No registra",
         lines: 2,
-        width: 460,
-        height: 124,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2075,8 +2149,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.direccionNombreDelLugar ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2085,8 +2159,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.ciudadDeEventoDeLaLesion ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2095,8 +2169,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.condadoDeLesiones ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2105,8 +2179,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.estadoProvinciaDeLesiones ?? "No registra",
         lines: 1,
-        width: 440,
-        height: 124,
+        width: freeSize ? null : 440,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2115,8 +2189,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.paisDeLesiones ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2125,8 +2199,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.codigoPostalDeLesiones ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2139,8 +2213,8 @@ class _ContentDataPatient extends StatelessWidget {
             : "No registra",
         // rightIcon: Icons.calendar_month_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2153,8 +2227,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2163,8 +2237,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.tipoDeVehiculo ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2173,8 +2247,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.ocupante ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2183,8 +2257,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.velocidadDeColision ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2193,8 +2267,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${injuryRecord.scq ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2207,8 +2281,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2217,8 +2291,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${injuryRecord.alturaMetros ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2227,8 +2301,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: injuryRecord.tipoDeSuperficie ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
     ];
   }
@@ -2246,7 +2320,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: collision.tipoDeColision ?? "No registra",
         lines: 2,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2264,7 +2338,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: drugAbuse.tipoDeDroga ?? "No registra",
         lines: 2,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2282,7 +2356,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: vitalSignGcsQualifier.calificadorGcs ?? "No registra",
         lines: 2,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2300,8 +2374,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: hospitalizationVariable.tipoDeVariable ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 94,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 94,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2310,8 +2384,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: hospitalizationVariable.valorDeLaVariable ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 94,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 94,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2323,8 +2397,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(hospitalizationVariable.fechaYHoraDeLaVariable!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 153,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 153,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2333,8 +2407,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: hospitalizationVariable.localizacionDeVariable ?? "No registra",
         lines: 3,
-        width: 220,
-        height: 153,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 153,
       ),
     ];
   }
@@ -2352,7 +2426,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: hospitalizationComplication.tipoDeComplicacion ?? "No registra",
         lines: 2,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2364,8 +2438,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(hospitalizationComplication.fechaYHoraDeComplicacion!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2374,8 +2448,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: hospitalizationComplication.lugarDeComplicacion ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
     ];
   }
@@ -2393,7 +2467,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: traumaRegisterIcd10.descripcion ?? "No registra",
         lines: 4,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2402,7 +2476,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: traumaRegisterIcd10.mecanismoIcd ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2420,8 +2494,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: intensiveCareUnit.tipo ?? "No registra",
         lines: 2,
-        width: 460,
-        height: 94,
+        width: freeSize ? null : 460,
+        height: freeSize ? null : 94,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2433,8 +2507,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(intensiveCareUnit.fechaYHoraDeInicio!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2446,8 +2520,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(intensiveCareUnit.fechaYHoraDeTermino!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2456,8 +2530,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: intensiveCareUnit.lugar ?? "No registra",
         lines: 3,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2466,8 +2540,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${intensiveCareUnit.icuDays ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
     ];
   }
@@ -2485,8 +2559,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: imaging.tipoDeImagen ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 94,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 94,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2495,8 +2569,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: imaging.parteDelCuerpo ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 94,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 94,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2509,7 +2583,7 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
+        width: freeSize ? null : 220,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2518,7 +2592,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: imaging.descripcion ?? "No registra",
         lines: 9,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2536,7 +2610,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: apparentIntentInjury.intencionAparente ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2554,7 +2628,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: burnInjury.tipoDeQuemadura ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2563,7 +2637,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: burnInjury.gradoDeQuemadura ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2581,7 +2655,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: firearmInjury.tipoDeArmaDeFuego ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2599,7 +2673,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: penetratingInjury.tipoDeLesionPenetrante ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2617,7 +2691,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: poisoningInjury.tipoDeEnvenenamiento ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2635,7 +2709,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: violenceInjury.tipoDeViolencia ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2653,7 +2727,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: device.tipoDeDispositivo ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2671,8 +2745,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: laboratory.resultadoDeLaboratorio ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2684,8 +2758,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(laboratory.fechaYHoraDeLaboratorio!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2694,8 +2768,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: laboratory.nombreDelLaboratorio ?? "No registra",
         lines: 3,
-        width: 220,
-        height: 154,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 154,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2704,8 +2778,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: laboratory.nombreDeLaUnidadDeLaboratorio ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 154,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 154,
       ),
     ];
   }
@@ -2723,7 +2797,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: physicalExamBodyPartInjury.parteDelCuerpo ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2732,7 +2806,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: physicalExamBodyPartInjury.tipoDeLesion ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2750,8 +2824,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: procedure.procedimientoRealizado ?? "No registra",
         lines: 4,
-        width: 220,
-        height: 184,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 184,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2760,8 +2834,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: procedure.lugar ?? "No registra",
         lines: 4,
-        width: 220,
-        height: 184,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 184,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2773,8 +2847,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(procedure.fechaYHoraDeInicio!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2786,8 +2860,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(procedure.fechaYHoraDeTermino!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
     ];
   }
@@ -2805,7 +2879,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: prehospitalProcedure.procedimientoRealizado ?? "No registra",
         lines: 2,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2823,7 +2897,7 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: transportationMode.modoDeTransporte ?? "No registra",
         lines: 1,
-        width: 460,
+        width: freeSize ? null : 460,
       ),
     ];
   }
@@ -2844,8 +2918,8 @@ class _ContentDataPatient extends StatelessWidget {
                 .format(vitalSign.fechaYHoraDeSignosVitales!)
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2858,8 +2932,8 @@ class _ContentDataPatient extends StatelessWidget {
                 : 'No'
             : "No registra",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2868,8 +2942,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${vitalSign.frecuenciaCardiaca ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2878,8 +2952,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${vitalSign.presionArterialSistolica ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2888,8 +2962,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${vitalSign.presionArterialDiastolica ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2898,8 +2972,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${vitalSign.frecuenciaRespiratoria ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2908,8 +2982,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: vitalSign.calificadorDeFrecuenciaRespiratoria ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2919,8 +2993,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: "${vitalSign.temperaturaCelsius ?? "No registra"}",
         rightIcon: Icons.device_thermostat_outlined,
         lines: 1,
-        width: 220,
-        height: 124,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2929,11 +3003,11 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${vitalSign.pesoKg ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       SizedBox(
-        width: 220,
+        width: freeSize ? null : 220,
         child: Row(
           children: [
             CustomInputWithLabel(
@@ -2943,8 +3017,8 @@ class _ContentDataPatient extends StatelessWidget {
               hintText: "",
               text: "${vitalSign.alturaMetros ?? "No registra"}",
               lines: 1,
-              width: 100,
-              height: 108,
+              width: freeSize ? null : 100,
+              height: freeSize ? null : 108,
             ),
             const SizedBox(width: 20),
             CustomInputWithLabel(
@@ -2954,8 +3028,8 @@ class _ContentDataPatient extends StatelessWidget {
               hintText: "",
               text: "${vitalSign.saturacionDeOxigeno ?? "No registra"}",
               lines: 1,
-              width: 100,
-              height: 108,
+              width: freeSize ? null : 100,
+              height: freeSize ? null : 108,
             ),
           ],
         ),
@@ -2967,8 +3041,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: vitalSign.perdidaDeConciencia ?? "No registra",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2978,8 +3052,8 @@ class _ContentDataPatient extends StatelessWidget {
         text: (vitalSign.duracionDePerdidaDeConciencia ?? "No registra")
             .toString(),
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2988,11 +3062,11 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${vitalSign.gcsMotora ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 108,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 108,
       ),
       SizedBox(
-        width: 220,
+        width: freeSize ? null : 220,
         child: Row(
           children: [
             CustomInputWithLabel(
@@ -3002,8 +3076,8 @@ class _ContentDataPatient extends StatelessWidget {
               hintText: "",
               text: "${vitalSign.gcsOcular ?? "No registra"}",
               lines: 1,
-              width: 100,
-              height: 108,
+              width: freeSize ? null : 100,
+              height: freeSize ? null : 108,
             ),
             const SizedBox(width: 20),
             CustomInputWithLabel(
@@ -3013,8 +3087,8 @@ class _ContentDataPatient extends StatelessWidget {
               hintText: "",
               text: "${vitalSign.gcsVerbal ?? "No registra"}",
               lines: 1,
-              width: 100,
-              height: 108,
+              width: freeSize ? null : 100,
+              height: freeSize ? null : 108,
             ),
           ],
         ),
@@ -3026,8 +3100,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: "${vitalSign.gcsTotal ?? "No registra"}",
         lines: 1,
-        width: 220,
-        height: 94,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 94,
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -3036,8 +3110,8 @@ class _ContentDataPatient extends StatelessWidget {
         hintText: "",
         text: vitalSign.avup ?? "No registra",
         lines: 2,
-        width: 220,
-        height: 94,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 94,
       ),
     ];
   }
