@@ -40,15 +40,42 @@ class CustomVerticalBarChart extends StatelessWidget {
                       if (index < 0 || index >= data.length) {
                         return const SizedBox.shrink();
                       }
+
+                      // Obtén el nombre del tag
+                      final tag = data[index].tag;
+
+                      // Define un valor máximo para la longitud de los tags
+                      const maxLength = 10;
+                      String displayText = '';
+
+                      if (tag.length > maxLength) {
+                        // Si el tag es más largo que el valor máximo, lo dividimos en varias líneas
+                        final parts = tag.split(' ');
+                        final firstLine =
+                            parts.take(2).join(' '); // Primer línea
+                        final secondLine =
+                            parts.skip(2).take(2).join(' '); // Segunda línea
+                        final thirdLine =
+                            parts.skip(4).join(' '); // Tercer línea
+
+                        // Concatenamos las líneas con saltos de línea
+                        displayText = '$firstLine\n$secondLine\n$thirdLine';
+                      } else {
+                        // Si no es muy largo, mostramos el tag tal cual
+                        displayText = tag;
+                      }
+
                       return SideTitleWidget(
                         axisSide: AxisSide.bottom,
                         child: Text(
-                          data[index].tag,
+                          displayText,
+                          textAlign: TextAlign
+                              .center,
                           style: const TextStyle(fontSize: 10),
                         ),
                       );
                     },
-                    reservedSize: 40,
+                    reservedSize: 50,
                   ),
                 ),
                 leftTitles: AxisTitles(

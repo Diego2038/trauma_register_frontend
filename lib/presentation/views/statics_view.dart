@@ -177,7 +177,7 @@ class StaticsView extends StatelessWidget {
         final categoricalStats = snapshot.data!;
         final List<Datum> genderData = categoricalStats.data;
         return CustomVerticalBarChart(
-          chartWidth: 1200,
+          chartWidth: 650,
           chartHeight: 300,
           data: genderData,
         );
