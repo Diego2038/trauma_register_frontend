@@ -131,38 +131,43 @@ class _PatientManagementViewState extends State<PatientManagementView> {
           padding: const EdgeInsets.all(10),
           child: SizedBox(
             // width: double.infinity,
-            child: Wrap(
-              runAlignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              runSpacing: 20,
-              spacing: 30,
+            child: Column(
               children: [
-                CustomInputWithLabel(
-                  size: CustomSize.h2,
-                  width: 400,
-                  controller: controller,
-                  allowOnlyNumbers: true,
-                  title: "Buscar paciente por ID",
-                  text: "",
-                  hintText: "3155805",
-                  leftIcon: Icons.person_search_outlined,
-                  rightIcon: Icons.search,
-                  onPressedRightIcon: () async {
-                    await searchPatient(controller.text);
-                  },
-                ),
-                SizedBox(
-                  child: CustomCheckbox(
-                    size: CustomSize.h3,
-                    text: "Desplegar todas las secciones",
-                    minWidthToCollapse: 440,
-                    onChanged: (bool value) {
-                      final traumaDataProvider =
-                          Provider.of<TraumaDataProvider>(context,
-                              listen: false);
-                      traumaDataProvider.setAllExpanded(value);
-                    },
-                  ),
+                const SizedBox(width: double.infinity),
+                Wrap(
+                  runAlignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  runSpacing: 20,
+                  spacing: 30,
+                  children: [
+                    CustomInputWithLabel(
+                      size: CustomSize.h2,
+                      width: 400,
+                      controller: controller,
+                      allowOnlyNumbers: true,
+                      title: "Buscar paciente por ID",
+                      text: "",
+                      hintText: "3155805",
+                      leftIcon: Icons.person_search_outlined,
+                      rightIcon: Icons.search,
+                      onPressedRightIcon: () async {
+                        await searchPatient(controller.text);
+                      },
+                    ),
+                    SizedBox(
+                      child: CustomCheckbox(
+                        size: CustomSize.h3,
+                        text: "Desplegar todas las secciones",
+                        minWidthToCollapse: 440,
+                        onChanged: (bool value) {
+                          final traumaDataProvider =
+                              Provider.of<TraumaDataProvider>(context,
+                                  listen: false);
+                          traumaDataProvider.setAllExpanded(value);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
