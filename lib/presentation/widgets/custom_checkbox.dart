@@ -9,6 +9,7 @@ class CustomCheckbox extends StatefulWidget {
   final bool initialValue;
   final Function(bool) onChanged;
   final double minWidthToCollapse;
+  final bool centerCheckBox;
 
   const CustomCheckbox({
     super.key,
@@ -17,6 +18,7 @@ class CustomCheckbox extends StatefulWidget {
     this.initialValue = false,
     required this.onChanged,
     required this.minWidthToCollapse,
+    this.centerCheckBox = false,
   });
 
   @override
@@ -37,10 +39,12 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
     final size = MediaQuery.of(context).size;
     return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: widget.centerCheckBox
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 5),
+          padding: EdgeInsets.only(top: widget.size == CustomSize.h3 ? 5 : 0),
           child: customCheckbox(size: widget.size),
         ),
         spaceWidth(size: widget.size),

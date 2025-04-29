@@ -26,7 +26,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    final isMobile = screenWidth < 768;
+    final isMobile = screenWidth < 800;
 
     return Scaffold(
       body: isMobile ? mobileContent(screenWidth, screenHeight) : webContent(),
@@ -119,7 +119,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   void _determineIsSidebarExpandValue() {
     final size = MediaQuery.of(context).size;
-    final bool isMobileView = size.width < 768;
+    final bool isMobileView = size.width < 800;
     _isSidebarExpanded = !isMobileView;
   }
 }
