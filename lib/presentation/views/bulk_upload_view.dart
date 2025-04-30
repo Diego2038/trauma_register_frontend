@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
@@ -6,16 +9,28 @@ import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_checkbox.dart';
 
-class BulkUploadView extends StatelessWidget {
+class BulkUploadView extends StatefulWidget {
   const BulkUploadView({super.key});
+
+  @override
+  State<BulkUploadView> createState() => _BulkUploadViewState();
+}
+
+class _BulkUploadViewState extends State<BulkUploadView> {
+  FilePickerResult? filePickerResult;
+  Uint8List? excelFileBytes;
+  bool allowUpdateElements = false;
+  bool allowOnlyUpdate = false;
+  bool isLoadedSuccesful = false;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _customLoadSection(),
-          const Text("Bulk upload view"),
+          _customViewResponse(),
         ],
       ),
     );
@@ -56,14 +71,18 @@ class BulkUploadView extends StatelessWidget {
                     size: CustomSize.h5,
                     centerCheckBox: true,
                     text: 'Permitir actualización de datos',
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      allowUpdateElements = value;
+                    },
                     minWidthToCollapse: 400,
                   ),
                   CustomCheckbox(
                     size: CustomSize.h5,
                     centerCheckBox: true,
                     text: 'Permitir únicamente actualización',
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      allowOnlyUpdate = value;
+                    },
                     minWidthToCollapse: 400,
                   ),
                 ],
@@ -71,9 +90,10 @@ class BulkUploadView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-          const CustomButton(
+          CustomButton(
             size: CustomSize.h2,
-            onPressed: null,
+            onPressed: uploadExcelFile,
+            isAvailable: excelFileBytes != null,
             width: 383,
             height: 45,
             text: 'Subir archivo',
@@ -85,38 +105,76 @@ class BulkUploadView extends StatelessWidget {
   }
 
   Widget loadFileWidget() {
-    return DottedBorder(
-      dashPattern: const [10, 5],
-      color: AppColors.base,
-      borderType: BorderType.RRect,
-      strokeWidth: 2,
-      radius: const Radius.circular(20),
-      child: Container(
-        constraints: const BoxConstraints(
-          maxHeight: 200,
-          maxWidth: 500,
-        ),
-        child: const SizedBox(
-          height: 250,
-          width: 500,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.upload_file_outlined,
-                color: AppColors.base,
-                size: 100,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () async {
+          final FilePickerResult? result = await FilePicker.platform.pickFiles(
+            type: FileType.custom,
+            allowedExtensions: ['xlsx'],
+          );
+          if (result != null) {
+            final PlatformFile file = result.files.first;
+            setState(() => excelFileBytes = file.bytes);
+          }
+        },
+        child: DottedBorder(
+          dashPattern: const [10, 5],
+          color: AppColors.base,
+          borderType: BorderType.RRect,
+          strokeWidth: 2,
+          radius: const Radius.circular(20),
+          child: Container(
+            constraints: const BoxConstraints(
+              minHeight: 175,
+              maxWidth: 500,
+            ),
+            child: SizedBox(
+              // height: 200,
+              width: 500,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    excelFileBytes == null ? Icons.upload_file_outlined : Icons.check_circle,
+                    color: AppColors.base,
+                    size: 100,
+                  ),
+                  const SizedBox(height: 10),
+                  H5(
+                    text: excelFileBytes == null ? "Haga clic para seleccionar un archivo" : isLoadedSuccesful ? "El archivo Excel se ha cargado y guardado con éxito.\nHaz clic aquí si desea subir otro archivo." : "Archivo excel cargado",
+                    color: AppColors.base300,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-              SizedBox(height: 10),
-              H4(
-                text: "Haga clic para seleccionar un archivo",
-                color: AppColors.base300,
-                textAlign: TextAlign.center,
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _customViewResponse() {
+    return const Padding(
+      padding: EdgeInsets.only(
+        left: 40,
+        top: 15,
+        right: 40,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          H1(
+            text: "Estado de la carga de datos del archivo Excel",
+            color: AppColors.base,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> uploadExcelFile() async {
+    print("subir");
   }
 }

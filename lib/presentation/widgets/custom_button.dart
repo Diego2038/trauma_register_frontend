@@ -13,6 +13,7 @@ class CustomButton extends StatefulWidget {
   final bool showShadow;
   final bool startWithHover;
   final bool centerButtonContent;
+  final bool isAvailable;
 
   const CustomButton({
     super.key,
@@ -25,6 +26,7 @@ class CustomButton extends StatefulWidget {
     this.showShadow = true,
     this.startWithHover = false,
     this.centerButtonContent = false,
+    this.isAvailable = true,
   });
 
   @override
@@ -36,19 +38,17 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
   bool isLoading = false;
   bool isHover = false;
-  bool isThereFunction = true;
 
   @override
   void initState() {
     super.initState();
     isHover = widget.startWithHover;
-    isThereFunction = widget.onPressed != null;
   }
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      cursor: !isThereFunction
+      cursor: !widget.isAvailable
           ? MouseCursor.defer
           : isLoading
               ? MouseCursor.defer
@@ -57,7 +57,7 @@ class _CustomButtonState extends State<CustomButton> {
       onExit: (_) => setState(() => isHover = widget.startWithHover),
       child: GestureDetector(
         onTap: () async {
-          if (isLoading || !isThereFunction) return;
+          if (isLoading || !widget.isAvailable) return;
           setState(() => isLoading = true);
           await widget.onPressed!();
           setState(() => isLoading = false);
@@ -95,7 +95,7 @@ class _CustomButtonState extends State<CustomButton> {
   }
 
   BoxDecoration decorationButton() {
-    final color = !isThereFunction
+    final color = !widget.isAvailable
         ? AppColors.grey200
         : isHover
             ? AppColors.base
@@ -125,7 +125,7 @@ class _CustomButtonState extends State<CustomButton> {
   }
 
   Widget contentButton() {
-    final color = !isThereFunction
+    final color = !widget.isAvailable
         ? AppColors.grey500
         : isHover
             ? AppColors.white
