@@ -169,9 +169,9 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    excelFileBytes == null
-                        ? Icons.upload_file_outlined
-                        : Icons.check_circle,
+                    excelFileBytes != null || bulkUploadProvider.isLoadedSuccesful
+                        ? Icons.check_circle
+                        : Icons.upload_file_outlined,
                     color: AppColors.base,
                     size: 100,
                   ),
