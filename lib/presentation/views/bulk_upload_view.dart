@@ -1,37 +1,60 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/helpers/local_storage.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
+import 'package:trauma_register_frontend/data/models/upload_file/upload_request.dart';
+import 'package:trauma_register_frontend/data/models/upload_file/upload_response.dart';
+import 'package:trauma_register_frontend/data/models/user/user_model.dart';
+import 'package:trauma_register_frontend/presentation/providers/bulk_upload_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_checkbox.dart';
+import 'package:trauma_register_frontend/presentation/widgets/text_block.dart';
 
-class BulkUploadView extends StatefulWidget {
+class BulkUploadView extends StatelessWidget {
   const BulkUploadView({super.key});
 
   @override
-  State<BulkUploadView> createState() => _BulkUploadViewState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => BulkUploadProvider(),
+      child: const BulkUploadViewContent(),
+    );
+  }
 }
 
-class _BulkUploadViewState extends State<BulkUploadView> {
-  FilePickerResult? filePickerResult;
+class BulkUploadViewContent extends StatefulWidget {
+  const BulkUploadViewContent({super.key});
+
+  @override
+  State<BulkUploadViewContent> createState() => _BulkUploadViewContentState();
+}
+
+class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
+  Future<UploadResponse?>? _uploadFuture;
   Uint8List? excelFileBytes;
-  bool allowUpdateElements = false;
+  bool allowUpdateElements = true;
   bool allowOnlyUpdate = false;
-  bool isLoadedSuccesful = false;
+  bool isInitial = true;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _customLoadSection(),
-          _customViewResponse(),
-        ],
+    return ChangeNotifierProvider(
+      create: (_) => BulkUploadProvider(),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _customLoadSection(),
+            _customViewResponse(),
+          ],
+        ),
       ),
     );
   }
@@ -71,6 +94,7 @@ class _BulkUploadViewState extends State<BulkUploadView> {
                     size: CustomSize.h5,
                     centerCheckBox: true,
                     text: 'Permitir actualización de datos',
+                    initialValue: true,
                     onChanged: (value) {
                       allowUpdateElements = value;
                     },
@@ -92,7 +116,7 @@ class _BulkUploadViewState extends State<BulkUploadView> {
           const SizedBox(height: 15),
           CustomButton(
             size: CustomSize.h2,
-            onPressed: uploadExcelFile,
+            onPressed: () async => _startUpload(),
             isAvailable: excelFileBytes != null,
             width: 383,
             height: 45,
@@ -105,6 +129,8 @@ class _BulkUploadViewState extends State<BulkUploadView> {
   }
 
   Widget loadFileWidget() {
+    final bulkUploadProvider =
+        Provider.of<BulkUploadProvider>(context, listen: true);
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -136,13 +162,19 @@ class _BulkUploadViewState extends State<BulkUploadView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    excelFileBytes == null ? Icons.upload_file_outlined : Icons.check_circle,
+                    excelFileBytes == null
+                        ? Icons.upload_file_outlined
+                        : Icons.check_circle,
                     color: AppColors.base,
                     size: 100,
                   ),
                   const SizedBox(height: 10),
                   H5(
-                    text: excelFileBytes == null ? "Haga clic para seleccionar un archivo" : isLoadedSuccesful ? "El archivo Excel se ha cargado y guardado con éxito.\nHaz clic aquí si desea subir otro archivo." : "Archivo excel cargado",
+                    text: excelFileBytes == null
+                        ? "Haga clic para seleccionar un archivo"
+                        : bulkUploadProvider.isLoadedSuccesful
+                            ? "El archivo Excel se ha cargado y guardado con éxito.\nHaz clic aquí si desea subir otro archivo."
+                            : "Archivo excel cargado",
                     color: AppColors.base300,
                     textAlign: TextAlign.center,
                   ),
@@ -156,8 +188,8 @@ class _BulkUploadViewState extends State<BulkUploadView> {
   }
 
   Widget _customViewResponse() {
-    return const Padding(
-      padding: EdgeInsets.only(
+    return Padding(
+      padding: const EdgeInsets.only(
         left: 40,
         top: 15,
         right: 40,
@@ -165,16 +197,131 @@ class _BulkUploadViewState extends State<BulkUploadView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          H1(
+          const H1(
             text: "Estado de la carga de datos del archivo Excel",
             color: AppColors.base,
           ),
+          if (isInitial)
+            const H3(text: "No se ha subido ningún archivo.")
+          else
+            SizedBox(
+              width: double.infinity,
+              child: showUploadResult(),
+            ),
         ],
       ),
     );
   }
 
-  Future<void> uploadExcelFile() async {
-    print("subir");
+  Widget showUploadResult() {
+    return FutureBuilder<UploadResponse?>(
+      future: _uploadFuture,
+      builder: (context, snapshot) {
+        if (_uploadFuture == null) return const SizedBox.shrink();
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              H3(text: "Subiendo y procesando los datos..."),
+              SizedBox(
+                height: 300,
+                child: Center(
+                  child: SizedBox(
+                    height: 80,
+                    width: 80,
+                    child: CircularProgressIndicator(
+                      color: AppColors.base,
+                      strokeWidth: 6,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        } else if (snapshot.hasError || snapshot.data == null) {
+          return const HeaderText(text: "Error al cargar los datos");
+        }
+        final response = snapshot.data!;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (response.allowUpdateData != null)
+              TextBlock(
+                title: "Permitir actualización de datos",
+                text:
+                    "${response.allowUpdateData! ? "E" : "No e"}stá permitido.",
+                size: CustomSize.h3,
+              ),
+            if (response.onlyUpdate != null)
+              TextBlock(
+                title: "Permitir únicamente actualización",
+                text: "${response.onlyUpdate! ? "A" : "No a"}plica.",
+                size: CustomSize.h3,
+              ),
+            if (response.updatedPatients != null)
+              TextBlock(
+                title: "IDs de registros de pacientes actualizados",
+                text: response.updatedPatients!.isEmpty
+                    ? "No aplica."
+                    : response.updatedPatients!.join('\n'),
+                size: CustomSize.h3,
+              ),
+            if (response.problems != null)
+              TextBlock(
+                title: "Errores ocurridos durante la carga",
+                text: response.problems!.isEmpty
+                    ? "No aplica."
+                    : response.problems!.join('\n'),
+                size: CustomSize.h3,
+              ),
+
+            //! Format no valid section
+            if (response.detail != null)
+              TextBlock(
+                title: "Errores ocurridos durante la carga",
+                text:
+                    response.detail!.isEmpty ? "No aplica." : response.detail!,
+                size: CustomSize.h3,
+              ),
+
+            //! Update no valid
+            if (response.error != null)
+              TextBlock(
+                title: "Error",
+                text: response.error!.isEmpty ? "No aplica." : response.error!,
+                size: CustomSize.h3,
+              ),
+            if (response.specificError != null)
+              TextBlock(
+                title: "Error específico",
+                text: response.specificError!.isEmpty
+                    ? "No aplica."
+                    : response.specificError!,
+                size: CustomSize.h3,
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _startUpload() {
+    final bulkUploadProvider = Provider.of<BulkUploadProvider>(
+      context,
+      listen: false,
+    );
+    final userJson = LocalStorage.prefs.getString('user') ??
+        '{"username":"No name","email":""}';
+    final UserModel user = UserModel.fromJson(json.decode(userJson));
+    final uploadRequest = UploadRequest(
+      file: excelFileBytes!,
+      user: user.username,
+      updateData: allowUpdateElements,
+      onlyUpdate: allowOnlyUpdate,
+    );
+    setState(() {
+      _uploadFuture = bulkUploadProvider.uploadExcelFile(uploadRequest);
+      isInitial = false;
+    });
   }
 }

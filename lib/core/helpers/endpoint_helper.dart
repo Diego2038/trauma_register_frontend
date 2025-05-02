@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:trauma_register_frontend/core/constants/api.dart';
 import 'package:trauma_register_frontend/data/models/http_response/custom_http_response.dart';
@@ -27,6 +29,50 @@ class EndpointHelper {
       return _convert(response);
     } catch (e) {
       rethrow; // Manejo de errores opcional
+    }
+  }
+
+  static Future<CustomHttpResponse> postRequestFileFormat({
+    required String path, 
+    required Map<String, dynamic> data,
+    required String? token,
+    String keyFile = 'file',
+  }) async {
+    try {
+
+      FormData formData = FormData();
+
+      data.forEach((key, value) {
+        if (key == keyFile && value is Uint8List) {
+          formData.files.add(
+            MapEntry(
+              keyFile,
+              MultipartFile.fromBytes(
+                value,
+                filename: 'file.bin',
+                // contentType: MediaType('application', 'octet-stream'), // Ajusta el tipo de contenido si es necesario
+              ),
+            ),
+          );
+        } else {
+          formData.fields.add(MapEntry(key, value.toString()));
+        }
+      });
+      final response = await _dio.post(
+        path, 
+        data: formData,
+        options: token == null
+          ? null
+          : Options(
+            headers: {
+              'Authorization': 'Bearer $token', 
+              'Content-Type': 'multipart/form-data',
+            }
+          )
+      );
+      return _convert(response);
+    } catch (e) {
+      rethrow;
     }
   }
 
