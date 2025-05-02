@@ -15,6 +15,7 @@ import 'package:trauma_register_frontend/data/models/user/user_model.dart';
 import 'package:trauma_register_frontend/presentation/providers/bulk_upload_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_checkbox.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/text_block.dart';
 
 class BulkUploadView extends StatelessWidget {
@@ -116,7 +117,13 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
           const SizedBox(height: 15),
           CustomButton(
             size: CustomSize.h2,
-            onPressed: () async => _startUpload(),
+            onPressed: () async => CustomModal.showModal(
+              context: context,
+              title: "Subida de archivo",
+              text:
+                  "¿Está seguro que desea subir el archivo Excel? Recuerda que el tiempo de carga es proporcional a su contenido.",
+              onPressedAccept: () async => _startUpload(),
+            ),
             isAvailable: excelFileBytes != null,
             width: 383,
             height: 45,
@@ -170,10 +177,10 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
                   ),
                   const SizedBox(height: 10),
                   H5(
-                    text: excelFileBytes == null
-                        ? "Haga clic para seleccionar un archivo"
-                        : bulkUploadProvider.isLoadedSuccesful
-                            ? "El archivo Excel se ha cargado y guardado con éxito.\nHaz clic aquí si desea subir otro archivo."
+                    text: bulkUploadProvider.isLoadedSuccesful
+                        ? "El archivo Excel se ha cargado y guardado con éxito.\nHaz clic aquí si desea subir otro archivo."
+                        : excelFileBytes == null
+                            ? "Haga clic para seleccionar un archivo"
                             : "Archivo excel cargado",
                     color: AppColors.base300,
                     textAlign: TextAlign.center,
@@ -263,7 +270,7 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
                 title: "IDs de registros de pacientes actualizados",
                 text: response.updatedPatients!.isEmpty
                     ? "No aplica."
-                    : response.updatedPatients!.join('\n'),
+                    : "∙ ${response.updatedPatients!.join('\n∙ ')}",
                 size: CustomSize.h3,
               ),
             if (response.problems != null)
@@ -271,14 +278,14 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
                 title: "Errores ocurridos durante la carga",
                 text: response.problems!.isEmpty
                     ? "No aplica."
-                    : response.problems!.join('\n'),
+                    : "∙ ${response.problems!.join('\n∙ ')}",
                 size: CustomSize.h3,
               ),
 
             //! Format no valid section
             if (response.detail != null)
               TextBlock(
-                title: "Errores ocurridos durante la carga",
+                title: "Error de formato",
                 text:
                     response.detail!.isEmpty ? "No aplica." : response.detail!,
                 size: CustomSize.h3,
@@ -320,6 +327,7 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
       onlyUpdate: allowOnlyUpdate,
     );
     setState(() {
+      excelFileBytes = null;
       _uploadFuture = bulkUploadProvider.uploadExcelFile(uploadRequest);
       isInitial = false;
     });

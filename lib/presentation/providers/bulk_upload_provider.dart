@@ -14,12 +14,10 @@ class BulkUploadProvider extends ChangeNotifier {
   Future<UploadResponse?> uploadExcelFile(UploadRequest uploadRequest) async {
     final bulkUploadService = BulkUploadService();
     final response = await bulkUploadService.uploadExcelFile(uploadRequest);
-    if (response != null &&
+    updateIsLoaded(response != null &&
         response.detail == null &&
         response.specificError == null &&
-        response.error == null) {
-      updateIsLoaded(true);
-    }
+        response.error == null);
     return response;
   }
 }
