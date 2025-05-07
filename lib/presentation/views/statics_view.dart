@@ -122,8 +122,9 @@ class StaticsView extends StatelessWidget {
         final List<Datum> genderData = categoricalStats.data;
 
         return CustomPieChart(
-          chartWidth: 300,
-          chartHeight: 300,
+          chartWidth: 400,
+          chartHeight: 400,
+          allowBadge: true,
           data: genderData,
         );
       },

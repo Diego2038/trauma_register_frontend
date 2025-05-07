@@ -4,42 +4,64 @@ import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/stats/categorical_stats.dart';
 
-class CustomPieChart extends StatelessWidget {
+class CustomPieChart extends StatefulWidget {
   final double? chartWidth;
   final double? chartHeight;
   final List<Datum> data;
+  final bool allowBadge;
 
   const CustomPieChart({
     super.key,
     required this.data,
     this.chartHeight,
     this.chartWidth,
+    this.allowBadge = false,
   });
 
   @override
+  State<CustomPieChart> createState() => _CustomPieChartState();
+}
+
+class _CustomPieChartState extends State<CustomPieChart> {
+  int? _touchedIndex;
+
+  @override
   Widget build(BuildContext context) {
-    final total = data.fold<double>(0, (sum, item) => sum + item.total);
+    final total = widget.data.fold<double>(0, (sum, item) => sum + item.total);
 
     final List<PieChartSectionData> showingSections =
-        data.asMap().entries.map((entry) {
+        widget.data.asMap().entries.map((entry) {
       final index = entry.key;
       final data = entry.value;
       final percentage = (data.total / total) * 100;
       const fontSize = 16.0;
-      const radius = 100.0;
+      final isTouched = index == _touchedIndex;
+      final radius = isTouched ? 100.0 : 90.0;
+
       return PieChartSectionData(
         color: _getColorForTag(index),
         // value: data.total,
-        // title: '${percentage.toStringAsFixed(1)}%',
-        value: data.total,
-        title: '${data.total.toInt()}\n${percentage.toStringAsFixed(1)}%',
+        title: widget.allowBadge
+            ? null
+            : isTouched
+                ? '${data.total.toInt()}\n${percentage.toStringAsFixed(1)}%'
+                : null,
         radius: radius,
-        // badgeWidget: Text("Prueba"),
-        // badgePositionPercentageOffset: 0.65,
+        badgeWidget: !widget.allowBadge
+            ? null
+            : isTouched
+                ? H6(
+                    text:
+                        '${data.total.toInt()}\n${percentage.toStringAsFixed(1)}%',
+                    color: AppColors.base,
+                    fontWeight: FontWeight.bold,
+                  )
+                : null,
+        badgePositionPercentageOffset: !widget.allowBadge ? null : 1.3,
         titleStyle: const TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: AppColors.white,
         ),
       );
     }).toList();
@@ -49,13 +71,27 @@ class CustomPieChart extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: chartWidth,
-          height: chartHeight,
+          width: widget.chartWidth,
+          height: widget.chartHeight,
           child: PieChart(
             PieChartData(
               sectionsSpace: 0,
               centerSpaceRadius: 40,
               sections: showingSections,
+              pieTouchData: PieTouchData(
+                touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                  setState(() {
+                    if (!event.isInterestedForInteractions ||
+                        pieTouchResponse == null ||
+                        pieTouchResponse.touchedSection == null) {
+                      _touchedIndex = null;
+                      return;
+                    }
+                    _touchedIndex =
+                        pieTouchResponse.touchedSection!.touchedSectionIndex;
+                  });
+                },
+              ),
             ),
           ),
         ),
@@ -64,7 +100,7 @@ class CustomPieChart extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: data.asMap().entries.map((entry) {
+          children: widget.data.asMap().entries.map((entry) {
             final index = entry.key;
             final value = entry.value;
             return Padding(
