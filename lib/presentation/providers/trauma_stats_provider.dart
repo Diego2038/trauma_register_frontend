@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:trauma_register_frontend/core/helpers/print_error.dart';
 import 'package:trauma_register_frontend/data/models/stats/categorical_stats.dart';
 import 'package:trauma_register_frontend/data/models/stats/single_value_stats.dart';
+import 'package:trauma_register_frontend/data/models/stats/time_serie.dart';
+import 'package:trauma_register_frontend/data/services/time_serie_service.dart';
 import 'package:trauma_register_frontend/data/services/trauma_stats_service.dart';
 
 class TraumaStatsProvider extends ChangeNotifier {
-  
   Future<SingleValueStats?> getAmountOfPatients() async {
     try {
       final traumaStatsService = TraumaStatsService();
@@ -90,4 +91,17 @@ class TraumaStatsProvider extends ChangeNotifier {
     }
   }
 
+  Future<TimeSeries?> getTraumaCountByDate() async {
+    try {
+      final timeSeriesService = TimeSeriesService();
+      return timeSeriesService.getTraumaCountByDate();
+    } catch (e, s) {
+      PrintError.makePrint(
+        e: e,
+        ubication: 'trauma_stats_provider.dart',
+        stack: s,
+      );
+      return null;
+    }
+  }
 }

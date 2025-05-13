@@ -3,7 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/stats/categorical_stats.dart';
+import 'package:trauma_register_frontend/data/models/stats/time_serie.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_stats_provider.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_time_series_line_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_vertical_bar_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_pie_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_stats_container.dart';
@@ -66,6 +68,12 @@ class StaticsView extends StatelessWidget {
                     minHeight: 350,
                     title: "Distribución por tipo de trauma",
                     child: patientsWithRelationsContent(traumaStatsProvider),
+                  ),
+                  CustomStatsContainer(
+                    minWidth: 30,
+                    minHeight: 350,
+                    title: "Cantidad de ingresos por año",
+                    child: traumaCountByDateContent(traumaStatsProvider),
                   ),
                 ],
               ),
@@ -236,6 +244,33 @@ class StaticsView extends StatelessWidget {
           chartWidth: 450,
           chartHeight: 300,
           data: genderData,
+        );
+      },
+    );
+  }
+
+  Widget traumaCountByDateContent(TraumaStatsProvider traumaStatsProvider) {
+    return FutureBuilder(
+      future: traumaStatsProvider.getTraumaCountByDate(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: SizedBox(
+              height: 40,
+              width: 40,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else if (snapshot.hasError || snapshot.data == null) {
+          return const HeaderText(text: "Error al cargar los datos");
+        }
+        final categoricalStats = snapshot.data!;
+        final List<DateDatum> timeSeries = categoricalStats.data;
+        return CustomTimeSeriesLineChart(
+          chartHeight: 400,
+          chartWidth: 600,
+          data: timeSeries,
         );
       },
     );
