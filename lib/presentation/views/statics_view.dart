@@ -9,6 +9,7 @@ import 'package:trauma_register_frontend/presentation/widgets/custom_time_series
 import 'package:trauma_register_frontend/presentation/widgets/custom_vertical_bar_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_pie_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_stats_container.dart';
+import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
 
 class StaticsView extends StatelessWidget {
   const StaticsView({super.key});
@@ -16,7 +17,7 @@ class StaticsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final traumaStatsProvider =
-        Provider.of<TraumaStatsProvider>(context, listen: false);
+        Provider.of<TraumaStatsProvider>(context, listen: true);
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -28,6 +29,13 @@ class StaticsView extends StatelessWidget {
                 runSpacing: 20,
                 spacing: 20,
                 children: [
+                  const CustomStatsContainer(
+                    title: "Rango de fechas",
+                    minHeight: 100,
+                    minWidth: 400,
+                    maxWidth: 400,
+                    child: DateRangePickerButtons(),
+                  ),
                   Column(
                     children: [
                       CustomStatsContainer(
@@ -86,7 +94,10 @@ class StaticsView extends StatelessWidget {
 
   Widget amountOfPatientsContent(TraumaStatsProvider traumaStatsProvider) {
     return FutureBuilder(
-      future: traumaStatsProvider.getAmountOfPatients(),
+      future: traumaStatsProvider.getAmountOfPatients(
+        startDate: traumaStatsProvider.startDate,
+        endDate: traumaStatsProvider.endDate,
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
@@ -111,7 +122,10 @@ class StaticsView extends StatelessWidget {
 
   Widget gendersContent(TraumaStatsProvider traumaStatsProvider) {
     return FutureBuilder<CategoricalStats?>(
-      future: traumaStatsProvider.getGenders(),
+      future: traumaStatsProvider.getGenders(
+        startDate: traumaStatsProvider.startDate,
+        endDate: traumaStatsProvider.endDate,
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
@@ -141,7 +155,10 @@ class StaticsView extends StatelessWidget {
 
   Widget patientsAgesContent(TraumaStatsProvider traumaStatsProvider) {
     return FutureBuilder(
-      future: traumaStatsProvider.getPatientsAges(),
+      future: traumaStatsProvider.getPatientsAges(
+        startDate: traumaStatsProvider.startDate,
+        endDate: traumaStatsProvider.endDate,
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
@@ -169,7 +186,10 @@ class StaticsView extends StatelessWidget {
 
   Widget patientsWithRelationsContent(TraumaStatsProvider traumaStatsProvider) {
     return FutureBuilder(
-      future: traumaStatsProvider.getPatientsWithRelations(),
+      future: traumaStatsProvider.getPatientsWithRelations(
+        startDate: traumaStatsProvider.startDate,
+        endDate: traumaStatsProvider.endDate,
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
@@ -196,7 +216,10 @@ class StaticsView extends StatelessWidget {
 
   Widget insuredPatientsContent(TraumaStatsProvider traumaStatsProvider) {
     return FutureBuilder(
-      future: traumaStatsProvider.getInsuredPatients(),
+      future: traumaStatsProvider.getInsuredPatients(
+        startDate: traumaStatsProvider.startDate,
+        endDate: traumaStatsProvider.endDate,
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
@@ -224,7 +247,10 @@ class StaticsView extends StatelessWidget {
   Widget typeOfPatientsAdmissionContent(
       TraumaStatsProvider traumaStatsProvider) {
     return FutureBuilder(
-      future: traumaStatsProvider.getTypeOfPatientsAdmission(),
+      future: traumaStatsProvider.getTypeOfPatientsAdmission(
+        startDate: traumaStatsProvider.startDate,
+        endDate: traumaStatsProvider.endDate,
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(
@@ -251,7 +277,10 @@ class StaticsView extends StatelessWidget {
 
   Widget traumaCountByDateContent(TraumaStatsProvider traumaStatsProvider) {
     return FutureBuilder(
-      future: traumaStatsProvider.getTraumaCountByDate(),
+      future: traumaStatsProvider.getTraumaCountByDate(
+        startDate: traumaStatsProvider.startDate,
+        endDate: traumaStatsProvider.endDate,
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Padding(

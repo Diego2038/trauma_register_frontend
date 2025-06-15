@@ -40,12 +40,14 @@ class _CustomPieChartState extends State<CustomPieChart> {
 
       return PieChartSectionData(
         color: _getColorForTag(index),
-        // value: data.total,
+        value: data.total,
+        showTitle: !widget.allowBadge,
         title: widget.allowBadge
             ? null
             : isTouched
                 ? '${data.total.toInt()}\n${percentage.toStringAsFixed(1)}%'
                 : null,
+        // titlePositionPercentageOffset: 0.4,
         radius: radius,
         badgeWidget: !widget.allowBadge
             ? null

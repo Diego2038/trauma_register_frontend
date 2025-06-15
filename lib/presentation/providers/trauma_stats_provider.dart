@@ -7,10 +7,35 @@ import 'package:trauma_register_frontend/data/services/time_serie_service.dart';
 import 'package:trauma_register_frontend/data/services/trauma_stats_service.dart';
 
 class TraumaStatsProvider extends ChangeNotifier {
-  Future<SingleValueStats?> getAmountOfPatients() async {
+  DateTime? startDate;
+  DateTime? endDate;
+
+  void updateStartDate(DateTime? date) {
+    startDate = date;
+    notifyListeners();
+  }
+
+  void updateEndDate(DateTime? date) {
+    endDate = date;
+    notifyListeners();
+  }
+
+  void clearDates() {
+    startDate = null;
+    endDate = null;
+    notifyListeners();
+  }
+
+  Future<SingleValueStats?> getAmountOfPatients({
+    required DateTime? startDate,
+    required DateTime? endDate,
+  }) async {
     try {
       final traumaStatsService = TraumaStatsService();
-      return await traumaStatsService.getAmountOfPatients();
+      return await traumaStatsService.getAmountOfPatients(
+        startDate: startDate,
+        endDate: endDate,
+      );
     } catch (e, s) {
       PrintError.makePrint(
         e: e,
@@ -21,10 +46,16 @@ class TraumaStatsProvider extends ChangeNotifier {
     }
   }
 
-  Future<CategoricalStats?> getGenders() async {
+  Future<CategoricalStats?> getGenders({
+    required DateTime? startDate,
+    required DateTime? endDate,
+  }) async {
     try {
       final traumaStatsService = TraumaStatsService();
-      return await traumaStatsService.getGenders();
+      return await traumaStatsService.getGenders(
+        startDate: startDate,
+        endDate: endDate,
+      );
     } catch (e, s) {
       PrintError.makePrint(
         e: e,
@@ -35,10 +66,16 @@ class TraumaStatsProvider extends ChangeNotifier {
     }
   }
 
-  Future<CategoricalStats?> getPatientsAges() async {
+  Future<CategoricalStats?> getPatientsAges({
+    required DateTime? startDate,
+    required DateTime? endDate,
+  }) async {
     try {
       final traumaStatsService = TraumaStatsService();
-      return await traumaStatsService.getPatientsAges();
+      return await traumaStatsService.getPatientsAges(
+        startDate: startDate,
+        endDate: endDate,
+      );
     } catch (e, s) {
       PrintError.makePrint(
         e: e,
@@ -49,10 +86,16 @@ class TraumaStatsProvider extends ChangeNotifier {
     }
   }
 
-  Future<CategoricalStats?> getPatientsWithRelations() async {
+  Future<CategoricalStats?> getPatientsWithRelations({
+    required DateTime? startDate,
+    required DateTime? endDate,
+  }) async {
     try {
       final traumaStatsService = TraumaStatsService();
-      return await traumaStatsService.getPatientsWithRelations();
+      return await traumaStatsService.getPatientsWithRelations(
+        startDate: startDate,
+        endDate: endDate,
+      );
     } catch (e, s) {
       PrintError.makePrint(
         e: e,
@@ -63,10 +106,16 @@ class TraumaStatsProvider extends ChangeNotifier {
     }
   }
 
-  Future<CategoricalStats?> getInsuredPatients() async {
+  Future<CategoricalStats?> getInsuredPatients({
+    required DateTime? startDate,
+    required DateTime? endDate,
+  }) async {
     try {
       final traumaStatsService = TraumaStatsService();
-      return await traumaStatsService.getInsuredPatients();
+      return await traumaStatsService.getInsuredPatients(
+        startDate: startDate,
+        endDate: endDate,
+      );
     } catch (e, s) {
       PrintError.makePrint(
         e: e,
@@ -77,10 +126,16 @@ class TraumaStatsProvider extends ChangeNotifier {
     }
   }
 
-  Future<CategoricalStats?> getTypeOfPatientsAdmission() async {
+  Future<CategoricalStats?> getTypeOfPatientsAdmission({
+    required DateTime? startDate,
+    required DateTime? endDate,
+  }) async {
     try {
       final traumaStatsService = TraumaStatsService();
-      return await traumaStatsService.getTypeOfPatientsAdmission();
+      return await traumaStatsService.getTypeOfPatientsAdmission(
+        startDate: startDate,
+        endDate: endDate,
+      );
     } catch (e, s) {
       PrintError.makePrint(
         e: e,
@@ -91,10 +146,16 @@ class TraumaStatsProvider extends ChangeNotifier {
     }
   }
 
-  Future<TimeSeries?> getTraumaCountByDate() async {
+  Future<TimeSeries?> getTraumaCountByDate({
+    required DateTime? startDate,
+    required DateTime? endDate,
+  }) async {
     try {
       final timeSeriesService = TimeSeriesService();
-      return timeSeriesService.getTraumaCountByDate();
+      return timeSeriesService.getTraumaCountByDate(
+        startDate: startDate,
+        endDate: endDate,
+      );
     } catch (e, s) {
       PrintError.makePrint(
         e: e,
