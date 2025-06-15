@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/helpers/local_storage.dart';
 import 'package:trauma_register_frontend/core/routes/app_router.dart';
@@ -55,6 +56,12 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate, // Material Design widgets
+        GlobalWidgetsLocalizations.delegate,  // General widgets to Flutter
+        GlobalCupertinoLocalizations.delegate, // iOS (Cupertino)
+      ],
+      supportedLocales: const [Locale('es', 'CO')],
       navigatorKey: NavigationService.navigatorKey,
       onGenerateRoute: AppRouter.router.generator,
       debugShowCheckedModeBanner: false,
