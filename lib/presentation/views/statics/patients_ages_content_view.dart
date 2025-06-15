@@ -60,10 +60,11 @@ class _PatientsAgesContentViewState extends State<PatientsAgesContentView> {
         final List<Datum> genderData = categoricalStats.data;
 
         return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomVerticalBarChart(
               chartWidth: 500,
-              chartHeight: 500,
+              chartHeight: 600,
               data: genderData,
             ),
             DateRangePickerButtons(

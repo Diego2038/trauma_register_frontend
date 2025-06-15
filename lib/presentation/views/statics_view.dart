@@ -18,59 +18,64 @@ class StaticsView extends StatelessWidget {
           _CustomFilterBox(),
           Padding(
             padding: EdgeInsets.all(20),
-            child: Wrap(
-              runSpacing: 20,
-              spacing: 20,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    CustomStatsContainer(
-                      minWidth: 555,
-                      minHeight: 525,
-                      title: "Distribución por género",
-                      child: GendersContentView(),
-                    ),
-                    SizedBox(height: 20),
-                    CustomStatsContainer(
-                      minWidth: 555,
-                      minHeight: 200,
-                      title: "Cantidad de registros de pacientes",
-                      child: AmountOfPatientsContentView(),
-                    ),
-                  ],
-                ),
-                CustomStatsContainer(
-                  minWidth: 555,
-                  minHeight: 625,
-                  title: "Distribución por edad",
-                  child: PatientsAgesContentView(),
-                ),
-                CustomStatsContainer(
-                  minWidth: 555,
-                  minHeight: 425,
-                  title: "Distribución por aseguramiento",
-                  child: InsuredPatientsContentView(),
-                ),
-                CustomStatsContainer(
-                  minWidth: 555,
-                  minHeight: 425,
-                  title: "Distribución por tipo de admisión",
-                  child: TypeOfPatientsAdmissionContentView(),
-                ),
-                CustomStatsContainer(
-                  minWidth: 670,
-                  minHeight: 425,
-                  title: "Distribución por tipo de trauma",
-                  child: PatientsWithRelationsContentView(),
-                ),
-                CustomStatsContainer(
-                  minWidth: 625,
-                  minHeight: 525,
-                  title: "Cantidad de ingresos por año",
-                  child: TraumaCountByDateContentView(),
-                ),
-              ],
+            child: SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                runSpacing: 20,
+                spacing: 20,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                alignment: WrapAlignment.center,
+                // alignment: WrapAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      CustomStatsContainer(
+                        minWidth: 555,
+                        minHeight: 525,
+                        title: "Distribución por género",
+                        child: GendersContentView(),
+                      ),
+                      SizedBox(height: 20),
+                      CustomStatsContainer(
+                        minWidth: 555,
+                        minHeight: 200,
+                        title: "Cantidad de registros de pacientes",
+                        child: AmountOfPatientsContentView(),
+                      ),
+                    ],
+                  ),
+                  CustomStatsContainer(
+                    minWidth: 555,
+                    minHeight: 740,
+                    title: "Distribución por edad",
+                    child: PatientsAgesContentView(),
+                  ),
+                  CustomStatsContainer(
+                    minWidth: 555,
+                    minHeight: 525,
+                    title: "Distribución por aseguramiento",
+                    child: InsuredPatientsContentView(),
+                  ),
+                  CustomStatsContainer(
+                    minWidth: 555,
+                    minHeight: 525,
+                    title: "Distribución por tipo de admisión",
+                    child: TypeOfPatientsAdmissionContentView(),
+                  ),
+                  CustomStatsContainer(
+                    minWidth: 670,
+                    minHeight: 425,
+                    title: "Distribución por tipo de trauma",
+                    child: PatientsWithRelationsContentView(),
+                  ),
+                  CustomStatsContainer(
+                    minWidth: 625,
+                    minHeight: 525,
+                    title: "Cantidad de ingresos por año",
+                    child: TraumaCountByDateContentView(),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -59,6 +59,7 @@ class _TraumaCountByDateContentViewState extends State<TraumaCountByDateContentV
         final categoricalStats = snapshot.data!;
         final List<DateDatum> timeSeries = categoricalStats.data;
         return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomTimeSeriesLineChart(
               chartHeight: 400,

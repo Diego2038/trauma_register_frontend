@@ -59,11 +59,13 @@ class _InsuredPatientsContentViewState extends State<InsuredPatientsContentView>
         final categoricalStats = snapshot.data!;
         final List<Datum> genderData = categoricalStats.data;
         return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomPieChart(
-              chartWidth: 300,
-              chartHeight: 300,
+              chartWidth: 400,
+              chartHeight: 400,
               data: genderData,
+              allowBadge: true,
             ),
             DateRangePickerButtons(
               startDate: insuredPatientsStartDate ?? traumaStatsProvider.globalStartDate,

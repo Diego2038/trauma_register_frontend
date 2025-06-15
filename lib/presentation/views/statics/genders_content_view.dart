@@ -61,6 +61,7 @@ class _GendersContentViewState extends State<GendersContentView> {
         final List<Datum> genderData = categoricalStats.data;
 
         return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomPieChart(
               chartWidth: 400,

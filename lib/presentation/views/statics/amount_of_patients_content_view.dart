@@ -57,10 +57,12 @@ class _AmountOfPatientsContentViewState extends State<AmountOfPatientsContentVie
         }
         final singleValueStats = snapshot.data!;
         return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             H1(
               text: singleValueStats.data.toString(),
               color: AppColors.base,
+              textAlign: TextAlign.center,
             ),
             DateRangePickerButtons(
               startDate: amountOfPatientsStartDate ?? traumaStatsProvider.globalStartDate,

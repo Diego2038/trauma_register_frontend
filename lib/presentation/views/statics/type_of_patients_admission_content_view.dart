@@ -59,10 +59,11 @@ class _TypeOfPatientsAdmissionContentViewState extends State<TypeOfPatientsAdmis
         final categoricalStats = snapshot.data!;
         final List<Datum> genderData = categoricalStats.data;
         return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomVerticalBarChart(
               chartWidth: 450,
-              chartHeight: 300,
+              chartHeight: 400,
               data: genderData,
             ),
             DateRangePickerButtons(
