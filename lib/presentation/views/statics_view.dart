@@ -13,6 +13,7 @@ class StaticsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _CustomFilterBox(),
           Padding(

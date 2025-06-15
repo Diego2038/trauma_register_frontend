@@ -6,10 +6,33 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_stats_pro
 import 'package:trauma_register_frontend/presentation/widgets/custom_vertical_bar_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
 
-class PatientsWithRelationsContentView extends StatelessWidget {
+class PatientsWithRelationsContentView extends StatefulWidget {
   const PatientsWithRelationsContentView({
     super.key,
   });
+
+  @override
+  State<PatientsWithRelationsContentView> createState() => _PatientsWithRelationsContentViewState();
+}
+
+class _PatientsWithRelationsContentViewState extends State<PatientsWithRelationsContentView> {
+  DateTime? patientsWithRelationsStartDate;
+  DateTime? patientsWithRelationsEndDate;
+  late TraumaStatsProvider _traumaStatsProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _traumaStatsProvider =
+        Provider.of<TraumaStatsProvider>(context, listen: false);
+    _traumaStatsProvider.addListener(clearPatientsWithRelationsDates);
+  }
+
+  @override
+  void dispose() {
+    _traumaStatsProvider.removeListener(clearPatientsWithRelationsDates);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +40,8 @@ class PatientsWithRelationsContentView extends StatelessWidget {
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder(
       future: traumaStatsProvider.getPatientsWithRelations(
-        startDate: traumaStatsProvider.patientsWithRelationsStartDate ?? traumaStatsProvider.globalStartDate,
-        endDate: traumaStatsProvider.patientsWithRelationsEndDate ?? traumaStatsProvider.globalEndDate,
+        startDate: patientsWithRelationsStartDate ?? traumaStatsProvider.globalStartDate,
+        endDate: patientsWithRelationsEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,15 +66,31 @@ class PatientsWithRelationsContentView extends StatelessWidget {
               data: genderData,
             ),
             DateRangePickerButtons(
-              startDate: traumaStatsProvider.patientsWithRelationsStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: traumaStatsProvider.patientsWithRelationsEndDate ?? traumaStatsProvider.globalEndDate,
-              updateStartDate: traumaStatsProvider.updatePatientsWithRelationsStartDate,
-              updateEndDate: traumaStatsProvider.updatePatientsWithRelationsEndDate,
-              clearDates: traumaStatsProvider.clearPatientsWithRelationsDates,
+              startDate: patientsWithRelationsStartDate ?? traumaStatsProvider.globalStartDate,
+              endDate: patientsWithRelationsEndDate ?? traumaStatsProvider.globalEndDate,
+              updateStartDate: updatePatientsWithRelationsStartDate,
+              updateEndDate: updatePatientsWithRelationsEndDate,
+              clearDates: clearPatientsWithRelationsDates,
             ),
           ],
         );
       },
     );
+  }
+
+  void updatePatientsWithRelationsStartDate(DateTime? date) {
+    patientsWithRelationsStartDate = date;
+    setState(() => {});
+  }
+
+  void updatePatientsWithRelationsEndDate(DateTime? date) {
+    patientsWithRelationsEndDate = date;
+    setState(() => {});
+  }
+
+  void clearPatientsWithRelationsDates() {
+    patientsWithRelationsStartDate = null;
+    patientsWithRelationsEndDate = null;
+    setState(() => {});
   }
 }

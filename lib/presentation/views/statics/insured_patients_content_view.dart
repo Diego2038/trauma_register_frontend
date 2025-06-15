@@ -6,10 +6,33 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_stats_pro
 import 'package:trauma_register_frontend/presentation/widgets/custom_pie_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
 
-class InsuredPatientsContentView extends StatelessWidget {
+class InsuredPatientsContentView extends StatefulWidget {
   const InsuredPatientsContentView({
     super.key,
   });
+
+  @override
+  State<InsuredPatientsContentView> createState() => _InsuredPatientsContentViewState();
+}
+
+class _InsuredPatientsContentViewState extends State<InsuredPatientsContentView> {
+  DateTime? insuredPatientsStartDate;
+  DateTime? insuredPatientsEndDate;
+  late TraumaStatsProvider _traumaStatsProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _traumaStatsProvider =
+        Provider.of<TraumaStatsProvider>(context, listen: false);
+    _traumaStatsProvider.addListener(clearInsuredPatientsDates);
+  }
+
+  @override
+  void dispose() {
+    _traumaStatsProvider.removeListener(clearInsuredPatientsDates);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +40,8 @@ class InsuredPatientsContentView extends StatelessWidget {
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder(
       future: traumaStatsProvider.getInsuredPatients(
-        startDate: traumaStatsProvider.insuredPatientsStartDate ?? traumaStatsProvider.globalStartDate,
-        endDate: traumaStatsProvider.insuredPatientsEndDate ?? traumaStatsProvider.globalEndDate,
+        startDate: insuredPatientsStartDate ?? traumaStatsProvider.globalStartDate,
+        endDate: insuredPatientsEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,15 +66,31 @@ class InsuredPatientsContentView extends StatelessWidget {
               data: genderData,
             ),
             DateRangePickerButtons(
-              startDate: traumaStatsProvider.insuredPatientsStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: traumaStatsProvider.insuredPatientsEndDate ?? traumaStatsProvider.globalEndDate,
-              updateStartDate: traumaStatsProvider.updateInsuredPatientsStartDate,
-              updateEndDate: traumaStatsProvider.updateInsuredPatientsEndDate,
-              clearDates: traumaStatsProvider.clearInsuredPatientsDates,
+              startDate: insuredPatientsStartDate ?? traumaStatsProvider.globalStartDate,
+              endDate: insuredPatientsEndDate ?? traumaStatsProvider.globalEndDate,
+              updateStartDate: updateInsuredPatientsStartDate,
+              updateEndDate: updateInsuredPatientsEndDate,
+              clearDates: clearInsuredPatientsDates,
             ),
           ],
         );
       },
     );
+  }
+
+  void updateInsuredPatientsStartDate(DateTime? date) {
+    insuredPatientsStartDate = date;
+    setState(() => {});
+  }
+
+  void updateInsuredPatientsEndDate(DateTime? date) {
+    insuredPatientsEndDate = date;
+    setState(() => {});
+  }
+
+  void clearInsuredPatientsDates() {
+    insuredPatientsStartDate = null;
+    insuredPatientsEndDate = null;
+    setState(() => {});
   }
 }

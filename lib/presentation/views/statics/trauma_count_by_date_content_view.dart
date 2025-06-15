@@ -6,10 +6,33 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_stats_pro
 import 'package:trauma_register_frontend/presentation/widgets/custom_time_series_line_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
 
-class TraumaCountByDateContentView extends StatelessWidget {
+class TraumaCountByDateContentView extends StatefulWidget {
   const TraumaCountByDateContentView({
     super.key,
   });
+
+  @override
+  State<TraumaCountByDateContentView> createState() => _TraumaCountByDateContentViewState();
+}
+
+class _TraumaCountByDateContentViewState extends State<TraumaCountByDateContentView> {
+  DateTime? traumaCountByDateStartDate;
+  DateTime? traumaCountByDateEndDate;
+  late TraumaStatsProvider _traumaStatsProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _traumaStatsProvider =
+        Provider.of<TraumaStatsProvider>(context, listen: false);
+    _traumaStatsProvider.addListener(clearTraumaCountByDateDates);
+  }
+
+  @override
+  void dispose() {
+    _traumaStatsProvider.removeListener(clearTraumaCountByDateDates);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +40,8 @@ class TraumaCountByDateContentView extends StatelessWidget {
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder(
       future: traumaStatsProvider.getTraumaCountByDate(
-        startDate: traumaStatsProvider.traumaCountByDateStartDate ?? traumaStatsProvider.globalStartDate,
-        endDate: traumaStatsProvider.traumaCountByDateEndDate ?? traumaStatsProvider.globalEndDate,
+        startDate: traumaCountByDateStartDate ?? traumaStatsProvider.globalStartDate,
+        endDate: traumaCountByDateEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,15 +66,31 @@ class TraumaCountByDateContentView extends StatelessWidget {
               data: timeSeries,
             ),
             DateRangePickerButtons(
-              startDate: traumaStatsProvider.traumaCountByDateStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: traumaStatsProvider.traumaCountByDateEndDate ?? traumaStatsProvider.globalEndDate,
-              updateStartDate: traumaStatsProvider.updateTraumaCountByDateStartDate,
-              updateEndDate: traumaStatsProvider.updateTraumaCountByDateEndDate,
-              clearDates: traumaStatsProvider.clearTraumaCountByDateDates,
+              startDate: traumaCountByDateStartDate ?? traumaStatsProvider.globalStartDate,
+              endDate: traumaCountByDateEndDate ?? traumaStatsProvider.globalEndDate,
+              updateStartDate: updateTraumaCountByDateStartDate,
+              updateEndDate: updateTraumaCountByDateEndDate,
+              clearDates: clearTraumaCountByDateDates,
             ),
           ],
         );
       },
     );
+  }
+
+  void updateTraumaCountByDateStartDate(DateTime? date) {
+    traumaCountByDateStartDate = date;
+    setState(() => {});
+  }
+
+  void updateTraumaCountByDateEndDate(DateTime? date) {
+    traumaCountByDateEndDate = date;
+    setState(() => {});
+  }
+
+  void clearTraumaCountByDateDates() {
+    traumaCountByDateStartDate = null;
+    traumaCountByDateEndDate = null;
+    setState(() => {});
   }
 }

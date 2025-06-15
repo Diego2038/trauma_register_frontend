@@ -6,10 +6,33 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_stats_pro
 import 'package:trauma_register_frontend/presentation/widgets/custom_pie_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
 
-class GendersContentView extends StatelessWidget {
+class GendersContentView extends StatefulWidget {
   const GendersContentView({
     super.key,
   });
+
+  @override
+  State<GendersContentView> createState() => _GendersContentViewState();
+}
+
+class _GendersContentViewState extends State<GendersContentView> {
+  DateTime? gendersStartDate;
+  DateTime? gendersEndDate;
+  late TraumaStatsProvider _traumaStatsProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _traumaStatsProvider =
+        Provider.of<TraumaStatsProvider>(context, listen: false);
+    _traumaStatsProvider.addListener(clearGendersDates);
+  }
+
+  @override
+  void dispose() {
+    _traumaStatsProvider.removeListener(clearGendersDates);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +40,8 @@ class GendersContentView extends StatelessWidget {
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder<CategoricalStats?>(
       future: traumaStatsProvider.getGenders(
-        startDate: traumaStatsProvider.gendersStartDate ?? traumaStatsProvider.globalStartDate,
-        endDate: traumaStatsProvider.gendersEndDate ?? traumaStatsProvider.globalEndDate,
+        startDate: gendersStartDate ?? traumaStatsProvider.globalStartDate,
+        endDate: gendersEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -46,15 +69,31 @@ class GendersContentView extends StatelessWidget {
               data: genderData,
             ),
             DateRangePickerButtons(
-              startDate: traumaStatsProvider.gendersStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: traumaStatsProvider.gendersEndDate ?? traumaStatsProvider.globalEndDate,
-              updateStartDate: traumaStatsProvider.updateGendersStartDate,
-              updateEndDate: traumaStatsProvider.updateGendersEndDate,
-              clearDates: traumaStatsProvider.clearGendersDates,
+              startDate: gendersStartDate ?? traumaStatsProvider.globalStartDate,
+              endDate: gendersEndDate ?? traumaStatsProvider.globalEndDate,
+              updateStartDate: updateGendersStartDate,
+              updateEndDate: updateGendersEndDate,
+              clearDates: clearGendersDates,
             ),
           ],
         );
       },
     );
+  }
+
+  void updateGendersStartDate(DateTime? date) {
+    gendersStartDate = date;
+    setState(() => {});
+  }
+
+  void updateGendersEndDate(DateTime? date) {
+    gendersEndDate = date;
+    setState(() => {});
+  }
+
+  void clearGendersDates() {
+    gendersStartDate = null;
+    gendersEndDate = null;
+    setState(() => {});
   }
 }

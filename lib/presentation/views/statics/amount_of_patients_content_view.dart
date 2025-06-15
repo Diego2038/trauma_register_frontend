@@ -5,10 +5,33 @@ import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_stats_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
 
-class AmountOfPatientsContentView extends StatelessWidget {
+class AmountOfPatientsContentView extends StatefulWidget {
   const AmountOfPatientsContentView({
     super.key,
   });
+
+  @override
+  State<AmountOfPatientsContentView> createState() => _AmountOfPatientsContentViewState();
+}
+
+class _AmountOfPatientsContentViewState extends State<AmountOfPatientsContentView> {
+  DateTime? amountOfPatientsStartDate;
+  DateTime? amountOfPatientsEndDate;
+  late TraumaStatsProvider _traumaStatsProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _traumaStatsProvider =
+        Provider.of<TraumaStatsProvider>(context, listen: false);
+    _traumaStatsProvider.addListener(clearAmountOfPatientsDates);
+  }
+
+  @override
+  void dispose() {
+    _traumaStatsProvider.removeListener(clearAmountOfPatientsDates);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +39,8 @@ class AmountOfPatientsContentView extends StatelessWidget {
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder(
       future: traumaStatsProvider.getAmountOfPatients(
-        startDate: traumaStatsProvider.amountOfPatientsStartDate ?? traumaStatsProvider.globalStartDate,
-        endDate: traumaStatsProvider.amountOfPatientsEndDate ?? traumaStatsProvider.globalEndDate,
+        startDate: amountOfPatientsStartDate ?? traumaStatsProvider.globalStartDate,
+        endDate: amountOfPatientsEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -40,15 +63,31 @@ class AmountOfPatientsContentView extends StatelessWidget {
               color: AppColors.base,
             ),
             DateRangePickerButtons(
-              startDate: traumaStatsProvider.amountOfPatientsStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: traumaStatsProvider.amountOfPatientsEndDate ?? traumaStatsProvider.globalEndDate,
-              updateStartDate: traumaStatsProvider.updateAmountOfPatientsStartDate,
-              updateEndDate: traumaStatsProvider.updateAmountOfPatientsEndDate,
-              clearDates: traumaStatsProvider.clearAmountOfPatientsDates,
+              startDate: amountOfPatientsStartDate ?? traumaStatsProvider.globalStartDate,
+              endDate: amountOfPatientsEndDate ?? traumaStatsProvider.globalEndDate,
+              updateStartDate: updateAmountOfPatientsStartDate,
+              updateEndDate: updateAmountOfPatientsEndDate,
+              clearDates: clearAmountOfPatientsDates,
             ),
           ],
         );
       },
     );
+  }
+
+  void updateAmountOfPatientsStartDate(DateTime? date) {
+    amountOfPatientsStartDate = date;
+    setState(() => {});
+  }
+
+  void updateAmountOfPatientsEndDate(DateTime? date) {
+    amountOfPatientsEndDate = date;
+    setState(() => {});
+  }
+
+  void clearAmountOfPatientsDates() {
+    amountOfPatientsStartDate = null;
+    amountOfPatientsEndDate = null;
+    setState(() => {});
   }
 }

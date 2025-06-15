@@ -6,10 +6,33 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_stats_pro
 import 'package:trauma_register_frontend/presentation/widgets/custom_vertical_bar_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
 
-class TypeOfPatientsAdmissionContentView extends StatelessWidget {
+class TypeOfPatientsAdmissionContentView extends StatefulWidget {
   const TypeOfPatientsAdmissionContentView({
     super.key,
   });
+
+  @override
+  State<TypeOfPatientsAdmissionContentView> createState() => _TypeOfPatientsAdmissionContentViewState();
+}
+
+class _TypeOfPatientsAdmissionContentViewState extends State<TypeOfPatientsAdmissionContentView> {
+  DateTime? typeOfPatientsAdmissionStartDate;
+  DateTime? typeOfPatientsAdmissionEndDate;
+  late TraumaStatsProvider _traumaStatsProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _traumaStatsProvider =
+        Provider.of<TraumaStatsProvider>(context, listen: false);
+    _traumaStatsProvider.addListener(clearTypeOfPatientsAdmissionDates);
+  }
+
+  @override
+  void dispose() {
+    _traumaStatsProvider.removeListener(clearTypeOfPatientsAdmissionDates);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +40,8 @@ class TypeOfPatientsAdmissionContentView extends StatelessWidget {
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder(
       future: traumaStatsProvider.getTypeOfPatientsAdmission(
-        startDate: traumaStatsProvider.typeOfPatientsAdmissionStartDate ?? traumaStatsProvider.globalStartDate,
-        endDate: traumaStatsProvider.typeOfPatientsAdmissionEndDate ?? traumaStatsProvider.globalEndDate,
+        startDate: typeOfPatientsAdmissionStartDate ?? traumaStatsProvider.globalStartDate,
+        endDate: typeOfPatientsAdmissionEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -43,15 +66,31 @@ class TypeOfPatientsAdmissionContentView extends StatelessWidget {
               data: genderData,
             ),
             DateRangePickerButtons(
-              startDate: traumaStatsProvider.typeOfPatientsAdmissionStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: traumaStatsProvider.typeOfPatientsAdmissionEndDate ?? traumaStatsProvider.globalEndDate,
-              updateStartDate: traumaStatsProvider.updateTypeOfPatientsAdmissionStartDate,
-              updateEndDate: traumaStatsProvider.updateTypeOfPatientsAdmissionEndDate,
-              clearDates: traumaStatsProvider.clearTypeOfPatientsAdmissionDates,
+              startDate: typeOfPatientsAdmissionStartDate ?? traumaStatsProvider.globalStartDate,
+              endDate: typeOfPatientsAdmissionEndDate ?? traumaStatsProvider.globalEndDate,
+              updateStartDate: updateTypeOfPatientsAdmissionStartDate,
+              updateEndDate: updateTypeOfPatientsAdmissionEndDate,
+              clearDates: clearTypeOfPatientsAdmissionDates,
             ),
           ],
         );
       },
     );
+  }
+
+  void updateTypeOfPatientsAdmissionStartDate(DateTime? date) {
+    typeOfPatientsAdmissionStartDate = date;
+    setState(() => {});
+  }
+
+  void updateTypeOfPatientsAdmissionEndDate(DateTime? date) {
+    typeOfPatientsAdmissionEndDate = date;
+    setState(() => {});
+  }
+
+  void clearTypeOfPatientsAdmissionDates() {
+    typeOfPatientsAdmissionStartDate = null;
+    typeOfPatientsAdmissionEndDate = null;
+    setState(() => {});
   }
 }

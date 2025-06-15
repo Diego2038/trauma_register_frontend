@@ -6,10 +6,33 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_stats_pro
 import 'package:trauma_register_frontend/presentation/widgets/custom_vertical_bar_chart.dart';
 import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
 
-class PatientsAgesContentView extends StatelessWidget {
+class PatientsAgesContentView extends StatefulWidget {
   const PatientsAgesContentView({
     super.key,
   });
+
+  @override
+  State<PatientsAgesContentView> createState() => _PatientsAgesContentViewState();
+}
+
+class _PatientsAgesContentViewState extends State<PatientsAgesContentView> {
+  DateTime? patientsAgesStartDate;
+  DateTime? patientsAgesEndDate;
+  late TraumaStatsProvider _traumaStatsProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    _traumaStatsProvider =
+        Provider.of<TraumaStatsProvider>(context, listen: false);
+    _traumaStatsProvider.addListener(clearPatientsAgesDates);
+  }
+
+  @override
+  void dispose() {
+    _traumaStatsProvider.removeListener(clearPatientsAgesDates);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +40,8 @@ class PatientsAgesContentView extends StatelessWidget {
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder(
       future: traumaStatsProvider.getPatientsAges(
-        startDate: traumaStatsProvider.patientsAgesStartDate ?? traumaStatsProvider.globalStartDate,
-        endDate: traumaStatsProvider.patientsAgesEndDate ?? traumaStatsProvider.globalEndDate,
+        startDate: patientsAgesStartDate ?? traumaStatsProvider.globalStartDate,
+        endDate: patientsAgesEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -44,15 +67,31 @@ class PatientsAgesContentView extends StatelessWidget {
               data: genderData,
             ),
             DateRangePickerButtons(
-              startDate: traumaStatsProvider.patientsAgesStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: traumaStatsProvider.patientsAgesEndDate ?? traumaStatsProvider.globalEndDate,
-              updateStartDate: traumaStatsProvider.updatePatientsAgesStartDate,
-              updateEndDate: traumaStatsProvider.updatePatientsAgesEndDate,
-              clearDates: traumaStatsProvider.clearPatientsAgesDates,
+              startDate: patientsAgesStartDate ?? traumaStatsProvider.globalStartDate,
+              endDate: patientsAgesEndDate ?? traumaStatsProvider.globalEndDate,
+              updateStartDate: updatePatientsAgesStartDate,
+              updateEndDate: updatePatientsAgesEndDate,
+              clearDates: clearPatientsAgesDates,
             ),
           ],
         );
       },
     );
+  }
+
+  void updatePatientsAgesStartDate(DateTime? date) {
+    patientsAgesStartDate = date;
+    setState(() => {});
+  }
+
+  void updatePatientsAgesEndDate(DateTime? date) {
+    patientsAgesEndDate = date;
+    setState(() => {});
+  }
+
+  void clearPatientsAgesDates() {
+    patientsAgesStartDate = null;
+    patientsAgesEndDate = null;
+    setState(() => {});
   }
 }
