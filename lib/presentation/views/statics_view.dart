@@ -19,74 +19,114 @@ class StaticsView extends StatelessWidget {
     final traumaStatsProvider =
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Wrap(
-                runSpacing: 20,
-                spacing: 20,
-                children: [
-                  const CustomStatsContainer(
-                    title: "Rango de fechas",
-                    minHeight: 100,
-                    minWidth: 400,
-                    maxWidth: 400,
-                    child: DateRangePickerButtons(),
-                  ),
-                  Column(
+      child: Column(
+        children: [
+          _customFilterBox(context),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    runSpacing: 20,
+                    spacing: 20,
                     children: [
+                      Column(
+                        children: [
+                          CustomStatsContainer(
+                            minWidth: 420,
+                            minHeight: 350,
+                            title: "Distribución por género",
+                            child: gendersContent(traumaStatsProvider),
+                          ),
+                          const SizedBox(height: 20),
+                          CustomStatsContainer(
+                            minWidth: 420,
+                            minHeight: 144,
+                            title: "Cantidad de registros de pacientes",
+                            child: amountOfPatientsContent(traumaStatsProvider),
+                          ),
+                        ],
+                      ),
                       CustomStatsContainer(
                         minWidth: 420,
                         minHeight: 350,
-                        title: "Distribución por género",
-                        child: gendersContent(traumaStatsProvider),
+                        title: "Distribución por edad",
+                        child: patientsAgesContent(traumaStatsProvider),
                       ),
-                      const SizedBox(height: 20),
                       CustomStatsContainer(
                         minWidth: 420,
-                        minHeight: 144,
-                        title: "Cantidad de registros de pacientes",
-                        child: amountOfPatientsContent(traumaStatsProvider),
+                        minHeight: 350,
+                        title: "Distribución por aseguramiento",
+                        child: insuredPatientsContent(traumaStatsProvider),
+                      ),
+                      CustomStatsContainer(
+                        minWidth: 500,
+                        minHeight: 350,
+                        title: "Distribución por tipo de admisión",
+                        child: typeOfPatientsAdmissionContent(traumaStatsProvider),
+                      ),
+                      CustomStatsContainer(
+                        minWidth: 30,
+                        minHeight: 350,
+                        title: "Distribución por tipo de trauma",
+                        child: patientsWithRelationsContent(traumaStatsProvider),
+                      ),
+                      CustomStatsContainer(
+                        minWidth: 30,
+                        minHeight: 350,
+                        title: "Cantidad de ingresos por año",
+                        child: traumaCountByDateContent(traumaStatsProvider),
                       ),
                     ],
                   ),
-                  CustomStatsContainer(
-                    minWidth: 420,
-                    minHeight: 350,
-                    title: "Distribución por edad",
-                    child: patientsAgesContent(traumaStatsProvider),
-                  ),
-                  CustomStatsContainer(
-                    minWidth: 420,
-                    minHeight: 350,
-                    title: "Distribución por aseguramiento",
-                    child: insuredPatientsContent(traumaStatsProvider),
-                  ),
-                  CustomStatsContainer(
-                    minWidth: 500,
-                    minHeight: 350,
-                    title: "Distribución por tipo de admisión",
-                    child: typeOfPatientsAdmissionContent(traumaStatsProvider),
-                  ),
-                  CustomStatsContainer(
-                    minWidth: 30,
-                    minHeight: 350,
-                    title: "Distribución por tipo de trauma",
-                    child: patientsWithRelationsContent(traumaStatsProvider),
-                  ),
-                  CustomStatsContainer(
-                    minWidth: 30,
-                    minHeight: 350,
-                    title: "Cantidad de ingresos por año",
-                    child: traumaCountByDateContent(traumaStatsProvider),
-                  ),
-                ],
-              ),
-            )
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _customFilterBox(BuildContext context) {
+    final traumaStatsProvider = Provider.of<TraumaStatsProvider>(context);
+    return Center(
+      child: Container(
+        // height: 140,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: AppColors.base50,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              offset: const Offset(0, 4),
+              blurRadius: 4,
+            ),
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomStatsContainer(
+                title: "Filtro de fecha global",
+                minHeight: 100,
+                minWidth: 400,
+                maxWidth: 400,
+                // internColor: AppColors.base200,
+                child: DateRangePickerButtons(
+                  startDate: traumaStatsProvider.startDate,
+                  endDate: traumaStatsProvider.endDate,
+                  updateStartDate: traumaStatsProvider.updateStartDate,
+                  updateEndDate: traumaStatsProvider.updateEndDate,
+                  clearDates: traumaStatsProvider.clearDates,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
