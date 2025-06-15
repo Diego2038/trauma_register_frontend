@@ -38,6 +38,7 @@ class CustomStatsContainer extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           H3(text: title),
           child,
