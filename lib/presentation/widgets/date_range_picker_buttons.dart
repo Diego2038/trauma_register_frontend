@@ -41,6 +41,7 @@ class DateRangePickerButtons extends StatelessWidget {
       child: Wrap(
         runSpacing: 10,
         alignment: WrapAlignment.spaceAround,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: [
           SizedBox(
             width: 150,
