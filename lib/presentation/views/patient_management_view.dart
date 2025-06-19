@@ -185,7 +185,8 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                   final bool result = await traumaDataProvider
                                       .createPatientData(patientData!);
                                   CustomModal.showModal(
-                                    context: NavigationService.navigatorKey.currentContext!,
+                                    context: NavigationService
+                                        .navigatorKey.currentContext!,
                                     title: null,
                                     showCancelButton: false,
                                     text: result
@@ -236,12 +237,22 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                         text:
                                             "¿Está seguro que desea eliminar éste usuario?",
                                         onPressedAccept: () async {
-                                          traumaDataProvider
-                                              .deletePatientDataById(
-                                                  patientData!
-                                                      .traumaRegisterRecordId!
-                                                      .toString());
+                                          final bool result =
+                                              await traumaDataProvider
+                                                  .deletePatientDataById(
+                                                      patientData!
+                                                          .traumaRegisterRecordId!
+                                                          .toString());
                                           setState(() => patientData = null);
+                                          CustomModal.showModal(
+                                            context: NavigationService
+                                                .navigatorKey.currentContext!,
+                                            title: null,
+                                            showCancelButton: false,
+                                            text: result
+                                                ? "El usuario se ha eliminado satisfactoriamente."
+                                                : "El usuario no se pudo eliminar, por favor inténtelo nuevamente.",
+                                          );
                                         },
                                       );
                                     },

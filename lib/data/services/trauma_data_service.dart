@@ -21,17 +21,19 @@ class TraumaDataService {
     }
   }
 
-  Future<void> deletePatientDataById(String traumaRegisterRecordId) async {
+  Future<bool> deletePatientDataById(String traumaRegisterRecordId) async {
     try {
       final String? token = LocalStorage.prefs.getString('token');
       final response = await EndpointHelper.deleteRequest(
         path: "/medical_records/patient-data/$traumaRegisterRecordId/",
         token: token,
       );
-      if (response.statusCode == 404) return;
+      if (response.statusCode == 404) return false;
+      return true;
     } catch (e, s) {
       PrintError.makePrint(
           e: e, ubication: 'trauma_data_service.dart', stack: s);
+      return false;
     }
   }
 
