@@ -73,6 +73,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
         scale: radious / 18,
         child: SizedBox(
           width: radious,
+          height: size == CustomSize.h5 ? 25 : null,
           child: Checkbox(
               value: checkboxValue,
               splashRadius: 15,

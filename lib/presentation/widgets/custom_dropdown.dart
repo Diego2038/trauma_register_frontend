@@ -1,44 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_size_text.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 
-class CustomInputWithLabel extends StatelessWidget {
+class CustomDropdown extends StatelessWidget {
   final CustomSize size;
   final String title;
   final String hintText;
-  final String text;
+  final String? selectedValue; // El valor actualmente seleccionado para el dropdown
+  final List<String> items; // La lista de opciones para el dropdown
   final double? width;
   final double? height;
-  final TextEditingController? controller;
-  final void Function(String)? onChanged;
-  final VoidCallback? onPressedRightIcon;
-  final void Function(String?)? onSubmitted;
-  final IconData? rightIcon;
-  final IconData? leftIcon;
-  final bool readOnly;
-  final int lines;
-  final bool allowOnlyNumbers;
+  final void Function(String?)? onItemSelected; // Callback cuando se selecciona un item
+  final IconData? leftIcon; // Icono a la izquierda
+  final IconData? customDropdownIcon; // Icono para el dropdown (reemplaza la flecha por defecto)
 
-  const CustomInputWithLabel({
+  const CustomDropdown({
     super.key,
     required this.size,
     required this.title,
     required this.hintText,
-    required this.text,
+    required this.items, // Ahora requerido
+    this.selectedValue,
     this.width,
     this.height,
-    this.controller,
-    this.onChanged,
-    this.onPressedRightIcon,
-    this.onSubmitted,
-    this.rightIcon,
+    this.onItemSelected, // Ahora un parámetro específico para el dropdown
     this.leftIcon,
-    this.readOnly = false,
-    this.lines = 1,
-    this.allowOnlyNumbers = false,
+    this.customDropdownIcon, // Nuevo parámetro para el icono del dropdown
   }) : assert(
           size == CustomSize.h2 ||
               size == CustomSize.h3 ||
@@ -57,14 +46,15 @@ class CustomInputWithLabel extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           customTitle(),
-          // customHeightSpace(),
-          customInput(),
+          // customHeightSpace(), // Descomenta si necesitas espacio vertical entre título y dropdown
+          customDropdownField(), // Renombrado de customInput a customDropdownField
         ],
       ),
     );
   }
 
   Widget customTitle() {
+    // Lógica para el título, se mantiene igual
     return size == CustomSize.h2
         ? H2(
             text: title,
@@ -82,6 +72,7 @@ class CustomInputWithLabel extends StatelessWidget {
   }
 
   Widget customHeightSpace() {
+    // Lógica para el espacio, se mantiene igual
     return SizedBox(
         height: size == CustomSize.h2
             ? 10
@@ -90,7 +81,7 @@ class CustomInputWithLabel extends StatelessWidget {
                 : 5);
   }
 
-  Widget customInput() {
+  Widget customDropdownField() {
     final double customSpace = size == CustomSize.h2
         ? 10
         : size == CustomSize.h3
@@ -105,38 +96,52 @@ class CustomInputWithLabel extends StatelessWidget {
       minWidth: 0,
       minHeight: 0,
     );
-    final rightIconWidget = Icon(
-      rightIcon,
-      color: AppColors.grey200,
-      size: dimensionSize,
-    );
-    return TextField(
-      controller: controller ?? TextEditingController(text: text),
-      onChanged: onChanged,
-      onSubmitted: onSubmitted,
-      keyboardType: allowOnlyNumbers ? TextInputType.number : null,
-      inputFormatters: allowOnlyNumbers
-          ? [
-              FilteringTextInputFormatter.digitsOnly,
-            ]
-          : null,
-      maxLines: lines,
-      minLines: lines,
-      readOnly: readOnly,
+
+    return DropdownButtonFormField<String>(
+      // El valor actualmente seleccionado
+      value: selectedValue,
+      
+      // Texto que se muestra cuando no hay nada seleccionado
+      hint: Text(
+        hintText,
+        style: TextStyle(
+          fontSize: dimensionSize,
+          color: AppColors.grey200,
+          fontWeight: FontWeight.w300,
+        ),
+      ),
+      
+      // Callback cuando se selecciona un nuevo elemento
+      onChanged: onItemSelected,
+      
+      // Estilo del texto de los elementos seleccionados
       style: TextStyle(
         fontSize: dimensionSize,
         color: AppColors.black,
         fontWeight: FontWeight.w300,
       ),
+      
+      // Icono del desplegable (flecha)
+      icon: customDropdownIcon != null
+          ? Icon(
+              customDropdownIcon,
+              color: AppColors.grey200,
+              size: dimensionSize,
+            )
+          : const Icon(Icons.arrow_drop_down), // Icono por defecto si no se provee uno
+      
+      // Los elementos del menú desplegable
+      items: items.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      
+      // Decoración del campo (similar a TextField)
       decoration: InputDecoration(
         filled: true,
         fillColor: AppColors.white,
-        hintText: hintText,
-        hintStyle: TextStyle(
-          fontSize: dimensionSize,
-          color: AppColors.grey200,
-          fontWeight: FontWeight.w300,
-        ),
         prefixIcon: leftIcon != null
             ? Padding(
                 padding: EdgeInsets.only(
@@ -151,20 +156,8 @@ class CustomInputWithLabel extends StatelessWidget {
               )
             : null,
         prefixIconConstraints: iconConstrain,
-        suffixIcon: rightIcon != null
-            ? Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: onPressedRightIcon == null
-                    ? rightIconWidget
-                    : IconButton(
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        onPressed: onPressedRightIcon,
-                        icon: rightIconWidget,
-                      ),
-              )
-            : null,
-        suffixIconConstraints: iconConstrain,
+        // Eliminamos suffixIcon y onPressedRightIcon ya que el DropdownButtonFormField maneja su propio icono de flecha
+        // y no tiene un onPressed para un suffixIcon arbitrario.
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
           borderSide: const BorderSide(color: AppColors.grey200),
@@ -179,7 +172,7 @@ class CustomInputWithLabel extends StatelessWidget {
         ),
         contentPadding: EdgeInsets.symmetric(
           vertical: dimensionSize * 0.3,
-          horizontal: 5,
+          horizontal: 10,
         ),
       ),
     );

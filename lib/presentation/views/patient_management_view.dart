@@ -8,7 +8,9 @@ import 'package:trauma_register_frontend/data/models/trauma_data/trauma_data.dar
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_checkbox.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_dropdown.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class PatientManagementView extends StatefulWidget {
@@ -26,6 +28,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
   bool isMounted = false;
   bool allowEditFields = false;
   bool freeSize = false;
+  String query = "Buscar";
 
   @override
   void didChangeDependencies() {
@@ -140,30 +143,95 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                   runSpacing: 20,
                   spacing: 30,
                   children: [
-                    CustomInputWithLabel(
-                      size: CustomSize.h2,
-                      width: 400,
-                      controller: controller,
-                      allowOnlyNumbers: true,
-                      title: "Buscar paciente por ID",
-                      text: "",
-                      hintText: "3155805",
-                      leftIcon: Icons.person_search_outlined,
-                      rightIcon: Icons.search,
-                      onPressedRightIcon: () async {
-                        await searchPatient(controller.text);
-                      },
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomInputWithLabel(
+                          size: CustomSize.h2,
+                          width: 400,
+                          controller: controller,
+                          allowOnlyNumbers: true,
+                          title: "Buscar paciente por ID",
+                          text: "",
+                          hintText: "3155805",
+                          leftIcon: Icons.person_search_outlined,
+                          rightIcon: Icons.search,
+                          onPressedRightIcon: () async {
+                            await searchPatient(controller.text);
+                          },
+                          onSubmitted: (String? value) async => await searchPatient(value ?? ''),
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          constraints: const BoxConstraints(
+                            maxWidth: 400,
+                          ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Wrap(
+                              runSpacing: 10,
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 6,
+                                    bottom: 6,
+                                  ),
+                                  child: CustomCheckbox(
+                                    size: CustomSize.h5,
+                                    text: "Desplegar todas las secciones",
+                                    minWidthToCollapse: 440,
+                                    onChanged: (bool value) {
+                                      final traumaDataProvider =
+                                          Provider.of<TraumaDataProvider>(
+                                        context,
+                                        listen: false,
+                                      );
+                                      traumaDataProvider.setAllExpanded(value);
+                                    },
+                                  ),
+                                ),
+                                if (query == "Buscar" && patientData != null)
+                                  IconButton(
+                                    onPressed: () {
+                                      CustomModal.showModal(
+                                        context: context,
+                                        title: "Eliminar usuario",
+                                        text:
+                                            "¿Está seguro que desea eliminar éste usuario?",
+                                        onPressedAccept: () async {
+                                          final traumaDataProvider = Provider.of<TraumaDataProvider>(context, listen: false);
+                                          traumaDataProvider.deletePatientDataById(patientData!.traumaRegisterRecordId!.toString());
+                                          setState(() => patientData = null);
+                                        },
+                                      );
+                                    },
+                                    icon: const Icon(Icons.delete),
+                                    iconSize: 25,
+                                    color: AppColors.modalCancel,
+                                    padding: EdgeInsets.zero,
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      child: CustomCheckbox(
-                        size: CustomSize.h3,
-                        text: "Desplegar todas las secciones",
-                        minWidthToCollapse: 440,
-                        onChanged: (bool value) {
-                          final traumaDataProvider =
-                              Provider.of<TraumaDataProvider>(context,
-                                  listen: false);
-                          traumaDataProvider.setAllExpanded(value);
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: CustomDropdown(
+                        size: CustomSize.h5,
+                        title: "Selecciona la opción",
+                        hintText: "Crear",
+                        selectedValue: query,
+                        width: 190,
+                        items: const [
+                          "Crear",
+                          "Buscar",
+                        ],
+                        onItemSelected: (String? value) {
+                          setState(() => query = value!);
                         },
                       ),
                     ),
@@ -195,7 +263,7 @@ class _ContentDataPatient extends StatelessWidget {
 
   const _ContentDataPatient({
     required this.patientData,
-    required this.customSize, 
+    required this.customSize,
     required this.allowEditFields,
     required this.freeSize,
   });
@@ -253,8 +321,8 @@ class _ContentDataPatient extends StatelessWidget {
               patientData.collision == null || patientData.collision!.isEmpty
                   ? noDataWidget
                   : SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
+                      width: double.infinity,
+                      child: Wrap(
                         runSpacing: 10,
                         spacing: 10,
                         children: patientData.collision!
@@ -269,7 +337,7 @@ class _ContentDataPatient extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                  ),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -279,8 +347,8 @@ class _ContentDataPatient extends StatelessWidget {
               patientData.drugAbuse == null || patientData.drugAbuse!.isEmpty
                   ? noDataWidget
                   : SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
+                      width: double.infinity,
+                      child: Wrap(
                         runSpacing: 10,
                         spacing: 10,
                         children: patientData.drugAbuse!
@@ -295,7 +363,7 @@ class _ContentDataPatient extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                  ),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -305,8 +373,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.vitalSignGcsQualifier!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.vitalSignGcsQualifier!
@@ -322,7 +390,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -332,8 +400,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.hospitalizationVariable!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.hospitalizationVariable!
@@ -349,7 +417,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -359,8 +427,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.hospitalizationComplication!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.hospitalizationComplication!
@@ -370,14 +438,14 @@ class _ContentDataPatient extends StatelessWidget {
                             children: hospitalizationComplicationContent(
                               hospitalizationComplication:
                                   hospitalizationComplication,
-                                  allowEditFields: allowEditFields,
+                              allowEditFields: allowEditFields,
                               customSize: customSize,
                             ),
                           ),
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -387,8 +455,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.traumaRegisterIcd10!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.traumaRegisterIcd10!
@@ -404,7 +472,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -414,8 +482,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.intensiveCareUnit!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.intensiveCareUnit!
@@ -431,7 +499,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -441,8 +509,8 @@ class _ContentDataPatient extends StatelessWidget {
               patientData.imaging == null || patientData.imaging!.isEmpty
                   ? noDataWidget
                   : SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
+                      width: double.infinity,
+                      child: Wrap(
                         runSpacing: 10,
                         spacing: 10,
                         children: patientData.imaging!
@@ -458,7 +526,7 @@ class _ContentDataPatient extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                  ),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -468,8 +536,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.apparentIntentInjury!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.apparentIntentInjury!
@@ -485,7 +553,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -495,8 +563,8 @@ class _ContentDataPatient extends StatelessWidget {
               patientData.burnInjury == null || patientData.burnInjury!.isEmpty
                   ? noDataWidget
                   : SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
+                      width: double.infinity,
+                      child: Wrap(
                         runSpacing: 10,
                         spacing: 10,
                         children: patientData.burnInjury!
@@ -512,7 +580,7 @@ class _ContentDataPatient extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                  ),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -522,8 +590,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.firearmInjury!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.firearmInjury!
@@ -539,7 +607,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -549,8 +617,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.penetratingInjury!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.penetratingInjury!
@@ -566,7 +634,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -576,8 +644,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.poisoningInjury!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.poisoningInjury!
@@ -593,7 +661,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -603,8 +671,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.violenceInjury!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.violenceInjury!
@@ -620,7 +688,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -630,8 +698,8 @@ class _ContentDataPatient extends StatelessWidget {
               patientData.device == null || patientData.device!.isEmpty
                   ? noDataWidget
                   : SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
+                      width: double.infinity,
+                      child: Wrap(
                         runSpacing: 10,
                         spacing: 10,
                         children: patientData.device!
@@ -647,7 +715,7 @@ class _ContentDataPatient extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                  ),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -657,8 +725,8 @@ class _ContentDataPatient extends StatelessWidget {
               patientData.laboratory == null || patientData.laboratory!.isEmpty
                   ? noDataWidget
                   : SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
+                      width: double.infinity,
+                      child: Wrap(
                         runSpacing: 10,
                         spacing: 10,
                         children: patientData.laboratory!
@@ -674,7 +742,7 @@ class _ContentDataPatient extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                  ),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -684,8 +752,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.physicalExamBodyPartInjury!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.physicalExamBodyPartInjury!
@@ -695,14 +763,14 @@ class _ContentDataPatient extends StatelessWidget {
                             children: physicalExamBodyPartInjuryContent(
                               physicalExamBodyPartInjury:
                                   physicalExamBodyPartInjury,
-                                  allowEditFields: allowEditFields,
+                              allowEditFields: allowEditFields,
                               customSize: customSize,
                             ),
                           ),
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -712,8 +780,8 @@ class _ContentDataPatient extends StatelessWidget {
               patientData.procedure == null || patientData.procedure!.isEmpty
                   ? noDataWidget
                   : SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
+                      width: double.infinity,
+                      child: Wrap(
                         runSpacing: 10,
                         spacing: 10,
                         children: patientData.procedure!
@@ -729,7 +797,7 @@ class _ContentDataPatient extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                  ),
+                    ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -739,8 +807,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.prehospitalProcedure!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.prehospitalProcedure!
@@ -756,7 +824,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -766,8 +834,8 @@ class _ContentDataPatient extends StatelessWidget {
                   patientData.transportationMode!.isEmpty
               ? noDataWidget
               : SizedBox(
-                width: double.infinity,
-                child: Wrap(
+                  width: double.infinity,
+                  child: Wrap(
                     runSpacing: 10,
                     spacing: 10,
                     children: patientData.transportationMode!
@@ -783,7 +851,7 @@ class _ContentDataPatient extends StatelessWidget {
                         )
                         .toList(),
                   ),
-              ),
+                ),
         ),
         const SizedBox(height: 10),
         ExpandableTitleWidget(
@@ -793,8 +861,8 @@ class _ContentDataPatient extends StatelessWidget {
               patientData.vitalSign == null || patientData.vitalSign!.isEmpty
                   ? noDataWidget
                   : SizedBox(
-                    width: double.infinity,
-                    child: Wrap(
+                      width: double.infinity,
+                      child: Wrap(
                         runSpacing: 10,
                         spacing: 10,
                         children: patientData.vitalSign!
@@ -810,7 +878,7 @@ class _ContentDataPatient extends StatelessWidget {
                             )
                             .toList(),
                       ),
-                  ),
+                    ),
         ),
       ],
     );

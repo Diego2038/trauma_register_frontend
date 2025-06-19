@@ -45,4 +45,14 @@ class TraumaDataProvider extends ChangeNotifier {
       return null;
     }
   }
+
+  Future<void> deletePatientDataById(String traumaRegisterRecordId) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      await traumaDataService.deletePatientDataById(traumaRegisterRecordId);
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+    }
+  }
 }
