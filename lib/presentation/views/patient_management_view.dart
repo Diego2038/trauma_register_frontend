@@ -5,7 +5,9 @@ import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/trauma_data.dart';
+import 'package:trauma_register_frontend/data/services/navigation_service.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_checkbox.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_dropdown.dart';
@@ -116,6 +118,10 @@ class _PatientManagementViewState extends State<PatientManagementView> {
   }
 
   Center _customSearchBox() {
+    final traumaDataProvider = Provider.of<TraumaDataProvider>(
+      context,
+      listen: false,
+    );
     return Center(
       child: Container(
         // height: 140,
@@ -146,21 +152,50 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomInputWithLabel(
-                          size: CustomSize.h2,
-                          width: 400,
-                          controller: controller,
-                          allowOnlyNumbers: true,
-                          title: "Buscar paciente por ID",
-                          text: "",
-                          hintText: "3155805",
-                          leftIcon: Icons.person_search_outlined,
-                          rightIcon: Icons.search,
-                          onPressedRightIcon: () async {
-                            await searchPatient(controller.text);
-                          },
-                          onSubmitted: (String? value) async => await searchPatient(value ?? ''),
-                        ),
+                        if (query == 'Buscar')
+                          CustomInputWithLabel(
+                            size: CustomSize.h2,
+                            width: 400,
+                            controller: controller,
+                            allowOnlyNumbers: true,
+                            title: "Buscar paciente por ID",
+                            text: "",
+                            hintText: "3155805",
+                            leftIcon: Icons.person_search_outlined,
+                            rightIcon: Icons.search,
+                            onPressedRightIcon: () async {
+                              await searchPatient(controller.text);
+                            },
+                            onSubmitted: (String? value) async =>
+                                await searchPatient(value ?? ''),
+                          )
+                        else
+                          Padding(
+                            padding: const EdgeInsets.only(top: 40, bottom: 4),
+                            child: CustomButton(
+                              size: CustomSize.h2,
+                              text: "Guardar Usuario",
+                              width: 350,
+                              centerButtonContent: true,
+                              onPressed: () async => CustomModal.showModal(
+                                context: context,
+                                title: null,
+                                text: "¿Desea crear el usuario?",
+                                onPressedAccept: () async {
+                                  final bool result = await traumaDataProvider
+                                      .createPatientData(patientData!);
+                                  CustomModal.showModal(
+                                    context: NavigationService.navigatorKey.currentContext!,
+                                    title: null,
+                                    showCancelButton: false,
+                                    text: result
+                                        ? "El usuario se ha creado satisfactoriamente."
+                                        : "El usuario no se pudo crear, por favor inténtelo nuevamente.",
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
                         const SizedBox(height: 8),
                         Container(
                           constraints: const BoxConstraints(
@@ -201,8 +236,11 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                         text:
                                             "¿Está seguro que desea eliminar éste usuario?",
                                         onPressedAccept: () async {
-                                          final traumaDataProvider = Provider.of<TraumaDataProvider>(context, listen: false);
-                                          traumaDataProvider.deletePatientDataById(patientData!.traumaRegisterRecordId!.toString());
+                                          traumaDataProvider
+                                              .deletePatientDataById(
+                                                  patientData!
+                                                      .traumaRegisterRecordId!
+                                                      .toString());
                                           setState(() => patientData = null);
                                         },
                                       );

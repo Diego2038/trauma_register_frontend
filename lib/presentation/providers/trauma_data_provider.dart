@@ -55,4 +55,16 @@ class TraumaDataProvider extends ChangeNotifier {
           e: e, ubication: 'trauma_data_provider.dart', stack: s);
     }
   }
+
+  Future<bool> createPatientData(PatientData patientData) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      final bool result = await traumaDataService.createPatientData(patientData);
+      return result;                    
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+      return false;
+    }
+  }
 }
