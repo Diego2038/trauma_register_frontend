@@ -12,6 +12,15 @@ class TraumaDataProvider extends ChangeNotifier {
   // This controls whether all widgets should expand or collapse.
   bool isAllExpanded = false;
 
+  // Patient trauma data
+  PatientData? patientData;
+
+  // Method to update the patientData
+  void updatePatientData(PatientData? patientData) {
+    this.patientData = patientData;
+    notifyListeners();
+  }
+
   // Method to update the expansion state of a specific widget
   void toggleExpansion(int index) {
     _expandedStates[index] = !_expandedStates[index];
