@@ -3,14 +3,12 @@ class HospitalizationComplication {
   final String? tipoDeComplicacion;
   final DateTime? fechaYHoraDeComplicacion;
   final String? lugarDeComplicacion;
-  final int? traumaRegisterRecordId;
 
   HospitalizationComplication({
     this.id,
     this.tipoDeComplicacion,
     this.fechaYHoraDeComplicacion,
     this.lugarDeComplicacion,
-    this.traumaRegisterRecordId,
   });
 
   HospitalizationComplication copyWith({
@@ -18,7 +16,6 @@ class HospitalizationComplication {
     String? tipoDeComplicacion,
     DateTime? fechaYHoraDeComplicacion,
     String? lugarDeComplicacion,
-    int? traumaRegisterRecordId,
   }) =>
       HospitalizationComplication(
         id: id ?? this.id,
@@ -26,8 +23,6 @@ class HospitalizationComplication {
         fechaYHoraDeComplicacion:
             fechaYHoraDeComplicacion ?? this.fechaYHoraDeComplicacion,
         lugarDeComplicacion: lugarDeComplicacion ?? this.lugarDeComplicacion,
-        traumaRegisterRecordId:
-            traumaRegisterRecordId ?? this.traumaRegisterRecordId,
       );
 
   factory HospitalizationComplication.fromJson(Map<String, dynamic> json) =>
@@ -38,7 +33,6 @@ class HospitalizationComplication {
             ? null
             : DateTime.parse(json["fecha_y_hora_de_complicacion"]),
         lugarDeComplicacion: json["lugar_de_complicacion"],
-        traumaRegisterRecordId: json["trauma_register_record_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -47,6 +41,5 @@ class HospitalizationComplication {
         "fecha_y_hora_de_complicacion":
             fechaYHoraDeComplicacion?.toIso8601String(),
         "lugar_de_complicacion": lugarDeComplicacion,
-        "trauma_register_record_id": traumaRegisterRecordId,
       };
 }

@@ -103,7 +103,6 @@ class HealthcareRecord {
   final int? cabeza;
   final double? trissContuso;
   final double? trissPenetrante;
-  final int? traumaRegisterRecordId;
 
   HealthcareRecord({
     this.id,
@@ -208,7 +207,6 @@ class HealthcareRecord {
     this.cabeza,
     this.trissContuso,
     this.trissPenetrante,
-    this.traumaRegisterRecordId,
   });
 
   HealthcareRecord copyWith({
@@ -314,7 +312,6 @@ class HealthcareRecord {
     int? cabeza,
     double? trissContuso,
     double? trissPenetrante,
-    int? traumaRegisterRecordId,
   }) =>
       HealthcareRecord(
         id: id ?? this.id,
@@ -490,8 +487,6 @@ class HealthcareRecord {
         cabeza: cabeza ?? this.cabeza,
         trissContuso: trissContuso ?? this.trissContuso,
         trissPenetrante: trissPenetrante ?? this.trissPenetrante,
-        traumaRegisterRecordId:
-            traumaRegisterRecordId ?? this.traumaRegisterRecordId,
       );
 
   factory HealthcareRecord.fromJson(Map<String, dynamic> json) =>
@@ -667,7 +662,6 @@ class HealthcareRecord {
         cabeza: json["cabeza"],
         trissContuso: double.tryParse(json["triss_contuso"].toString()),
         trissPenetrante: double.tryParse(json["triss_penetrante"].toString()),
-        traumaRegisterRecordId: json["trauma_register_record_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -806,6 +800,5 @@ class HealthcareRecord {
         "cabeza": cabeza,
         "triss_contuso": trissContuso,
         "triss_penetrante": trissPenetrante,
-        "trauma_register_record_id": traumaRegisterRecordId,
       };
 }

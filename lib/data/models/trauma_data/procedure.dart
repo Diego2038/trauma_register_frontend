@@ -4,7 +4,6 @@ class Procedure {
   final DateTime? fechaYHoraDeInicio;
   final DateTime? fechaYHoraDeTermino;
   final String? lugar;
-  final int? traumaRegisterRecordId;
 
   Procedure({
     this.id,
@@ -12,7 +11,6 @@ class Procedure {
     this.fechaYHoraDeInicio,
     this.fechaYHoraDeTermino,
     this.lugar,
-    this.traumaRegisterRecordId,
   });
 
   Procedure copyWith({
@@ -21,7 +19,6 @@ class Procedure {
     DateTime? fechaYHoraDeInicio,
     DateTime? fechaYHoraDeTermino,
     String? lugar,
-    int? traumaRegisterRecordId,
   }) =>
       Procedure(
         id: id ?? this.id,
@@ -30,8 +27,6 @@ class Procedure {
         fechaYHoraDeInicio: fechaYHoraDeInicio ?? this.fechaYHoraDeInicio,
         fechaYHoraDeTermino: fechaYHoraDeTermino ?? this.fechaYHoraDeTermino,
         lugar: lugar ?? this.lugar,
-        traumaRegisterRecordId:
-            traumaRegisterRecordId ?? this.traumaRegisterRecordId,
       );
 
   factory Procedure.fromJson(Map<String, dynamic> json) => Procedure(
@@ -44,7 +39,6 @@ class Procedure {
             ? null
             : DateTime.parse(json["fecha_y_hora_de_termino"]),
         lugar: json["lugar"],
-        traumaRegisterRecordId: json["trauma_register_record_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -53,6 +47,5 @@ class Procedure {
         "fecha_y_hora_de_inicio": fechaYHoraDeInicio?.toIso8601String(),
         "fecha_y_hora_de_termino": fechaYHoraDeTermino?.toIso8601String(),
         "lugar": lugar,
-        "trauma_register_record_id": traumaRegisterRecordId,
       };
 }

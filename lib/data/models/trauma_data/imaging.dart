@@ -4,7 +4,6 @@ class Imaging {
   final String? parteDelCuerpo;
   final bool? opcion;
   final String? descripcion;
-  final int? traumaRegisterRecordId;
 
   Imaging({
     this.id,
@@ -12,7 +11,6 @@ class Imaging {
     this.parteDelCuerpo,
     this.opcion,
     this.descripcion,
-    this.traumaRegisterRecordId,
   });
 
   Imaging copyWith({
@@ -21,7 +19,6 @@ class Imaging {
     String? parteDelCuerpo,
     bool? opcion,
     String? descripcion,
-    int? traumaRegisterRecordId,
   }) =>
       Imaging(
         id: id ?? this.id,
@@ -29,8 +26,6 @@ class Imaging {
         parteDelCuerpo: parteDelCuerpo ?? this.parteDelCuerpo,
         opcion: opcion ?? this.opcion,
         descripcion: descripcion ?? this.descripcion,
-        traumaRegisterRecordId:
-            traumaRegisterRecordId ?? this.traumaRegisterRecordId,
       );
 
   factory Imaging.fromJson(Map<String, dynamic> json) => Imaging(
@@ -39,7 +34,6 @@ class Imaging {
         parteDelCuerpo: json["parte_del_cuerpo"],
         opcion: json["opcion"],
         descripcion: json["descripcion"],
-        traumaRegisterRecordId: json["trauma_register_record_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,6 +42,5 @@ class Imaging {
         "parte_del_cuerpo": parteDelCuerpo,
         "opcion": opcion,
         "descripcion": descripcion,
-        "trauma_register_record_id": traumaRegisterRecordId,
       };
 }

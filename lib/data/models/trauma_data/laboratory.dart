@@ -4,7 +4,6 @@ class Laboratory {
   final DateTime? fechaYHoraDeLaboratorio;
   final String? nombreDelLaboratorio;
   final String? nombreDeLaUnidadDeLaboratorio;
-  final int? traumaRegisterRecordId;
 
   Laboratory({
     this.id,
@@ -12,7 +11,6 @@ class Laboratory {
     this.fechaYHoraDeLaboratorio,
     this.nombreDelLaboratorio,
     this.nombreDeLaUnidadDeLaboratorio,
-    this.traumaRegisterRecordId,
   });
 
   Laboratory copyWith({
@@ -21,7 +19,6 @@ class Laboratory {
     DateTime? fechaYHoraDeLaboratorio,
     String? nombreDelLaboratorio,
     String? nombreDeLaUnidadDeLaboratorio,
-    int? traumaRegisterRecordId,
   }) =>
       Laboratory(
         id: id ?? this.id,
@@ -32,8 +29,6 @@ class Laboratory {
         nombreDelLaboratorio: nombreDelLaboratorio ?? this.nombreDelLaboratorio,
         nombreDeLaUnidadDeLaboratorio:
             nombreDeLaUnidadDeLaboratorio ?? this.nombreDeLaUnidadDeLaboratorio,
-        traumaRegisterRecordId:
-            traumaRegisterRecordId ?? this.traumaRegisterRecordId,
       );
 
   factory Laboratory.fromJson(Map<String, dynamic> json) => Laboratory(
@@ -45,7 +40,6 @@ class Laboratory {
         nombreDelLaboratorio: json["nombre_del_laboratorio"],
         nombreDeLaUnidadDeLaboratorio:
             json["nombre_de_la_unidad_de_laboratorio"],
-        traumaRegisterRecordId: json["trauma_register_record_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -55,6 +49,5 @@ class Laboratory {
             fechaYHoraDeLaboratorio?.toIso8601String(),
         "nombre_del_laboratorio": nombreDelLaboratorio,
         "nombre_de_la_unidad_de_laboratorio": nombreDeLaUnidadDeLaboratorio,
-        "trauma_register_record_id": traumaRegisterRecordId,
       };
 }

@@ -20,7 +20,6 @@ class VitalSign {
   final int? gcsVerbal;
   final int? gcsTotal;
   final String? avup;
-  final int? traumaRegisterRecordId;
 
   VitalSign({
     this.recordId,
@@ -42,7 +41,6 @@ class VitalSign {
     this.gcsVerbal,
     this.gcsTotal,
     this.avup,
-    this.traumaRegisterRecordId,
   });
 
   VitalSign copyWith({
@@ -65,7 +63,6 @@ class VitalSign {
     int? gcsVerbal,
     int? gcsTotal,
     String? avup,
-    int? traumaRegisterRecordId,
   }) =>
       VitalSign(
         recordId: recordId ?? this.recordId,
@@ -94,8 +91,6 @@ class VitalSign {
         gcsVerbal: gcsVerbal ?? this.gcsVerbal,
         gcsTotal: gcsTotal ?? this.gcsTotal,
         avup: avup ?? this.avup,
-        traumaRegisterRecordId:
-            traumaRegisterRecordId ?? this.traumaRegisterRecordId,
       );
 
   factory VitalSign.fromJson(Map<String, dynamic> json) => VitalSign(
@@ -128,7 +123,6 @@ class VitalSign {
         gcsVerbal: json["gcs_verbal"],
         gcsTotal: json["gcs_total"],
         avup: json["avup"],
-        traumaRegisterRecordId: json["trauma_register_record_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -153,6 +147,5 @@ class VitalSign {
         "gcs_verbal": gcsVerbal,
         "gcs_total": gcsTotal,
         "avup": avup,
-        "trauma_register_record_id": traumaRegisterRecordId,
       };
 }

@@ -5,7 +5,6 @@ class IntensiveCareUnit {
   final DateTime? fechaYHoraDeTermino;
   final String? lugar;
   final double? icuDays;
-  final int? traumaRegisterRecordId;
 
   IntensiveCareUnit({
     this.id,
@@ -14,7 +13,6 @@ class IntensiveCareUnit {
     this.fechaYHoraDeTermino,
     this.lugar,
     this.icuDays,
-    this.traumaRegisterRecordId,
   });
 
   IntensiveCareUnit copyWith({
@@ -24,7 +22,6 @@ class IntensiveCareUnit {
     DateTime? fechaYHoraDeTermino,
     String? lugar,
     double? icuDays,
-    int? traumaRegisterRecordId,
   }) =>
       IntensiveCareUnit(
         id: id ?? this.id,
@@ -33,8 +30,6 @@ class IntensiveCareUnit {
         fechaYHoraDeTermino: fechaYHoraDeTermino ?? this.fechaYHoraDeTermino,
         lugar: lugar ?? this.lugar,
         icuDays: icuDays ?? this.icuDays,
-        traumaRegisterRecordId:
-            traumaRegisterRecordId ?? this.traumaRegisterRecordId,
       );
 
   factory IntensiveCareUnit.fromJson(Map<String, dynamic> json) =>
@@ -49,7 +44,6 @@ class IntensiveCareUnit {
             : DateTime.parse(json["fecha_y_hora_de_termino"]),
         lugar: json["lugar"],
         icuDays: double.tryParse(json["icu_days"].toString()),
-        traumaRegisterRecordId: json["trauma_register_record_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,6 +53,5 @@ class IntensiveCareUnit {
         "fecha_y_hora_de_termino": fechaYHoraDeTermino?.toIso8601String(),
         "lugar": lugar,
         "icu_days": icuDays,
-        "trauma_register_record_id": traumaRegisterRecordId,
       };
 }

@@ -19,7 +19,6 @@ class InjuryRecord {
   final bool? caida;
   final double? alturaMetros;
   final String? tipoDeSuperficie;
-  final int? traumaRegisterRecordId;
 
   InjuryRecord({
     this.id,
@@ -42,7 +41,6 @@ class InjuryRecord {
     this.caida,
     this.alturaMetros,
     this.tipoDeSuperficie,
-    this.traumaRegisterRecordId,
   });
 
   InjuryRecord copyWith({
@@ -66,7 +64,6 @@ class InjuryRecord {
     bool? caida,
     double? alturaMetros,
     String? tipoDeSuperficie,
-    int? traumaRegisterRecordId,
   }) =>
       InjuryRecord(
         id: id ?? this.id,
@@ -93,8 +90,6 @@ class InjuryRecord {
         caida: caida ?? this.caida,
         alturaMetros: alturaMetros ?? this.alturaMetros,
         tipoDeSuperficie: tipoDeSuperficie ?? this.tipoDeSuperficie,
-        traumaRegisterRecordId:
-            traumaRegisterRecordId ?? this.traumaRegisterRecordId,
       );
 
   factory InjuryRecord.fromJson(Map<String, dynamic> json) => InjuryRecord(
@@ -121,7 +116,6 @@ class InjuryRecord {
         caida: json["caida"],
         alturaMetros: double.tryParse(json["altura_metros"].toString()),
         tipoDeSuperficie: json["tipo_de_superficie"],
-        traumaRegisterRecordId: json["trauma_register_record_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -145,6 +139,5 @@ class InjuryRecord {
         "caida": caida,
         "altura_metros": alturaMetros,
         "tipo_de_superficie": tipoDeSuperficie,
-        "trauma_register_record_id": traumaRegisterRecordId,
       };
 }
