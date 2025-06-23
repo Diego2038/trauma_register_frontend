@@ -4,7 +4,7 @@ import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_stats_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_stats_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/date_range_picker_buttons.dart';
-import 'statics/statics.dart';
+import 'statics.dart';
 
 class StaticsView extends StatelessWidget {
   const StaticsView({super.key});

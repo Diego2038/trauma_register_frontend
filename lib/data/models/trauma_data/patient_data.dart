@@ -262,4 +262,9 @@ class PatientData {
         "otro_grupo_etnico": otroGrupoEtnico,
         "num_doc_de_identificacion": numDocDeIdentificacion,
     };
+
+    @override
+  String toString() {
+    return "$traumaRegisterIcd10 - $direccionLinea1 - $direccionLinea2";
+  }
 }

@@ -19,7 +19,7 @@ class ExpandableTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final traumaDataProvider =
-        Provider.of<TraumaDataProvider>(context, listen: true);
+        Provider.of<TraumaDataProvider>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

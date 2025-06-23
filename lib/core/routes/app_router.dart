@@ -4,8 +4,8 @@ import 'package:trauma_register_frontend/presentation/providers/auth_provider.da
 import 'package:trauma_register_frontend/presentation/views/bulk_upload_view.dart';
 import 'package:trauma_register_frontend/presentation/views/home_view.dart';
 import 'package:trauma_register_frontend/presentation/views/login_view.dart';
-import 'package:trauma_register_frontend/presentation/views/patient_management_view.dart';
-import 'package:trauma_register_frontend/presentation/views/statics_view.dart';
+import 'package:trauma_register_frontend/presentation/views/patient_management/patient_management_view.dart';
+import 'package:trauma_register_frontend/presentation/views/statics/statics_view.dart';
 
 class AppRouter {
   static final FluroRouter router = FluroRouter();
