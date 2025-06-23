@@ -5,6 +5,7 @@ import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/trauma_data.dart';
 import 'package:trauma_register_frontend/data/services/navigation_service.dart';
+import 'package:trauma_register_frontend/presentation/providers/expandable_title_provider.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/views/patient_management/patient_management.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_button.dart';
@@ -53,15 +54,15 @@ class _PatientManagementViewState extends State<PatientManagementView> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!isMounted && context.mounted) {
         isMounted = true;
-        final traumaDataProvider =
-            Provider.of<TraumaDataProvider>(context, listen: false);
+        final expandableTitleProvider =
+            Provider.of<ExpandableTitleProvider>(context, listen: false);
         const traumaDataProviderCount =
             24; // Number of ExpandableTitleWidget widgets
 
         // Initialize the expansion state (we only do this once)
         if (traumaDataProviderCount !=
-            traumaDataProvider.currentAmountExpandedStates()) {
-          traumaDataProvider.initializeExpansions(traumaDataProviderCount);
+            expandableTitleProvider.currentAmountExpandedStates()) {
+          expandableTitleProvider.initializeExpansions(traumaDataProviderCount);
         }
       }
     });
@@ -240,12 +241,17 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                     text: "Desplegar todas las secciones",
                                     minWidthToCollapse: 440,
                                     onChanged: (bool value) {
+                                      final expandableTitleProvider =
+                                          Provider.of<ExpandableTitleProvider>(
+                                        context,
+                                        listen: false,
+                                      );
+                                      expandableTitleProvider.setAllExpanded(value);
                                       final traumaDataProvider =
                                           Provider.of<TraumaDataProvider>(
                                         context,
                                         listen: false,
                                       );
-                                      traumaDataProvider.setAllExpanded(value);
                                       print(traumaDataProvider.patientData);
                                     },
                                   ),

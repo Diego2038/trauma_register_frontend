@@ -9,6 +9,7 @@ import 'package:trauma_register_frontend/presentation/layouts/home_layout.dart';
 import 'package:trauma_register_frontend/presentation/layouts/loading_layout.dart';
 import 'package:trauma_register_frontend/presentation/layouts/login_layout.dart';
 import 'package:trauma_register_frontend/presentation/providers/auth_provider.dart';
+import 'package:trauma_register_frontend/presentation/providers/expandable_title_provider.dart';
 import 'package:trauma_register_frontend/presentation/providers/stats_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_stats_provider.dart';
@@ -25,6 +26,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => TraumaDataProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ExpandableTitleProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => StatsDataProvider(),
