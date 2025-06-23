@@ -9,9 +9,9 @@ class TraumaDataProvider extends ChangeNotifier {
   PatientData? patientData;
 
   // Method to update the patientData
-  void updatePatientData(PatientData? patientData) {
+  void updatePatientData(PatientData? patientData, [bool allowNotifyListener = false]) {
     this.patientData = patientData;
-    notifyListeners();
+    if (allowNotifyListener) notifyListeners();
   }
 
   Future<PatientData?> getPatientDataById(String traumaRegisterRecordId) async {

@@ -136,10 +136,6 @@ class _PatientManagementViewState extends State<PatientManagementView> {
   }
 
   Center _customSearchBox() {
-    final traumaDataProvider = Provider.of<TraumaDataProvider>(
-      context,
-      listen: true,
-    );
     return Center(
       child: Container(
         // height: 140,
@@ -190,32 +186,37 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                         else
                           Padding(
                             padding: const EdgeInsets.only(top: 40, bottom: 4),
-                            child: CustomButton(
-                              size: CustomSize.h2,
-                              text: "Guardar datos",
-                              width: 350,
-                              centerButtonContent: true,
-                              isAvailable: traumaDataProvider
-                                      .patientData?.traumaRegisterRecordId !=
-                                  null,
-                              onPressed: () async => CustomModal.showModal(
-                                context: context,
-                                title: null,
-                                text: "¿Desea crear el usuario?",
-                                onPressedAccept: () async {
-                                  final bool result = await traumaDataProvider
-                                      .createPatientData(
-                                          traumaDataProvider.patientData!);
-                                  CustomModal.showModal(
-                                    context: NavigationService
-                                        .navigatorKey.currentContext!,
-                                    title: null,
-                                    showCancelButton: false,
-                                    text: result
-                                        ? "El usuario se ha creado satisfactoriamente."
-                                        : "El usuario no se pudo crear, por favor inténtelo nuevamente.",
-                                  );
-                                },
+                            child: Consumer<TraumaDataProvider>(
+                              builder: (context, traumaDataProvider, _) =>
+                                  CustomButton(
+                                size: CustomSize.h2,
+                                text: "Guardar datos",
+                                width: 350,
+                                centerButtonContent: true,
+                                isAvailable: traumaDataProvider
+                                        .patientData?.traumaRegisterRecordId !=
+                                    null,
+                                onPressed: () async => CustomModal.showModal(
+                                  context: context,
+                                  title: null,
+                                  text: "¿Desea crear el usuario?",
+                                  onPressedAccept: () async {
+                                    print(
+                                        ">>>>>>>               ${traumaDataProvider.patientData}");
+                                    final bool result = await traumaDataProvider
+                                        .createPatientData(
+                                            traumaDataProvider.patientData!);
+                                    CustomModal.showModal(
+                                      context: NavigationService
+                                          .navigatorKey.currentContext!,
+                                      title: null,
+                                      showCancelButton: false,
+                                      text: result
+                                          ? "El usuario se ha creado satisfactoriamente."
+                                          : "El usuario no se pudo crear, por favor inténtelo nuevamente.",
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -246,7 +247,8 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                         context,
                                         listen: false,
                                       );
-                                      expandableTitleProvider.setAllExpanded(value);
+                                      expandableTitleProvider
+                                          .setAllExpanded(value);
                                       final traumaDataProvider =
                                           Provider.of<TraumaDataProvider>(
                                         context,
@@ -256,42 +258,50 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                     },
                                   ),
                                 ),
-                                if (query == "Buscar" &&
-                                    traumaDataProvider.patientData != null)
-                                  IconButton(
-                                    onPressed: () {
-                                      CustomModal.showModal(
-                                        context: context,
-                                        title: "Eliminar usuario",
-                                        text:
-                                            "¿Está seguro que desea eliminar éste usuario?",
-                                        onPressedAccept: () async {
-                                          final bool result =
-                                              await traumaDataProvider
-                                                  .deletePatientDataById(
-                                                      traumaDataProvider
-                                                          .patientData!
-                                                          .traumaRegisterRecordId!
-                                                          .toString());
-                                          traumaDataProvider
-                                              .updatePatientData(null);
-                                          CustomModal.showModal(
-                                            context: NavigationService
-                                                .navigatorKey.currentContext!,
-                                            title: null,
-                                            showCancelButton: false,
-                                            text: result
-                                                ? "El usuario se ha eliminado satisfactoriamente."
-                                                : "El usuario no se pudo eliminar, por favor inténtelo nuevamente.",
-                                          );
-                                        },
-                                      );
-                                    },
-                                    icon: const Icon(Icons.delete),
-                                    iconSize: 25,
-                                    color: AppColors.modalCancel,
-                                    padding: EdgeInsets.zero,
-                                  ),
+                                Consumer<TraumaDataProvider>(
+                                  builder: (context, traumaDataProvider,
+                                          child) =>
+                                      (query == "Buscar" &&
+                                              traumaDataProvider.patientData !=
+                                                  null)
+                                          ? IconButton(
+                                              onPressed: () {
+                                                CustomModal.showModal(
+                                                  context: context,
+                                                  title: "Eliminar usuario",
+                                                  text:
+                                                      "¿Está seguro que desea eliminar éste usuario?",
+                                                  onPressedAccept: () async {
+                                                    final bool result =
+                                                        await traumaDataProvider
+                                                            .deletePatientDataById(
+                                                                traumaDataProvider
+                                                                    .patientData!
+                                                                    .traumaRegisterRecordId!
+                                                                    .toString());
+                                                    traumaDataProvider
+                                                        .updatePatientData(
+                                                            null);
+                                                    CustomModal.showModal(
+                                                      context: NavigationService
+                                                          .navigatorKey
+                                                          .currentContext!,
+                                                      title: null,
+                                                      showCancelButton: false,
+                                                      text: result
+                                                          ? "El usuario se ha eliminado satisfactoriamente."
+                                                          : "El usuario no se pudo eliminar, por favor inténtelo nuevamente.",
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              icon: const Icon(Icons.delete),
+                                              iconSize: 25,
+                                              color: AppColors.modalCancel,
+                                              padding: EdgeInsets.zero,
+                                            )
+                                          : const SizedBox.shrink(),
+                                ),
                               ],
                             ),
                           ),
@@ -313,8 +323,10 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                         onItemSelected: (String? value) {
                           if (query == value) return;
                           allowEditFields = value == 'Crear';
-                          traumaDataProvider.updatePatientData(
-                              allowEditFields ? PatientData() : null);
+                          Provider.of<TraumaDataProvider>(context,
+                                  listen: false)
+                              .updatePatientData(
+                                  allowEditFields ? PatientData() : null);
                           if (!allowEditFields) {
                             startSearch = false;
                             isLoading = false;
@@ -360,7 +372,8 @@ class _ContentDataPatient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const noDataWidget = NormalText(text: "No hay datos en esta categoría");
-    final traumaProvider = Provider.of<TraumaDataProvider>(context, listen: false);
+    final traumaProvider =
+        Provider.of<TraumaDataProvider>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -422,10 +435,11 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         HospitalizationComplicationContent(
           traumaDataProvider: traumaProvider,
-            noDataWidget: noDataWidget,
-            allowEditFields: allowEditFields,
-            freeSize: freeSize,
-            customSize: customSize),
+          noDataWidget: noDataWidget,
+          allowEditFields: allowEditFields,
+          freeSize: freeSize,
+          customSize: customSize,
+        ),
         const SizedBox(height: 10),
         TraumaRegisterIcd10Content(
           traumaDataProvider: traumaProvider,
@@ -517,10 +531,11 @@ class _ContentDataPatient extends StatelessWidget {
         const SizedBox(height: 10),
         PhysicalExamBodyPartInjuryContent(
           traumaDataProvider: traumaProvider,
-            noDataWidget: noDataWidget,
-            allowEditFields: allowEditFields,
-            freeSize: freeSize,
-            customSize: customSize),
+          noDataWidget: noDataWidget,
+          allowEditFields: allowEditFields,
+          freeSize: freeSize,
+          customSize: customSize,
+        ),
         const SizedBox(height: 10),
         ProcedureContent(
           traumaDataProvider: traumaProvider,

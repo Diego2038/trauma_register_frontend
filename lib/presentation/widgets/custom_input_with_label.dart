@@ -9,7 +9,7 @@ class CustomInputWithLabel extends StatelessWidget {
   final CustomSize size;
   final String title;
   final String hintText;
-  final String text;
+  final String? text;
   final double? width;
   final double? height;
   final TextEditingController? controller;
@@ -27,7 +27,7 @@ class CustomInputWithLabel extends StatelessWidget {
     required this.size,
     required this.title,
     required this.hintText,
-    required this.text,
+    this.text,
     this.width,
     this.height,
     this.controller,

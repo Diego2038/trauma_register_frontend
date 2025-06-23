@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
-class PatientDataContent extends StatelessWidget {
+class PatientDataContent extends StatefulWidget {
   const PatientDataContent({
     super.key,
     required this.customSize,
@@ -24,18 +26,106 @@ class PatientDataContent extends StatelessWidget {
   final bool freeSize;
 
   @override
+  State<PatientDataContent> createState() => _PatientDataContentState();
+}
+
+class _PatientDataContentState extends State<PatientDataContent> {
+  late TextEditingController _traumaRegisterRecordIdController;
+  late TextEditingController _direccionLinea1Controller;
+  late TextEditingController _direccionLinea2Controller;
+  late TextEditingController _ciudadController;
+  late TextEditingController _cantonMunicipioController;
+  late TextEditingController _provinciaEstadoController;
+  late TextEditingController _codigoPostalController;
+  late TextEditingController _paisController;
+  late TextEditingController _edadController;
+  late TextEditingController _unidadDeEdadController;
+  late TextEditingController _generoController;
+  late TextEditingController _fechaDeNacimientoController;
+  late TextEditingController _ocupacionController;
+  late TextEditingController _estadoCivilController;
+  late TextEditingController _nacionalidadController;
+  late TextEditingController _grupoEtnicoController;
+  late TextEditingController _otroGrupoEtnicoController;
+  late TextEditingController _numDocDeIdentificacionController;
+
+  @override
+  void initState() {
+    //! It's probably TextEditingControllers won't be used
+    super.initState();
+    final PatientData? patientData = widget.traumaDataProvider.patientData;
+    if (patientData == null) return;
+    _traumaRegisterRecordIdController = TextEditingController(
+        text: patientData.traumaRegisterRecordId?.toString());
+    _direccionLinea1Controller =
+        TextEditingController(text: patientData.direccionLinea1);
+    _direccionLinea2Controller =
+        TextEditingController(text: patientData.direccionLinea2);
+    _ciudadController = TextEditingController(text: patientData.ciudad);
+    _cantonMunicipioController =
+        TextEditingController(text: patientData.cantonMunicipio);
+    _provinciaEstadoController =
+        TextEditingController(text: patientData.provinciaEstado);
+    _codigoPostalController =
+        TextEditingController(text: patientData.codigoPostal);
+    _paisController = TextEditingController(text: patientData.pais);
+    _edadController = TextEditingController(text: patientData.edad?.toString());
+    _unidadDeEdadController =
+        TextEditingController(text: patientData.unidadDeEdad);
+    _generoController = TextEditingController(text: patientData.genero);
+    _fechaDeNacimientoController = TextEditingController(
+        text: patientData.fechaDeNacimiento == null
+            ? null
+            : DateFormat('dd/MM/yyyy').format(patientData.fechaDeNacimiento!));
+    _ocupacionController = TextEditingController(text: patientData.ocupacion);
+    _estadoCivilController =
+        TextEditingController(text: patientData.estadoCivil);
+    _nacionalidadController =
+        TextEditingController(text: patientData.nacionalidad);
+    _grupoEtnicoController =
+        TextEditingController(text: patientData.grupoEtnico);
+    _otroGrupoEtnicoController =
+        TextEditingController(text: patientData.otroGrupoEtnico);
+    _numDocDeIdentificacionController =
+        TextEditingController(text: patientData.numDocDeIdentificacion);
+  }
+
+  @override
+  void dispose() {
+    _traumaRegisterRecordIdController.dispose();
+    _direccionLinea1Controller.dispose();
+    _direccionLinea2Controller.dispose();
+    _ciudadController.dispose();
+    _cantonMunicipioController.dispose();
+    _provinciaEstadoController.dispose();
+    _codigoPostalController.dispose();
+    _paisController.dispose();
+    _edadController.dispose();
+    _unidadDeEdadController.dispose();
+    _generoController.dispose();
+    _fechaDeNacimientoController.dispose();
+    _ocupacionController.dispose();
+    _estadoCivilController.dispose();
+    _nacionalidadController.dispose();
+    _grupoEtnicoController.dispose();
+    _otroGrupoEtnicoController.dispose();
+    _numDocDeIdentificacionController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ExpandableTitleWidget(
       title: "Datos generales",
       index: 0,
       expandedWidget: CustomContainer(
         children: patientDataContent(
-          customSize: customSize,
-          patientData: traumaDataProvider.patientData!,
-          allowEditFields: allowEditFields,
-          isCreatingPatientData: isCreatingPatientData,
-          traumaDataProvider: traumaDataProvider,
-          freeSize: freeSize,
+          customSize: widget.customSize,
+          patientData: widget.traumaDataProvider.patientData!,
+          allowEditFields: widget.allowEditFields,
+          isCreatingPatientData: widget.isCreatingPatientData,
+          traumaDataProvider: widget.traumaDataProvider,
+          freeSize: widget.freeSize,
         ),
       ),
     );
@@ -56,193 +146,289 @@ class PatientDataContent extends StatelessWidget {
           readOnly: !allowEditFields,
           title: "ID registro de trauma",
           hintText: "No registra",
-          text: (patientData.traumaRegisterRecordId ?? "").toString(),
+          controller: _traumaRegisterRecordIdController,
           lines: 2,
           width: freeSize ? null : 220,
-          // onChanged: (String? value) {
-          //   traumaDataProvider.updatePatientData(patientData.copyWith(
-          //     traumaRegisterRecordId: value!.isEmpty ? null : int.parse(value),
-          //   ));
-          // },
+          onChanged: (String? value) {
+            print("value: $value");
+            final patientData = _getCurrentPatientData(context);
+            traumaDataProvider.updatePatientData(
+              patientData.copyWith(traumaRegisterRecordId: TransformData.getTransformedValue<int>(value)),
+              true,
+            );
+          },
         ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Dirección línea 1",
         hintText: "No registra",
-        text: patientData.direccionLinea1 ?? "",
+        controller: _direccionLinea1Controller,
         lines: 2,
         width: freeSize ? null : 220,
-        // onChanged: (String? value) {
-        //   traumaDataProvider.updatePatientData(patientData.copyWith(
-        //     direccionLinea1: value!.isEmpty ? null : value,
-        //   ));
-        // },
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            direccionLinea1: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Dirección línea 2",
         hintText: "No registra",
-        text: patientData.direccionLinea2 ?? "",
+        controller: _direccionLinea2Controller,
         lines: 2,
         width: freeSize ? null : 220,
-        // onChanged: (String? value) {
-        //   traumaDataProvider.updatePatientData(patientData.copyWith(
-        //     direccionLinea2:
-        //         value, //! Review later
-        //   ));
-        // },
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            direccionLinea2: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Ciudad",
         hintText: "No registra",
-        text: patientData.ciudad ?? "",
+        controller: _ciudadController,
         lines: 2,
         width: freeSize ? null : 220,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            ciudad: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Cantón / municipio",
         hintText: "No registra",
-        text: patientData.cantonMunicipio ?? "",
+        controller: _cantonMunicipioController,
         lines: 2,
         width: freeSize ? null : 220,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            cantonMunicipio: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Provincia / estado",
         hintText: "No registra",
-        text: patientData.provinciaEstado ?? "",
+        controller: _provinciaEstadoController,
         lines: 2,
         width: freeSize ? null : 220,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            provinciaEstado: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Código postal",
         hintText: "No registra",
-        text: patientData.codigoPostal ?? "",
+        controller: _codigoPostalController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            codigoPostal: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "País",
         hintText: "No registra",
-        text: patientData.pais ?? "",
+        controller: _paisController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            pais: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Edad",
         hintText: "No registra",
-        text: "${patientData.edad ?? ""}",
+        controller: _edadController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider
+              .updatePatientData(patientData.copyWith(edad: TransformData.getTransformedValue<int>(value)));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Unidad de edad",
         hintText: "No registra",
-        text: patientData.unidadDeEdad ?? "",
+        controller: _unidadDeEdadController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            unidadDeEdad: TransformData.getTransformedValue<String>(value)
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Género",
         hintText: "No registra",
-        text: patientData.genero ?? "",
+        controller: _generoController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            genero: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Fecha de nacimiento",
         hintText: "No registra",
-        text: patientData.fechaDeNacimiento != null
-            ? DateFormat('dd/MM/yyyy').format(patientData.fechaDeNacimiento!)
-            : "",
+        controller: _fechaDeNacimientoController,
         rightIcon: Icons.calendar_month_outlined,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            fechaDeNacimiento: TransformData.getTransformedValue<DateTime>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Ocupación",
         hintText: "No registra",
-        text: patientData.ocupacion ?? "",
+        controller: _ocupacionController,
         lines: 2,
         width: freeSize ? null : 460,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            ocupacion: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Estado civil",
         hintText: "No registra",
-        text: patientData.estadoCivil ?? "",
+        controller: _estadoCivilController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            estadoCivil: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Nacionalidad",
         hintText: "No registra",
-        text: patientData.nacionalidad ?? "",
+        controller: _nacionalidadController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            nacionalidad: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Grupo étnico",
         hintText: "No registra",
-        text: patientData.grupoEtnico ?? "",
+        controller: _grupoEtnicoController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            grupoEtnico: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Otro grupo étnico",
         hintText: "No registra",
-        text: patientData.otroGrupoEtnico ?? "",
+        controller: _otroGrupoEtnicoController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            otroGrupoEtnico: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !allowEditFields,
         title: "Núm. de identificación",
         hintText: "No registra",
-        text: patientData.numDocDeIdentificacion ?? "",
+        controller: _numDocDeIdentificacionController,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            numDocDeIdentificacion: TransformData.getTransformedValue<String>(value),
+          ));
+        },
       ),
     ];
   }
+
+  PatientData _getCurrentPatientData(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+  
 }

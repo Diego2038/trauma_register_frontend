@@ -43,7 +43,7 @@ class TraumaDataService {
       final data = patientData.toJson();
       final response = await EndpointHelper.postRequest(
         path:
-            "/medical_records/patient-data/${patientData.traumaRegisterRecordId!}/",
+            "/medical_records/patient-data/",
         token: token,
         data: data,
       );
