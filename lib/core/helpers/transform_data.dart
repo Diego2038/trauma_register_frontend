@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:trauma_register_frontend/core/constants/null_value.dart';
+import 'package:trauma_register_frontend/data/models/custom/time_of_day.dart';
 
 class TransformData {
   static V? getTransformedValue<V>(String? value) {
@@ -15,7 +16,11 @@ class TransformData {
     } else if (V == DateTime) {
       DateTime result = _parseDate(value);
       return result as V?;
-    } else {
+    } else if (V == TimeOfDay) {
+      //! TODO: Transform String to bool later (it's hard to establish a null value in booleans)
+      TimeOfDay result = _parseTimeOfDay(value);
+      return result as V?;
+    }else {
       return null;
     }
   }
@@ -48,5 +53,9 @@ class TransformData {
     } on FormatException catch (_) {
       return NullValue.nullDateTime;
     }
+  }
+  
+  static TimeOfDay _parseTimeOfDay(String? value) {
+    return TimeOfDay(hour: 1, minute: 3); // TODO: Implement later
   }
 }

@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/apparent_intent_injury.dart';
+import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class ApparentIntentInjuryContent extends StatelessWidget {
   const ApparentIntentInjuryContent({
     super.key,
-    required this.traumaDataProvider,
     required this.noDataWidget,
     required this.customSize,
-    required this.allowEditFields,
+    required this.isCreating,
     required this.freeSize,
   });
 
-  final TraumaDataProvider traumaDataProvider;
   final NormalText noDataWidget;
   final CustomSize customSize;
-  final bool allowEditFields;
+  final bool isCreating;
   final bool freeSize;
 
   @override
@@ -28,51 +30,101 @@ class ApparentIntentInjuryContent extends StatelessWidget {
     return ExpandableTitleWidget(
       title: "Lesiones intencionales aparentes",
       index: 11,
-      expandedWidget: traumaDataProvider.patientData!.apparentIntentInjury ==
-                  null ||
-              traumaDataProvider.patientData!.apparentIntentInjury!.isEmpty
-          ? noDataWidget
-          : SizedBox(
-              width: double.infinity,
-              child: Wrap(
-                runSpacing: 10,
-                spacing: 10,
-                children: traumaDataProvider.patientData!.apparentIntentInjury!
-                    .map(
-                      (apparentIntentInjury) => CustomContainer(
-                        maxWidth: 600,
-                        children: apparentIntentInjuryContent(
-                          apparentIntentInjury: apparentIntentInjury,
-                          customSize: customSize,
-                          allowEditFields: allowEditFields,
-                          traumaDataProvider: traumaDataProvider,
-                          freeSize: freeSize,
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
+      expandedWidget:
+          _getCurrentPatientData(context).apparentIntentInjury == null ||
+                  _getCurrentPatientData(context).apparentIntentInjury!.isEmpty
+              ? isCreating
+                  ? Center(child: _addNewElement(context))
+                  : noDataWidget
+              : SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    runSpacing: 10,
+                    spacing: 10,
+                    children: [
+                      ..._getCurrentPatientData(context)
+                          .apparentIntentInjury!
+                          .asMap()
+                          .entries
+                          .map(
+                            (entry) => CustomContainer(
+                              maxWidth: 600,
+                              children: apparentIntentInjuryContent(
+                                context: context,
+                                index: entry.key,
+                                apparentIntentInjury: entry.value,
+                                customSize: customSize,
+                                isCreating: isCreating,
+                                freeSize: freeSize,
+                              ),
+                            ),
+                          ),
+                      if (isCreating) _addNewElement(context),
+                    ],
+                  ),
+                ),
+    );
+  }
+
+  Widget _addNewElement(BuildContext context) {
+    return CustomIconButton(
+      onPressed: () {
+        final currentPatientData = _getCurrentPatientData(context);
+        final currentElements = currentPatientData.apparentIntentInjury;
+        final traumaDataProvider = _getCurrentProvider(context);
+        traumaDataProvider.updatePatientData(
+            currentPatientData.copyWith(
+              apparentIntentInjury: [
+                if (currentElements != null) ...currentElements,
+                ApparentIntentInjury(),
+              ],
             ),
+            true);
+      },
     );
   }
 
   List<Widget> apparentIntentInjuryContent({
+    required BuildContext context,
+    required int index,
     required ApparentIntentInjury apparentIntentInjury,
     required CustomSize customSize,
-    required bool allowEditFields,
-    required TraumaDataProvider traumaDataProvider,
+    required bool isCreating,
     required bool freeSize,
   }) {
+    final traumaDataProvider = _getCurrentProvider(context);
     return [
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
-        title: "Intesión aparente",
+        readOnly: !isCreating,
+        title: "Intención aparente",
         hintText: "No registra",
         text: apparentIntentInjury.intencionAparente ?? "",
         lines: 1,
         width: freeSize ? null : 460,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            apparentIntentInjury: patientData.apparentIntentInjury
+                ?.asMap()
+                .entries
+                .map((e) => e.key == index
+                    ? e.value.copyWith(
+                        intencionAparente:
+                            TransformData.getTransformedValue<String>(value))
+                    : e.value)
+                .toList(),
+          ));
+        },
       ),
     ];
+  }
+
+  PatientData _getCurrentPatientData(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+
+  TraumaDataProvider _getCurrentProvider(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false);
   }
 }

@@ -25,7 +25,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
   bool startSearch = false;
   bool isLoading = false;
   bool isMounted = false;
-  bool allowEditFields = false;
+  bool isCreating = false;
   bool freeSize = false;
   String query = "Buscar";
 
@@ -82,7 +82,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
             ),
             child: query == 'Crear'
                 ? _ContentDataPatient(
-                    allowEditFields: allowEditFields,
+                    isCreating: isCreating,
                     freeSize: freeSize,
                     customSize: CustomSize.h5,
                     isCreatingPatientData: true,
@@ -122,7 +122,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                         ),
                       if (patientData != null && startSearch && !isLoading)
                         _ContentDataPatient(
-                          allowEditFields: allowEditFields,
+                          isCreating: isCreating,
                           freeSize: freeSize,
                           customSize: CustomSize.h5,
                           isCreatingPatientData: false,
@@ -322,12 +322,12 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                         ],
                         onItemSelected: (String? value) {
                           if (query == value) return;
-                          allowEditFields = value == 'Crear';
+                          isCreating = value == 'Crear';
                           Provider.of<TraumaDataProvider>(context,
                                   listen: false)
                               .updatePatientData(
-                                  allowEditFields ? PatientData() : null);
-                          if (!allowEditFields) {
+                                  isCreating ? PatientData() : null);
+                          if (!isCreating) {
                             startSearch = false;
                             isLoading = false;
                           }
@@ -358,13 +358,13 @@ class _PatientManagementViewState extends State<PatientManagementView> {
 
 class _ContentDataPatient extends StatelessWidget {
   final CustomSize customSize;
-  final bool allowEditFields;
+  final bool isCreating;
   final bool freeSize;
   final bool isCreatingPatientData;
 
   const _ContentDataPatient({
     required this.customSize,
-    required this.allowEditFields,
+    required this.isCreating,
     required this.freeSize,
     required this.isCreatingPatientData,
   });
@@ -380,192 +380,169 @@ class _ContentDataPatient extends StatelessWidget {
         PatientDataContent(
           traumaDataProvider: traumaProvider,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           isCreatingPatientData: isCreatingPatientData,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         HealthcareRecordContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         InjuryRecordContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         CollisionContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         DrugAbuseContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         VitalSignGcsQualifierContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         HospitalizationVariableContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         HospitalizationComplicationContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
           customSize: customSize,
         ),
         const SizedBox(height: 10),
         TraumaRegisterIcd10Content(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         IntensiveCareUnitContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         ImagingContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         ApparentIntentInjuryContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         BurnInjuryContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         FirearmInjuryContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         PenetratingInjuryContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         PoisoningInjuryContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         ViolenceInjuryContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         DeviceContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         LaboratoryContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         PhysicalExamBodyPartInjuryContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
           customSize: customSize,
         ),
         const SizedBox(height: 10),
         ProcedureContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         PrehospitalProcedureContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         TransportationModeContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         VitalSignContent(
-          traumaDataProvider: traumaProvider,
           noDataWidget: noDataWidget,
           customSize: customSize,
-          allowEditFields: allowEditFields,
+          isCreating: isCreating,
           freeSize: freeSize,
         ),
       ],

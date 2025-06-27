@@ -14,14 +14,14 @@ class PatientDataContent extends StatefulWidget {
     super.key,
     required this.customSize,
     required this.traumaDataProvider,
-    required this.allowEditFields,
+    required this.isCreating,
     required this.isCreatingPatientData,
     required this.freeSize,
   });
 
   final CustomSize customSize;
   final TraumaDataProvider traumaDataProvider;
-  final bool allowEditFields;
+  final bool isCreating;
   final bool isCreatingPatientData;
   final bool freeSize;
 
@@ -122,7 +122,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
         children: patientDataContent(
           customSize: widget.customSize,
           patientData: widget.traumaDataProvider.patientData!,
-          allowEditFields: widget.allowEditFields,
+          isCreating: widget.isCreating,
           isCreatingPatientData: widget.isCreatingPatientData,
           traumaDataProvider: widget.traumaDataProvider,
           freeSize: widget.freeSize,
@@ -134,7 +134,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
   List<Widget> patientDataContent({
     required PatientData patientData,
     required CustomSize customSize,
-    required bool allowEditFields,
+    required bool isCreating,
     required bool isCreatingPatientData,
     required TraumaDataProvider traumaDataProvider,
     required bool freeSize,
@@ -143,7 +143,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       if (isCreatingPatientData)
         CustomInputWithLabel(
           size: customSize,
-          readOnly: !allowEditFields,
+          readOnly: !isCreating,
           title: "ID registro de trauma",
           hintText: "No registra",
           controller: _traumaRegisterRecordIdController,
@@ -160,7 +160,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
         ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Dirección línea 1",
         hintText: "No registra",
         controller: _direccionLinea1Controller,
@@ -175,7 +175,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Dirección línea 2",
         hintText: "No registra",
         controller: _direccionLinea2Controller,
@@ -190,7 +190,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Ciudad",
         hintText: "No registra",
         controller: _ciudadController,
@@ -205,7 +205,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Cantón / municipio",
         hintText: "No registra",
         controller: _cantonMunicipioController,
@@ -220,7 +220,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Provincia / estado",
         hintText: "No registra",
         controller: _provinciaEstadoController,
@@ -235,7 +235,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Código postal",
         hintText: "No registra",
         controller: _codigoPostalController,
@@ -251,7 +251,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "País",
         hintText: "No registra",
         controller: _paisController,
@@ -267,7 +267,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Edad",
         hintText: "No registra",
         controller: _edadController,
@@ -282,7 +282,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Unidad de edad",
         hintText: "No registra",
         controller: _unidadDeEdadController,
@@ -298,7 +298,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Género",
         hintText: "No registra",
         controller: _generoController,
@@ -314,7 +314,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Fecha de nacimiento",
         hintText: "No registra",
         controller: _fechaDeNacimientoController,
@@ -331,7 +331,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Ocupación",
         hintText: "No registra",
         controller: _ocupacionController,
@@ -346,7 +346,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Estado civil",
         hintText: "No registra",
         controller: _estadoCivilController,
@@ -362,7 +362,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Nacionalidad",
         hintText: "No registra",
         controller: _nacionalidadController,
@@ -378,7 +378,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Grupo étnico",
         hintText: "No registra",
         controller: _grupoEtnicoController,
@@ -394,7 +394,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Otro grupo étnico",
         hintText: "No registra",
         controller: _otroGrupoEtnicoController,
@@ -410,7 +410,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
       ),
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !allowEditFields,
+        readOnly: !isCreating,
         title: "Núm. de identificación",
         hintText: "No registra",
         controller: _numDocDeIdentificacionController,
