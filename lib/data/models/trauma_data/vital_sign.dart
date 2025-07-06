@@ -1,4 +1,5 @@
 import 'package:trauma_register_frontend/data/models/custom/time_of_day.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 
 class VitalSign {
   final int? recordId;
@@ -44,53 +45,75 @@ class VitalSign {
   });
 
   VitalSign copyWith({
-    int? recordId,
-    DateTime? fechaYHoraDeSignosVitales,
-    bool? signosDeVida,
-    int? frecuenciaCardiaca,
-    int? presionArterialSistolica,
-    int? presionArterialDiastolica,
-    int? frecuenciaRespiratoria,
-    String? calificadorDeFrecuenciaRespiratoria,
-    double? temperaturaCelsius,
-    double? pesoKg,
-    double? alturaMetros,
-    double? saturacionDeOxigeno,
-    String? perdidaDeConciencia,
-    TimeOfDay? duracionDePerdidaDeConciencia,
-    int? gcsMotora,
-    int? gcsOcular,
-    int? gcsVerbal,
-    int? gcsTotal,
-    String? avup,
+    Optional<int?>? recordId,
+    Optional<DateTime?>? fechaYHoraDeSignosVitales,
+    Optional<bool?>? signosDeVida,
+    Optional<int?>? frecuenciaCardiaca,
+    Optional<int?>? presionArterialSistolica,
+    Optional<int?>? presionArterialDiastolica,
+    Optional<int?>? frecuenciaRespiratoria,
+    Optional<String?>? calificadorDeFrecuenciaRespiratoria,
+    Optional<double?>? temperaturaCelsius,
+    Optional<double?>? pesoKg,
+    Optional<double?>? alturaMetros,
+    Optional<double?>? saturacionDeOxigeno,
+    Optional<String?>? perdidaDeConciencia,
+    Optional<TimeOfDay?>? duracionDePerdidaDeConciencia,
+    Optional<int?>? gcsMotora,
+    Optional<int?>? gcsOcular,
+    Optional<int?>? gcsVerbal,
+    Optional<int?>? gcsTotal,
+    Optional<String?>? avup,
   }) =>
       VitalSign(
-        recordId: recordId ?? this.recordId,
-        fechaYHoraDeSignosVitales:
-            fechaYHoraDeSignosVitales ?? this.fechaYHoraDeSignosVitales,
-        signosDeVida: signosDeVida ?? this.signosDeVida,
-        frecuenciaCardiaca: frecuenciaCardiaca ?? this.frecuenciaCardiaca,
-        presionArterialSistolica:
-            presionArterialSistolica ?? this.presionArterialSistolica,
-        presionArterialDiastolica:
-            presionArterialDiastolica ?? this.presionArterialDiastolica,
-        frecuenciaRespiratoria:
-            frecuenciaRespiratoria ?? this.frecuenciaRespiratoria,
+        recordId: recordId?.isPresent == true ? recordId!.value : this.recordId,
+        fechaYHoraDeSignosVitales: fechaYHoraDeSignosVitales?.isPresent == true
+            ? fechaYHoraDeSignosVitales!.value
+            : this.fechaYHoraDeSignosVitales,
+        signosDeVida: signosDeVida?.isPresent == true
+            ? signosDeVida!.value
+            : this.signosDeVida,
+        frecuenciaCardiaca: frecuenciaCardiaca?.isPresent == true
+            ? frecuenciaCardiaca!.value
+            : this.frecuenciaCardiaca,
+        presionArterialSistolica: presionArterialSistolica?.isPresent == true
+            ? presionArterialSistolica!.value
+            : this.presionArterialSistolica,
+        presionArterialDiastolica: presionArterialDiastolica?.isPresent == true
+            ? presionArterialDiastolica!.value
+            : this.presionArterialDiastolica,
+        frecuenciaRespiratoria: frecuenciaRespiratoria?.isPresent == true
+            ? frecuenciaRespiratoria!.value
+            : this.frecuenciaRespiratoria,
         calificadorDeFrecuenciaRespiratoria:
-            calificadorDeFrecuenciaRespiratoria ??
-                this.calificadorDeFrecuenciaRespiratoria,
-        temperaturaCelsius: temperaturaCelsius ?? this.temperaturaCelsius,
-        pesoKg: pesoKg ?? this.pesoKg,
-        alturaMetros: alturaMetros ?? this.alturaMetros,
-        saturacionDeOxigeno: saturacionDeOxigeno ?? this.saturacionDeOxigeno,
-        perdidaDeConciencia: perdidaDeConciencia ?? this.perdidaDeConciencia,
+            calificadorDeFrecuenciaRespiratoria?.isPresent == true
+                ? calificadorDeFrecuenciaRespiratoria!.value
+                : this.calificadorDeFrecuenciaRespiratoria,
+        temperaturaCelsius: temperaturaCelsius?.isPresent == true
+            ? temperaturaCelsius!.value
+            : this.temperaturaCelsius,
+        pesoKg: pesoKg?.isPresent == true ? pesoKg!.value : this.pesoKg,
+        alturaMetros: alturaMetros?.isPresent == true
+            ? alturaMetros!.value
+            : this.alturaMetros,
+        saturacionDeOxigeno: saturacionDeOxigeno?.isPresent == true
+            ? saturacionDeOxigeno!.value
+            : this.saturacionDeOxigeno,
+        perdidaDeConciencia: perdidaDeConciencia?.isPresent == true
+            ? perdidaDeConciencia!.value
+            : this.perdidaDeConciencia,
         duracionDePerdidaDeConciencia:
-            duracionDePerdidaDeConciencia ?? this.duracionDePerdidaDeConciencia,
-        gcsMotora: gcsMotora ?? this.gcsMotora,
-        gcsOcular: gcsOcular ?? this.gcsOcular,
-        gcsVerbal: gcsVerbal ?? this.gcsVerbal,
-        gcsTotal: gcsTotal ?? this.gcsTotal,
-        avup: avup ?? this.avup,
+            duracionDePerdidaDeConciencia?.isPresent == true
+                ? duracionDePerdidaDeConciencia!.value
+                : this.duracionDePerdidaDeConciencia,
+        gcsMotora:
+            gcsMotora?.isPresent == true ? gcsMotora!.value : this.gcsMotora,
+        gcsOcular:
+            gcsOcular?.isPresent == true ? gcsOcular!.value : this.gcsOcular,
+        gcsVerbal:
+            gcsVerbal?.isPresent == true ? gcsVerbal!.value : this.gcsVerbal,
+        gcsTotal: gcsTotal?.isPresent == true ? gcsTotal!.value : this.gcsTotal,
+        avup: avup?.isPresent == true ? avup!.value : this.avup,
       );
 
   factory VitalSign.fromJson(Map<String, dynamic> json) => VitalSign(
@@ -141,7 +164,8 @@ class VitalSign {
         "altura_metros": alturaMetros,
         "saturacion_de_oxigeno": saturacionDeOxigeno,
         "perdida_de_conciencia": perdidaDeConciencia,
-        "duracion_de_perdida_de_conciencia": duracionDePerdidaDeConciencia,
+        "duracion_de_perdida_de_conciencia":
+            duracionDePerdidaDeConciencia?.toString(),
         "gcs_motora": gcsMotora,
         "gcs_ocular": gcsOcular,
         "gcs_verbal": gcsVerbal,

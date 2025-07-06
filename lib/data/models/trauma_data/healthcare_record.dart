@@ -758,7 +758,7 @@ class HealthcareRecord {
             saturacionDeO2DuranteElTransporte,
         "perdida_de_conciencia": perdidaDeConciencia,
         "duracion_de_perdida_de_conciencia":
-            duracionDePerdidaDeConciencia.toString(),
+            duracionDePerdidaDeConciencia?.toString(),
         "gcs_ocular": gcsOcular,
         "gcs_verbal": gcsVerbal,
         "gcs_motora": gcsMotora,
