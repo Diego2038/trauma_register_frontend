@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/custom/time_of_day.dart'
@@ -108,6 +109,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.integer,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -135,6 +137,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.datetime,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -148,6 +151,9 @@ class VitalSignContent extends StatelessWidget {
                     : e.value)
                 .toList(),
           ));
+        },
+        onTap: () {
+          
         },
       ),
       CustomInputWithLabel(
@@ -163,6 +169,8 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        suggestions: const ["Sí", "No"],
+        inputType: InputType.boolean,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -187,6 +195,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.integer,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -211,6 +220,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.integer,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -235,6 +245,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.integer,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -259,6 +270,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.integer,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -283,6 +295,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -310,6 +323,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.double,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -334,6 +348,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.double,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -362,6 +377,7 @@ class VitalSignContent extends StatelessWidget {
               lines: 1,
               width: freeSize ? null : 100,
               height: freeSize ? null : 108,
+              inputType: InputType.double,
               onChanged: (String? value) {
                 final patientData = _getCurrentPatientData(context);
                 traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -388,6 +404,7 @@ class VitalSignContent extends StatelessWidget {
               lines: 1,
               width: freeSize ? null : 100,
               height: freeSize ? null : 108,
+              inputType: InputType.double,
               onChanged: (String? value) {
                 final patientData = _getCurrentPatientData(context);
                 traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -416,6 +433,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -440,6 +458,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
+        inputType: InputType.time,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -470,6 +489,7 @@ class VitalSignContent extends StatelessWidget {
               lines: 1,
               width: freeSize ? null : 100,
               height: freeSize ? null : 108,
+              inputType: InputType.integer,
               onChanged: (String? value) {
                 final patientData = _getCurrentPatientData(context);
                 traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -496,6 +516,7 @@ class VitalSignContent extends StatelessWidget {
               lines: 1,
               width: freeSize ? null : 100,
               height: freeSize ? null : 108,
+              inputType: InputType.integer,
               onChanged: (String? value) {
                 final patientData = _getCurrentPatientData(context);
                 traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -528,6 +549,7 @@ class VitalSignContent extends StatelessWidget {
               lines: 1,
               width: freeSize ? null : 100,
               height: freeSize ? null : 94,
+              inputType: InputType.integer,
               onChanged: (String? value) {
                 final patientData = _getCurrentPatientData(context);
                 traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -554,6 +576,7 @@ class VitalSignContent extends StatelessWidget {
               lines: 1,
               width: freeSize ? null : 100,
               height: freeSize ? null : 94,
+              inputType: InputType.integer,
               onChanged: (String? value) {
                 final patientData = _getCurrentPatientData(context);
                 traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -582,6 +605,7 @@ class VitalSignContent extends StatelessWidget {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(

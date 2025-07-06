@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_size_text.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
@@ -20,7 +21,9 @@ class CustomInputWithLabel extends StatelessWidget {
   final IconData? leftIcon;
   final bool readOnly;
   final int lines;
-  final bool allowOnlyNumbers;
+  final List<String>? suggestions;
+  final InputType? inputType;
+  final VoidCallback? onTap;
 
   const CustomInputWithLabel({
     super.key,
@@ -36,9 +39,11 @@ class CustomInputWithLabel extends StatelessWidget {
     this.onSubmitted,
     this.rightIcon,
     this.leftIcon,
-    this.readOnly = false,
+    required this.readOnly,
     this.lines = 1,
-    this.allowOnlyNumbers = false,
+    this.suggestions,
+    this.inputType = InputType.string,
+    this.onTap,
   }) : assert(
           size == CustomSize.h2 ||
               size == CustomSize.h3 ||
@@ -51,15 +56,21 @@ class CustomInputWithLabel extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          customTitle(),
-          // customHeightSpace(),
-          customInput(),
-        ],
+      child: MouseRegion(
+        cursor: onTap != null ? SystemMouseCursors.click : MouseCursor.defer,
+        child: GestureDetector(
+          onTap: onTap,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              customTitle(),
+              // customHeightSpace(),
+              customInput(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -110,16 +121,247 @@ class CustomInputWithLabel extends StatelessWidget {
       color: AppColors.grey200,
       size: dimensionSize,
     );
+    return readOnly || suggestions == null
+        ? _CustomTextField(
+            controller: controller,
+            text: text,
+            onChanged: onChanged,
+            onSubmitted: onSubmitted,
+            lines: lines,
+            readOnly: readOnly,
+            dimensionSize: dimensionSize,
+            hintText: hintText,
+            leftIcon: leftIcon,
+            customSpace: customSpace,
+            iconConstrain: iconConstrain,
+            rightIcon: rightIcon,
+            onPressedRightIcon: onPressedRightIcon,
+            rightIconWidget: rightIconWidget,
+            inputType: inputType,
+          )
+        : _AutoCompleteWidget(
+            suggestions: suggestions,
+            controller: controller,
+            onChanged: onChanged,
+            width: width,
+            text: text,
+            onSubmitted: onSubmitted,
+            lines: lines,
+            hintText: hintText,
+            leftIcon: leftIcon,
+            rightIcon: rightIcon,
+            onPressedRightIcon: onPressedRightIcon,
+            dimensionSize: dimensionSize,
+            customSpace: customSpace,
+            iconConstrain: iconConstrain,
+            rightIconWidget: rightIconWidget,
+            inputType: inputType,
+          );
+  }
+}
+
+class _AutoCompleteWidget extends StatelessWidget {
+  const _AutoCompleteWidget({
+    required this.suggestions,
+    required this.controller,
+    required this.onChanged,
+    required this.width,
+    required this.text,
+    required this.onSubmitted,
+    required this.lines,
+    required this.hintText,
+    required this.leftIcon,
+    required this.rightIcon,
+    required this.onPressedRightIcon,
+    required this.inputType,
+    required this.dimensionSize,
+    required this.customSpace,
+    required this.iconConstrain,
+    required this.rightIconWidget,
+  });
+
+  final List<String>? suggestions;
+  final TextEditingController? controller;
+  final void Function(String p1)? onChanged;
+  final double? width;
+  final String? text;
+  final void Function(String? p1)? onSubmitted;
+  final int lines;
+  final String hintText;
+  final IconData? leftIcon;
+  final IconData? rightIcon;
+  final VoidCallback? onPressedRightIcon;
+  final InputType? inputType;
+  final double dimensionSize;
+  final double customSpace;
+  final BoxConstraints iconConstrain;
+  final Icon rightIconWidget;
+
+  @override
+  Widget build(BuildContext context) {
+    return Autocomplete<String>(
+      optionsBuilder: (TextEditingValue textEditingValue) {
+        if (textEditingValue.text.isEmpty || suggestions!.isEmpty) {
+          return const Iterable<String>.empty();
+        }
+        return suggestions!.where((String option) {
+          return option
+              .toLowerCase()
+              .contains(textEditingValue.text.toLowerCase());
+        });
+      },
+      onSelected: (String selection) {
+        if (controller != null) {
+          controller!.text = selection;
+        }
+        if (onChanged != null) {
+          onChanged!(selection);
+        }
+      },
+      optionsViewBuilder: (context, onSelected, options) {
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Material(
+            elevation: 4.0,
+            child: SizedBox(
+              width: width,
+              height: 175,
+              child: ListView.separated(
+                padding: EdgeInsets.zero,
+                itemCount: options.length,
+                separatorBuilder: (context, index) => const Divider(),
+                itemBuilder: (context, index) {
+                  final option = options.elementAt(index);
+                  return ListTile(
+                    title: H6(
+                      text: option,
+                      color: AppColors.black,
+                    ),
+                    onTap: () => onSelected(option),
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
+      fieldViewBuilder: (
+        BuildContext context,
+        TextEditingController textEditingController,
+        FocusNode focusNode,
+        VoidCallback onFieldSubmitted,
+      ) {
+        textEditingController.text = text ?? '';
+        return _CustomTextField(
+          focusNode: focusNode,
+          controller: textEditingController,
+          text: text,
+          onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          lines: lines,
+          readOnly: false,
+          dimensionSize: dimensionSize,
+          hintText: hintText,
+          leftIcon: leftIcon,
+          customSpace: customSpace,
+          iconConstrain: iconConstrain,
+          rightIcon: rightIcon,
+          onPressedRightIcon: onPressedRightIcon,
+          rightIconWidget: rightIconWidget,
+          inputType: inputType,
+        );
+      },
+    );
+  }
+}
+
+class _CustomTextField extends StatelessWidget {
+  const _CustomTextField({
+    this.focusNode,
+    this.controller,
+    required this.text,
+    required this.onChanged,
+    required this.onSubmitted,
+    required this.lines,
+    required this.readOnly,
+    required this.dimensionSize,
+    required this.hintText,
+    required this.leftIcon,
+    required this.customSpace,
+    required this.iconConstrain,
+    required this.rightIcon,
+    required this.onPressedRightIcon,
+    required this.rightIconWidget,
+    required this.inputType,
+  });
+
+  final FocusNode? focusNode;
+  final TextEditingController? controller;
+  final String? text;
+  final void Function(String p1)? onChanged;
+  final void Function(String? p1)? onSubmitted;
+  final int lines;
+  final bool readOnly;
+  final double dimensionSize;
+  final String hintText;
+  final IconData? leftIcon;
+  final double customSpace;
+  final BoxConstraints iconConstrain;
+  final IconData? rightIcon;
+  final VoidCallback? onPressedRightIcon;
+  final Icon rightIconWidget;
+  final InputType? inputType;
+
+  @override
+  Widget build(BuildContext context) {
+    TextInputType? keyboardType;
+    List<TextInputFormatter>? inputFormatters;
+
+    if (inputType == InputType.string) {
+      keyboardType = TextInputType.text;
+      inputFormatters = null;
+    } else if (inputType == InputType.integer) {
+      keyboardType = TextInputType.number;
+      inputFormatters = [FilteringTextInputFormatter.digitsOnly];
+    } else if (inputType == InputType.double) {
+      keyboardType = const TextInputType.numberWithOptions(decimal: true);
+      inputFormatters = [
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$'))
+      ];
+    } else if (inputType == InputType.boolean) {
+      keyboardType = TextInputType.text;
+      inputFormatters = [
+        FilteringTextInputFormatter.allow(
+          RegExp(r'[sniío]', caseSensitive: false),
+        ),
+        LengthLimitingTextInputFormatter(2),
+      ];
+    } else if (inputType == InputType.date) {
+      keyboardType = TextInputType.datetime;
+      inputFormatters = [
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9/]')),
+        LengthLimitingTextInputFormatter(10),
+      ];
+    } else if (inputType == InputType.time) {
+      keyboardType = TextInputType.datetime;
+      inputFormatters = [
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9:]')),
+        LengthLimitingTextInputFormatter(8),
+      ];
+    } else if (inputType == InputType.datetime) {
+      keyboardType = TextInputType.datetime;
+      inputFormatters = [
+        FilteringTextInputFormatter.allow(RegExp(r'[0-9/: ]')),
+        LengthLimitingTextInputFormatter(19),
+      ];
+    }
     return TextField(
+      focusNode: focusNode,
       controller: controller ?? TextEditingController(text: text),
       onChanged: onChanged,
       onSubmitted: onSubmitted,
-      keyboardType: allowOnlyNumbers ? TextInputType.number : null,
-      inputFormatters: allowOnlyNumbers
-          ? [
-              FilteringTextInputFormatter.digitsOnly,
-            ]
-          : null,
+      keyboardType: keyboardType,
+      inputFormatters: inputFormatters,
       maxLines: lines,
       minLines: lines,
       readOnly: readOnly,

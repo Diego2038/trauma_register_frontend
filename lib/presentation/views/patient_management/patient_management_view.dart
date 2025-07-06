@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/trauma_data.dart';
@@ -171,7 +172,8 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                             size: CustomSize.h2,
                             width: 400,
                             controller: controller,
-                            allowOnlyNumbers: true,
+                            readOnly: false,
+                            inputType: InputType.integer,
                             title: "Buscar paciente por ID",
                             text: "",
                             hintText: "3155805",

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
@@ -149,6 +150,7 @@ class _PatientDataContentState extends State<PatientDataContent> {
           controller: _traumaRegisterRecordIdController,
           lines: 2,
           width: freeSize ? null : 220,
+          inputType: InputType.integer,
           onChanged: (String? value) {
             print("value: $value");
             final patientData = _getCurrentPatientData(context);
