@@ -56,7 +56,7 @@ class TransformData {
   static DateTime? _parseDate(String? date) {
     try {
       if (date?.isEmpty ?? true) return null;
-      return DateFormat('dd/MM/yyyy').parse(date!);
+      return DateFormat('dd/MM/yyyy HH:mm:ss').parse(date!);
     } catch (_) {
       return null;
     }

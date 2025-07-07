@@ -14,6 +14,7 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_data_prov
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class VitalSignContent extends StatelessWidget {
@@ -51,16 +52,12 @@ class VitalSignContent extends StatelessWidget {
                       .asMap()
                       .entries
                       .map(
-                        (entry) => CustomContainer(
-                          maxWidth: 600,
-                          children: vitalSignContent(
-                            context: context,
-                            index: entry.key,
-                            vitalSign: entry.value,
-                            customSize: customSize,
-                            isCreating: isCreating,
-                            freeSize: freeSize,
-                          ),
+                        (entry) => _Content(
+                          keyy: entry.key,
+                          value: entry.value,
+                          customSize: customSize,
+                          isCreating: isCreating,
+                          freeSize: freeSize,
                         ),
                       ),
                   if (isCreating) _addNewElement(context),
@@ -85,6 +82,72 @@ class VitalSignContent extends StatelessWidget {
             ),
             true);
       },
+    );
+  }
+
+  PatientData _getCurrentPatientData(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+
+  TraumaDataProvider _getCurrentProvider(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+}
+
+class _Content extends StatefulWidget {
+  const _Content({
+    required this.keyy,
+    required this.value,
+    required this.customSize,
+    required this.isCreating,
+    required this.freeSize,
+  });
+
+  final int keyy;
+  final VitalSign value;
+  final CustomSize customSize;
+  final bool isCreating;
+  final bool freeSize;
+
+  @override
+  State<_Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<_Content> {
+  late TextEditingController _frecuenciaCardiacaController;
+  late TextEditingController _duracionPerdidaConcienciaController;
+
+  @override
+  void initState() {
+    super.initState();
+    _frecuenciaCardiacaController = TextEditingController(
+        text: widget.value.fechaYHoraDeSignosVitales != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(widget.value.fechaYHoraDeSignosVitales!)
+            : "");
+    _duracionPerdidaConcienciaController = TextEditingController(
+        text: (widget.value.duracionDePerdidaDeConciencia ?? "").toString());
+  }
+
+  @override
+  void dispose() {
+    _frecuenciaCardiacaController.dispose();
+    _duracionPerdidaConcienciaController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomContainer(
+      maxWidth: 600,
+      children: vitalSignContent(
+        context: context,
+        index: widget.keyy,
+        vitalSign: widget.value,
+        customSize: widget.customSize,
+        isCreating: widget.isCreating,
+        freeSize: widget.freeSize,
+      ),
     );
   }
 
@@ -152,8 +215,31 @@ class VitalSignContent extends StatelessWidget {
                 .toList(),
           ));
         },
-        onTap: () {
-          
+        controller: _frecuenciaCardiacaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _frecuenciaCardiacaController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            vitalSign: patientData.vitalSign
+                ?.asMap()
+                .entries
+                .map((e) => e.key == index
+                    ? e.value.copyWith(
+                        fechaYHoraDeSignosVitales: Optional<DateTime?>.of(
+                            TransformData.getTransformedValue<DateTime>(
+                                _frecuenciaCardiacaController.text)))
+                    : e.value)
+                .toList(),
+          ));
         },
       ),
       CustomInputWithLabel(
@@ -471,6 +557,28 @@ class VitalSignContent extends StatelessWidget {
                             Optional<t.TimeOfDay?>.of(
                                 TransformData.getTransformedValue<t.TimeOfDay>(
                                     value)))
+                    : e.value)
+                .toList(),
+          ));
+        },
+        controller: _duracionPerdidaConcienciaController,
+        onTap: () async {
+          final String? hour = await CustomModal.determineTimeWithSeconds(
+            context: context,
+            focusNode: FocusNode(),
+          );
+          _duracionPerdidaConcienciaController.text = hour ?? '';
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            vitalSign: patientData.vitalSign
+                ?.asMap()
+                .entries
+                .map((e) => e.key == index
+                    ? e.value.copyWith(
+                        duracionDePerdidaDeConciencia:
+                            Optional<t.TimeOfDay?>.of(
+                                TransformData.getTransformedValue<t.TimeOfDay>(
+                                    _duracionPerdidaConcienciaController.text)))
                     : e.value)
                 .toList(),
           ));

@@ -168,6 +168,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_time_duration_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_time_duration_picker
+      sha256: "0b180ed71c4b4a896fd9e115ea1146ed96c9069f6ee0bb43e4237fa9d7e12e7c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

@@ -56,21 +56,23 @@ class CustomInputWithLabel extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: MouseRegion(
-        cursor: onTap != null ? SystemMouseCursors.click : MouseCursor.defer,
-        child: GestureDetector(
-          onTap: onTap,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              customTitle(),
-              // customHeightSpace(),
-              customInput(),
-            ],
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          MouseRegion(
+            cursor: onTap != null && !readOnly
+                ? SystemMouseCursors.click
+                : MouseCursor.defer,
+            child: GestureDetector(
+              onTap: !readOnly ? onTap : null,
+              child: customTitle(),
+            ),
           ),
-        ),
+          // customHeightSpace(),
+          customInput(),
+        ],
       ),
     );
   }
@@ -326,7 +328,7 @@ class _CustomTextField extends StatelessWidget {
     } else if (inputType == InputType.double) {
       keyboardType = const TextInputType.numberWithOptions(decimal: true);
       inputFormatters = [
-        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$'))
+        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))
       ];
     } else if (inputType == InputType.boolean) {
       keyboardType = TextInputType.text;
