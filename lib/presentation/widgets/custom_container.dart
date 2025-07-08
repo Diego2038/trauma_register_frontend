@@ -4,10 +4,14 @@ import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 class CustomContainer extends StatelessWidget {
   final List<Widget> children;
   final double? maxWidth;
+  final bool showDeleteButton;
+  final VoidCallback? onDelete;
   const CustomContainer({
     super.key,
     required this.children,
     this.maxWidth,
+    this.showDeleteButton = false,
+    this.onDelete,
   });
 
   @override
@@ -23,11 +27,36 @@ class CustomContainer extends StatelessWidget {
         ),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
-      child: Wrap(
-        runAlignment: WrapAlignment.end,
-        runSpacing: 20,
-        spacing: 20,
-        children: children,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Wrap(
+            runAlignment: WrapAlignment.end,
+            runSpacing: 20,
+            spacing: 20,
+            children: children,
+          ),
+          if (showDeleteButton)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (showDeleteButton)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: onDelete,
+                        color: AppColors.modalCancel,
+                        iconSize: 25,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }
