@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class FirearmInjury {
   final int? id;
   final String? tipoDeArmaDeFuego;
@@ -9,11 +11,13 @@ class FirearmInjury {
 
   FirearmInjury copyWith({
     int? id,
-    String? tipoDeArmaDeFuego,
+    Optional<String?>? tipoDeArmaDeFuego,
   }) =>
       FirearmInjury(
         id: id ?? this.id,
-        tipoDeArmaDeFuego: tipoDeArmaDeFuego ?? this.tipoDeArmaDeFuego,
+        tipoDeArmaDeFuego: tipoDeArmaDeFuego?.isPresent == true
+            ? tipoDeArmaDeFuego!.value
+            : this.tipoDeArmaDeFuego,
       );
 
   factory FirearmInjury.fromJson(Map<String, dynamic> json) => FirearmInjury(

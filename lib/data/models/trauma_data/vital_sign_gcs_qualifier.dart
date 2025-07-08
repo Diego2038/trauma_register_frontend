@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class VitalSignGcsQualifier {
   final int? id;
   final String? calificadorGcs;
@@ -9,11 +11,13 @@ class VitalSignGcsQualifier {
 
   VitalSignGcsQualifier copyWith({
     int? id,
-    String? calificadorGcs,
+    Optional<String?>? calificadorGcs,
   }) =>
       VitalSignGcsQualifier(
         id: id ?? this.id,
-        calificadorGcs: calificadorGcs ?? this.calificadorGcs,
+        calificadorGcs: calificadorGcs?.isPresent == true
+            ? calificadorGcs!.value
+            : this.calificadorGcs,
       );
 
   factory VitalSignGcsQualifier.fromJson(Map<String, dynamic> json) =>

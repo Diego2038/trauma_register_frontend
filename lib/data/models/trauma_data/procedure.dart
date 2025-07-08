@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class Procedure {
   final int? id;
   final String? procedimientoRealizado;
@@ -15,18 +17,23 @@ class Procedure {
 
   Procedure copyWith({
     int? id,
-    String? procedimientoRealizado,
-    DateTime? fechaYHoraDeInicio,
-    DateTime? fechaYHoraDeTermino,
-    String? lugar,
+    Optional<String?>? procedimientoRealizado,
+    Optional<DateTime?>? fechaYHoraDeInicio,
+    Optional<DateTime?>? fechaYHoraDeTermino,
+    Optional<String?>? lugar,
   }) =>
       Procedure(
         id: id ?? this.id,
-        procedimientoRealizado:
-            procedimientoRealizado ?? this.procedimientoRealizado,
-        fechaYHoraDeInicio: fechaYHoraDeInicio ?? this.fechaYHoraDeInicio,
-        fechaYHoraDeTermino: fechaYHoraDeTermino ?? this.fechaYHoraDeTermino,
-        lugar: lugar ?? this.lugar,
+        procedimientoRealizado: procedimientoRealizado?.isPresent == true
+            ? procedimientoRealizado!.value
+            : this.procedimientoRealizado,
+        fechaYHoraDeInicio: fechaYHoraDeInicio?.isPresent == true
+            ? fechaYHoraDeInicio!.value
+            : this.fechaYHoraDeInicio,
+        fechaYHoraDeTermino: fechaYHoraDeTermino?.isPresent == true
+            ? fechaYHoraDeTermino!.value
+            : this.fechaYHoraDeTermino,
+        lugar: lugar?.isPresent == true ? lugar!.value : this.lugar,
       );
 
   factory Procedure.fromJson(Map<String, dynamic> json) => Procedure(

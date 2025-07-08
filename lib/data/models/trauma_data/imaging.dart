@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class Imaging {
   final int? id;
   final String? tipoDeImagen;
@@ -15,17 +17,23 @@ class Imaging {
 
   Imaging copyWith({
     int? id,
-    String? tipoDeImagen,
-    String? parteDelCuerpo,
-    bool? opcion,
-    String? descripcion,
+    Optional<String?>? tipoDeImagen,
+    Optional<String?>? parteDelCuerpo,
+    Optional<bool?>? opcion,
+    Optional<String?>? descripcion,
   }) =>
       Imaging(
         id: id ?? this.id,
-        tipoDeImagen: tipoDeImagen ?? this.tipoDeImagen,
-        parteDelCuerpo: parteDelCuerpo ?? this.parteDelCuerpo,
-        opcion: opcion ?? this.opcion,
-        descripcion: descripcion ?? this.descripcion,
+        tipoDeImagen: tipoDeImagen?.isPresent == true
+            ? tipoDeImagen!.value
+            : this.tipoDeImagen,
+        parteDelCuerpo: parteDelCuerpo?.isPresent == true
+            ? parteDelCuerpo!.value
+            : this.parteDelCuerpo,
+        opcion: opcion?.isPresent == true ? opcion!.value : this.opcion,
+        descripcion: descripcion?.isPresent == true
+            ? descripcion!.value
+            : this.descripcion,
       );
 
   factory Imaging.fromJson(Map<String, dynamic> json) => Imaging(

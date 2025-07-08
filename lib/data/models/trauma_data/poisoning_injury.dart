@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class PoisoningInjury {
   final int? id;
   final String? tipoDeEnvenenamiento;
@@ -9,11 +11,13 @@ class PoisoningInjury {
 
   PoisoningInjury copyWith({
     int? id,
-    String? tipoDeEnvenenamiento,
+    Optional<String?>? tipoDeEnvenenamiento,
   }) =>
       PoisoningInjury(
         id: id ?? this.id,
-        tipoDeEnvenenamiento: tipoDeEnvenenamiento ?? this.tipoDeEnvenenamiento,
+        tipoDeEnvenenamiento: tipoDeEnvenenamiento?.isPresent == true
+            ? tipoDeEnvenenamiento!.value
+            : this.tipoDeEnvenenamiento,
       );
 
   factory PoisoningInjury.fromJson(Map<String, dynamic> json) =>

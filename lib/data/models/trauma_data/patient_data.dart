@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:trauma_register_frontend/core/constants/null_value.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/trauma_data.dart';
 
 class PatientData {
@@ -115,23 +116,23 @@ class PatientData {
     List<PrehospitalProcedure>? prehospitalProcedure,
     List<TransportationMode>? transportationMode,
     List<VitalSign>? vitalSign,
-    String? direccionLinea1,
-    String? direccionLinea2,
-    String? ciudad,
-    String? cantonMunicipio,
-    String? provinciaEstado,
-    String? codigoPostal,
-    String? pais,
-    int? edad,
-    String? unidadDeEdad,
-    String? genero,
-    DateTime? fechaDeNacimiento,
-    String? ocupacion,
-    String? estadoCivil,
-    String? nacionalidad,
-    String? grupoEtnico,
-    String? otroGrupoEtnico,
-    String? numDocDeIdentificacion,
+    Optional<String?>? direccionLinea1,
+    Optional<String?>? direccionLinea2,
+    Optional<String?>? ciudad,
+    Optional<String?>? cantonMunicipio,
+    Optional<String?>? provinciaEstado,
+    Optional<String?>? codigoPostal,
+    Optional<String?>? pais,
+    Optional<int?>? edad,
+    Optional<String?>? unidadDeEdad,
+    Optional<String?>? genero,
+    Optional<DateTime?>? fechaDeNacimiento,
+    Optional<String?>? ocupacion,
+    Optional<String?>? estadoCivil,
+    Optional<String?>? nacionalidad,
+    Optional<String?>? grupoEtnico,
+    Optional<String?>? otroGrupoEtnico,
+    Optional<String?>? numDocDeIdentificacion,
   }) =>
       PatientData(
         traumaRegisterRecordId: traumaRegisterRecordId != NullValue.nullInt
@@ -164,49 +165,48 @@ class PatientData {
         prehospitalProcedure: prehospitalProcedure ?? this.prehospitalProcedure,
         transportationMode: transportationMode ?? this.transportationMode,
         vitalSign: vitalSign ?? this.vitalSign,
-        direccionLinea1: direccionLinea1 != NullValue.nullString
-            ? (direccionLinea1 ?? this.direccionLinea1)
-            : null,
-        direccionLinea2: direccionLinea2 != NullValue.nullString
-            ? (direccionLinea2 ?? this.direccionLinea2)
-            : null,
-        ciudad: ciudad != NullValue.nullString ? (ciudad ?? this.ciudad) : null,
-        cantonMunicipio: cantonMunicipio != NullValue.nullString
-            ? (cantonMunicipio ?? this.cantonMunicipio)
-            : null,
-        provinciaEstado: provinciaEstado != NullValue.nullString
-            ? (provinciaEstado ?? this.provinciaEstado)
-            : null,
-        codigoPostal: codigoPostal != NullValue.nullString
-            ? (codigoPostal ?? this.codigoPostal)
-            : null,
-        pais: pais != NullValue.nullString ? (pais ?? this.pais) : null,
-        edad: edad != NullValue.nullInt ? (edad ?? this.edad) : null,
-        unidadDeEdad: unidadDeEdad != NullValue.nullString
-            ? (unidadDeEdad ?? this.unidadDeEdad)
-            : null,
-        genero: genero != NullValue.nullString ? (genero ?? this.genero) : null,
-        fechaDeNacimiento: fechaDeNacimiento != NullValue.nullDateTime
-            ? (fechaDeNacimiento ?? this.fechaDeNacimiento)
-            : null,
-        ocupacion: ocupacion != NullValue.nullString
-            ? (ocupacion ?? this.ocupacion)
-            : null,
-        estadoCivil: estadoCivil != NullValue.nullString
-            ? (estadoCivil ?? this.estadoCivil)
-            : null,
-        nacionalidad: nacionalidad != NullValue.nullString
-            ? (nacionalidad ?? this.nacionalidad)
-            : null,
-        grupoEtnico: grupoEtnico != NullValue.nullString
-            ? (grupoEtnico ?? this.grupoEtnico)
-            : null,
-        otroGrupoEtnico: otroGrupoEtnico != NullValue.nullString
-            ? (otroGrupoEtnico ?? this.otroGrupoEtnico)
-            : null,
-        numDocDeIdentificacion: numDocDeIdentificacion != NullValue.nullString
-            ? (numDocDeIdentificacion ?? this.numDocDeIdentificacion)
-            : null,
+        direccionLinea1: direccionLinea1?.isPresent == true
+            ? direccionLinea1!.value
+            : this.direccionLinea1,
+        direccionLinea2: direccionLinea2?.isPresent == true
+            ? direccionLinea2!.value
+            : this.direccionLinea2,
+        ciudad: ciudad?.isPresent == true ? ciudad!.value : this.ciudad,
+        cantonMunicipio: cantonMunicipio?.isPresent == true
+            ? cantonMunicipio!.value
+            : this.cantonMunicipio,
+        provinciaEstado: provinciaEstado?.isPresent == true
+            ? provinciaEstado!.value
+            : this.provinciaEstado,
+        codigoPostal: codigoPostal?.isPresent == true
+            ? codigoPostal!.value
+            : this.codigoPostal,
+        pais: pais?.isPresent == true ? pais!.value : this.pais,
+        edad: edad?.isPresent == true ? edad!.value : this.edad,
+        unidadDeEdad: unidadDeEdad?.isPresent == true
+            ? unidadDeEdad!.value
+            : this.unidadDeEdad,
+        genero: genero?.isPresent == true ? genero!.value : this.genero,
+        fechaDeNacimiento: fechaDeNacimiento?.isPresent == true
+            ? fechaDeNacimiento!.value
+            : this.fechaDeNacimiento,
+        ocupacion:
+            ocupacion?.isPresent == true ? ocupacion!.value : this.ocupacion,
+        estadoCivil: estadoCivil?.isPresent == true
+            ? estadoCivil!.value
+            : this.estadoCivil,
+        nacionalidad: nacionalidad?.isPresent == true
+            ? nacionalidad!.value
+            : this.nacionalidad,
+        grupoEtnico: grupoEtnico?.isPresent == true
+            ? grupoEtnico!.value
+            : this.grupoEtnico,
+        otroGrupoEtnico: otroGrupoEtnico?.isPresent == true
+            ? otroGrupoEtnico!.value
+            : this.otroGrupoEtnico,
+        numDocDeIdentificacion: numDocDeIdentificacion?.isPresent == true
+            ? numDocDeIdentificacion!.value
+            : this.numDocDeIdentificacion,
       );
 
   factory PatientData.fromJson(Map<String, dynamic> json) => PatientData(

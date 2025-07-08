@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class PrehospitalProcedure {
   final int? id;
   final String? procedimientoRealizado;
@@ -9,12 +11,13 @@ class PrehospitalProcedure {
 
   PrehospitalProcedure copyWith({
     int? id,
-    String? procedimientoRealizado,
+    Optional<String?>? procedimientoRealizado,
   }) =>
       PrehospitalProcedure(
         id: id ?? this.id,
-        procedimientoRealizado:
-            procedimientoRealizado ?? this.procedimientoRealizado,
+        procedimientoRealizado: procedimientoRealizado?.isPresent == true
+            ? procedimientoRealizado!.value
+            : this.procedimientoRealizado,
       );
 
   factory PrehospitalProcedure.fromJson(Map<String, dynamic> json) =>

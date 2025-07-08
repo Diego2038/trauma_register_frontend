@@ -1,4 +1,5 @@
 import 'package:trauma_register_frontend/data/models/custom/time_of_day.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 
 class HealthcareRecord {
   final int? id;
@@ -211,282 +212,423 @@ class HealthcareRecord {
 
   HealthcareRecord copyWith({
     int? id,
-    String? numeroDeHistoriaClinica,
-    String? hospital,
-    DateTime? fechaYHoraDeLlegadaDelPaciente,
-    bool? referido,
-    bool? policiaNotificada,
-    DateTime? fechaYHoraDeLlegadaDelMedico,
-    DateTime? fechaYHoraDeNotificacionAlMedico,
-    bool? alertaEquipoDeTrauma,
-    String? nivelDeAlerta,
-    bool? pacienteAsegurado,
-    String? tipoDeSeguro,
-    String? motivoDeConsulta,
-    String? inmunizacionContraElTetanos,
-    String? descripcionDelExamenFisico,
-    String? mecanismoPrimario,
-    String? numeroDeLesionesSerias,
-    String? descripcionDelDiagnostico,
-    String? disposicionODestinoDelPaciente,
-    String? donacionDeOrganos,
-    String? autopsia,
-    String? muertePrevenible,
-    String? tipoDeAdmision,
-    DateTime? fechaYHoraDeLaDisposicion,
-    int? tiempoEnSalaDeEmergenciasHoras,
-    int? tiempoEnSalaDeEmergenciasMinutos,
-    String? numeroDeReferenciaDelEd,
-    DateTime? fechaDeAdmision,
-    DateTime? fechaYHoraDeAlta,
-    double? diasDeHospitalizacion,
-    int? uciDias,
-    String? detallesDeHospitalizacion,
-    String? disposicionODestinoDelPacienteDelHospitalizacion,
-    String? donacionDeOrganosDelHospitalizacion,
-    String? autopsiaDelHospitalizacion,
-    String? muertePrevenibleDelHospitalizacion,
-    String? numeroDeReferenciaDelHospitalizacion,
-    String? agenciaDeTransporte,
-    String? origenDelTransporte,
-    String? numeroDeRegistroDelTransporte,
-    DateTime? fechaYHoraDeNotificacionPreHospitalaria,
-    DateTime? fechaYHoraDeLlegadaALaEscena,
-    DateTime? fechaYHoraDeSalidaDeLaEscena,
-    String? razonDeLaDemora,
-    bool? reporteOFormularioPreHospitalarioEntregado,
-    String? ciudadHospitalMasCercanoAlSitioDelIncidente,
-    int? tiempoDeExtricacionHoras,
-    int? tiempoDeExtricacionMinutos,
-    int? duracionDelTransporteHoras,
-    int? duracionDelTransporteMinutos,
-    String? procedimientoRealizado,
-    int? frecuenciaCardiacaEnLaEscena,
-    int? presionArterialSistolicaEnLaEscena,
-    int? presionArterialDiastolicaEnLaEscena,
-    int? frecuenciaRespiratoriaEnLaEscena,
-    String? calificadorDeFrecuenciaRespiratoriaEnLaEscena,
-    double? temperaturaEnLaEscenaCelsius,
-    int? saturacionDeO2EnLaEscena,
-    int? frecuenciaCardiacaDuranteElTransporte,
-    int? presionArterialSistolicaDeTransporte,
-    int? presionDiastolicaDuranteElTransporte,
-    int? frecuenciaRespiratoriaDuranteElTransporte,
-    String? calificadorDeFrecuenciaRespiratoriaDuranteElTransporte,
-    double? temperaturaDuranteElTransporteCelsius,
-    int? saturacionDeO2DuranteElTransporte,
-    int? perdidaDeConciencia,
-    TimeOfDay? duracionDePerdidaDeConciencia,
-    int? gcsOcular,
-    int? gcsVerbal,
-    int? gcsMotora,
-    int? gcsTotal,
-    double? sangreL,
-    double? coloidesL,
-    double? cristaloidesL,
-    String? hallazgosClinicosTexto,
-    DateTime? fechaYHoraDeEnvioDeContraReferencia,
-    DateTime? fechaDeAltaDeContrarReferencia,
-    bool? hallazgosClinicosExistencia,
-    String? servicioQueAtendio,
-    bool? pacienteAdmitido,
-    String? hospitalQueRecibe,
-    String? otroServicio,
-    String? servicioQueRecibe,
-    String? recomendaciones,
-    String? numeroDeReferenciaDeReferenciasSalientes,
-    DateTime? fechaDeEnvioDeReferencia,
-    DateTime? fechaDeReferencia,
-    String? razonDeLaReferencia,
-    String? medicoQueRefiere,
-    String? estadoDeReferencia,
-    DateTime? fechaDeAceptacionDeReferencia,
-    int? iss,
-    int? kts,
-    double? rts,
-    int? abdomen,
-    int? torax,
-    int? externo,
-    int? extremidades,
-    int? cara,
-    int? cabeza,
-    double? trissContuso,
-    double? trissPenetrante,
+    Optional<String?>? numeroDeHistoriaClinica,
+    Optional<String?>? hospital,
+    Optional<DateTime?>? fechaYHoraDeLlegadaDelPaciente,
+    Optional<bool?>? referido,
+    Optional<bool?>? policiaNotificada,
+    Optional<DateTime?>? fechaYHoraDeLlegadaDelMedico,
+    Optional<DateTime?>? fechaYHoraDeNotificacionAlMedico,
+    Optional<bool?>? alertaEquipoDeTrauma,
+    Optional<String?>? nivelDeAlerta,
+    Optional<bool?>? pacienteAsegurado,
+    Optional<String?>? tipoDeSeguro,
+    Optional<String?>? motivoDeConsulta,
+    Optional<String?>? inmunizacionContraElTetanos,
+    Optional<String?>? descripcionDelExamenFisico,
+    Optional<String?>? mecanismoPrimario,
+    Optional<String?>? numeroDeLesionesSerias,
+    Optional<String?>? descripcionDelDiagnostico,
+    Optional<String?>? disposicionODestinoDelPaciente,
+    Optional<String?>? donacionDeOrganos,
+    Optional<String?>? autopsia,
+    Optional<String?>? muertePrevenible,
+    Optional<String?>? tipoDeAdmision,
+    Optional<DateTime?>? fechaYHoraDeLaDisposicion,
+    Optional<int?>? tiempoEnSalaDeEmergenciasHoras,
+    Optional<int?>? tiempoEnSalaDeEmergenciasMinutos,
+    Optional<String?>? numeroDeReferenciaDelEd,
+    Optional<DateTime?>? fechaDeAdmision,
+    Optional<DateTime?>? fechaYHoraDeAlta,
+    Optional<double?>? diasDeHospitalizacion,
+    Optional<int?>? uciDias,
+    Optional<String?>? detallesDeHospitalizacion,
+    Optional<String?>? disposicionODestinoDelPacienteDelHospitalizacion,
+    Optional<String?>? donacionDeOrganosDelHospitalizacion,
+    Optional<String?>? autopsiaDelHospitalizacion,
+    Optional<String?>? muertePrevenibleDelHospitalizacion,
+    Optional<String?>? numeroDeReferenciaDelHospitalizacion,
+    Optional<String?>? agenciaDeTransporte,
+    Optional<String?>? origenDelTransporte,
+    Optional<String?>? numeroDeRegistroDelTransporte,
+    Optional<DateTime?>? fechaYHoraDeNotificacionPreHospitalaria,
+    Optional<DateTime?>? fechaYHoraDeLlegadaALaEscena,
+    Optional<DateTime?>? fechaYHoraDeSalidaDeLaEscena,
+    Optional<String?>? razonDeLaDemora,
+    Optional<bool?>? reporteOFormularioPreHospitalarioEntregado,
+    Optional<String?>? ciudadHospitalMasCercanoAlSitioDelIncidente,
+    Optional<int?>? tiempoDeExtricacionHoras,
+    Optional<int?>? tiempoDeExtricacionMinutos,
+    Optional<int?>? duracionDelTransporteHoras,
+    Optional<int?>? duracionDelTransporteMinutos,
+    Optional<String?>? procedimientoRealizado,
+    Optional<int?>? frecuenciaCardiacaEnLaEscena,
+    Optional<int?>? presionArterialSistolicaEnLaEscena,
+    Optional<int?>? presionArterialDiastolicaEnLaEscena,
+    Optional<int?>? frecuenciaRespiratoriaEnLaEscena,
+    Optional<String?>? calificadorDeFrecuenciaRespiratoriaEnLaEscena,
+    Optional<double?>? temperaturaEnLaEscenaCelsius,
+    Optional<int?>? saturacionDeO2EnLaEscena,
+    Optional<int?>? frecuenciaCardiacaDuranteElTransporte,
+    Optional<int?>? presionArterialSistolicaDeTransporte,
+    Optional<int?>? presionDiastolicaDuranteElTransporte,
+    Optional<int?>? frecuenciaRespiratoriaDuranteElTransporte,
+    Optional<String?>? calificadorDeFrecuenciaRespiratoriaDuranteElTransporte,
+    Optional<double?>? temperaturaDuranteElTransporteCelsius,
+    Optional<int?>? saturacionDeO2DuranteElTransporte,
+    Optional<int?>? perdidaDeConciencia,
+    Optional<TimeOfDay?>? duracionDePerdidaDeConciencia,
+    Optional<int?>? gcsOcular,
+    Optional<int?>? gcsVerbal,
+    Optional<int?>? gcsMotora,
+    Optional<int?>? gcsTotal,
+    Optional<double?>? sangreL,
+    Optional<double?>? coloidesL,
+    Optional<double?>? cristaloidesL,
+    Optional<String?>? hallazgosClinicosTexto,
+    Optional<DateTime?>? fechaYHoraDeEnvioDeContraReferencia,
+    Optional<DateTime?>? fechaDeAltaDeContrarReferencia,
+    Optional<bool?>? hallazgosClinicosExistencia,
+    Optional<String?>? servicioQueAtendio,
+    Optional<bool?>? pacienteAdmitido,
+    Optional<String?>? hospitalQueRecibe,
+    Optional<String?>? otroServicio,
+    Optional<String?>? servicioQueRecibe,
+    Optional<String?>? recomendaciones,
+    Optional<String?>? numeroDeReferenciaDeReferenciasSalientes,
+    Optional<DateTime?>? fechaDeEnvioDeReferencia,
+    Optional<DateTime?>? fechaDeReferencia,
+    Optional<String?>? razonDeLaReferencia,
+    Optional<String?>? medicoQueRefiere,
+    Optional<String?>? estadoDeReferencia,
+    Optional<DateTime?>? fechaDeAceptacionDeReferencia,
+    Optional<int?>? iss,
+    Optional<int?>? kts,
+    Optional<double?>? rts,
+    Optional<int?>? abdomen,
+    Optional<int?>? torax,
+    Optional<int?>? externo,
+    Optional<int?>? extremidades,
+    Optional<int?>? cara,
+    Optional<int?>? cabeza,
+    Optional<double?>? trissContuso,
+    Optional<double?>? trissPenetrante,
   }) =>
       HealthcareRecord(
         id: id ?? this.id,
-        numeroDeHistoriaClinica:
-            numeroDeHistoriaClinica ?? this.numeroDeHistoriaClinica,
-        hospital: hospital ?? this.hospital,
-        fechaYHoraDeLlegadaDelPaciente: fechaYHoraDeLlegadaDelPaciente ??
-            this.fechaYHoraDeLlegadaDelPaciente,
-        referido: referido ?? this.referido,
-        policiaNotificada: policiaNotificada ?? this.policiaNotificada,
+        numeroDeHistoriaClinica: numeroDeHistoriaClinica?.isPresent == true
+            ? numeroDeHistoriaClinica!.value
+            : this.numeroDeHistoriaClinica,
+        hospital: hospital?.isPresent == true ? hospital!.value : this.hospital,
+        fechaYHoraDeLlegadaDelPaciente:
+            fechaYHoraDeLlegadaDelPaciente?.isPresent == true
+                ? fechaYHoraDeLlegadaDelPaciente!.value
+                : this.fechaYHoraDeLlegadaDelPaciente,
+        referido: referido?.isPresent == true ? referido!.value : this.referido,
+        policiaNotificada: policiaNotificada?.isPresent == true
+            ? policiaNotificada!.value
+            : this.policiaNotificada,
         fechaYHoraDeLlegadaDelMedico:
-            fechaYHoraDeLlegadaDelMedico ?? this.fechaYHoraDeLlegadaDelMedico,
-        fechaYHoraDeNotificacionAlMedico: fechaYHoraDeNotificacionAlMedico ??
-            this.fechaYHoraDeNotificacionAlMedico,
-        alertaEquipoDeTrauma: alertaEquipoDeTrauma ?? this.alertaEquipoDeTrauma,
-        nivelDeAlerta: nivelDeAlerta ?? this.nivelDeAlerta,
-        pacienteAsegurado: pacienteAsegurado ?? this.pacienteAsegurado,
-        tipoDeSeguro: tipoDeSeguro ?? this.tipoDeSeguro,
-        motivoDeConsulta: motivoDeConsulta ?? this.motivoDeConsulta,
+            fechaYHoraDeLlegadaDelMedico?.isPresent == true
+                ? fechaYHoraDeLlegadaDelMedico!.value
+                : this.fechaYHoraDeLlegadaDelMedico,
+        fechaYHoraDeNotificacionAlMedico:
+            fechaYHoraDeNotificacionAlMedico?.isPresent == true
+                ? fechaYHoraDeNotificacionAlMedico!.value
+                : this.fechaYHoraDeNotificacionAlMedico,
+        alertaEquipoDeTrauma: alertaEquipoDeTrauma?.isPresent == true
+            ? alertaEquipoDeTrauma!.value
+            : this.alertaEquipoDeTrauma,
+        nivelDeAlerta: nivelDeAlerta?.isPresent == true
+            ? nivelDeAlerta!.value
+            : this.nivelDeAlerta,
+        pacienteAsegurado: pacienteAsegurado?.isPresent == true
+            ? pacienteAsegurado!.value
+            : this.pacienteAsegurado,
+        tipoDeSeguro: tipoDeSeguro?.isPresent == true
+            ? tipoDeSeguro!.value
+            : this.tipoDeSeguro,
+        motivoDeConsulta: motivoDeConsulta?.isPresent == true
+            ? motivoDeConsulta!.value
+            : this.motivoDeConsulta,
         inmunizacionContraElTetanos:
-            inmunizacionContraElTetanos ?? this.inmunizacionContraElTetanos,
+            inmunizacionContraElTetanos?.isPresent == true
+                ? inmunizacionContraElTetanos!.value
+                : this.inmunizacionContraElTetanos,
         descripcionDelExamenFisico:
-            descripcionDelExamenFisico ?? this.descripcionDelExamenFisico,
-        mecanismoPrimario: mecanismoPrimario ?? this.mecanismoPrimario,
-        numeroDeLesionesSerias:
-            numeroDeLesionesSerias ?? this.numeroDeLesionesSerias,
-        descripcionDelDiagnostico:
-            descripcionDelDiagnostico ?? this.descripcionDelDiagnostico,
-        disposicionODestinoDelPaciente: disposicionODestinoDelPaciente ??
-            this.disposicionODestinoDelPaciente,
-        donacionDeOrganos: donacionDeOrganos ?? this.donacionDeOrganos,
-        autopsia: autopsia ?? this.autopsia,
-        muertePrevenible: muertePrevenible ?? this.muertePrevenible,
-        tipoDeAdmision: tipoDeAdmision ?? this.tipoDeAdmision,
-        fechaYHoraDeLaDisposicion:
-            fechaYHoraDeLaDisposicion ?? this.fechaYHoraDeLaDisposicion,
-        tiempoEnSalaDeEmergenciasHoras: tiempoEnSalaDeEmergenciasHoras ??
-            this.tiempoEnSalaDeEmergenciasHoras,
-        tiempoEnSalaDeEmergenciasMinutos: tiempoEnSalaDeEmergenciasMinutos ??
-            this.tiempoEnSalaDeEmergenciasMinutos,
-        numeroDeReferenciaDelEd:
-            numeroDeReferenciaDelEd ?? this.numeroDeReferenciaDelEd,
-        fechaDeAdmision: fechaDeAdmision ?? this.fechaDeAdmision,
-        fechaYHoraDeAlta: fechaYHoraDeAlta ?? this.fechaYHoraDeAlta,
-        diasDeHospitalizacion:
-            diasDeHospitalizacion ?? this.diasDeHospitalizacion,
-        uciDias: uciDias ?? this.uciDias,
-        detallesDeHospitalizacion:
-            detallesDeHospitalizacion ?? this.detallesDeHospitalizacion,
+            descripcionDelExamenFisico?.isPresent == true
+                ? descripcionDelExamenFisico!.value
+                : this.descripcionDelExamenFisico,
+        mecanismoPrimario: mecanismoPrimario?.isPresent == true
+            ? mecanismoPrimario!.value
+            : this.mecanismoPrimario,
+        numeroDeLesionesSerias: numeroDeLesionesSerias?.isPresent == true
+            ? numeroDeLesionesSerias!.value
+            : this.numeroDeLesionesSerias,
+        descripcionDelDiagnostico: descripcionDelDiagnostico?.isPresent == true
+            ? descripcionDelDiagnostico!.value
+            : this.descripcionDelDiagnostico,
+        disposicionODestinoDelPaciente:
+            disposicionODestinoDelPaciente?.isPresent == true
+                ? disposicionODestinoDelPaciente!.value
+                : this.disposicionODestinoDelPaciente,
+        donacionDeOrganos: donacionDeOrganos?.isPresent == true
+            ? donacionDeOrganos!.value
+            : this.donacionDeOrganos,
+        autopsia: autopsia?.isPresent == true ? autopsia!.value : this.autopsia,
+        muertePrevenible: muertePrevenible?.isPresent == true
+            ? muertePrevenible!.value
+            : this.muertePrevenible,
+        tipoDeAdmision: tipoDeAdmision?.isPresent == true
+            ? tipoDeAdmision!.value
+            : this.tipoDeAdmision,
+        fechaYHoraDeLaDisposicion: fechaYHoraDeLaDisposicion?.isPresent == true
+            ? fechaYHoraDeLaDisposicion!.value
+            : this.fechaYHoraDeLaDisposicion,
+        tiempoEnSalaDeEmergenciasHoras:
+            tiempoEnSalaDeEmergenciasHoras?.isPresent == true
+                ? tiempoEnSalaDeEmergenciasHoras!.value
+                : this.tiempoEnSalaDeEmergenciasHoras,
+        tiempoEnSalaDeEmergenciasMinutos:
+            tiempoEnSalaDeEmergenciasMinutos?.isPresent == true
+                ? tiempoEnSalaDeEmergenciasMinutos!.value
+                : this.tiempoEnSalaDeEmergenciasMinutos,
+        numeroDeReferenciaDelEd: numeroDeReferenciaDelEd?.isPresent == true
+            ? numeroDeReferenciaDelEd!.value
+            : this.numeroDeReferenciaDelEd,
+        fechaDeAdmision: fechaDeAdmision?.isPresent == true
+            ? fechaDeAdmision!.value
+            : this.fechaDeAdmision,
+        fechaYHoraDeAlta: fechaYHoraDeAlta?.isPresent == true
+            ? fechaYHoraDeAlta!.value
+            : this.fechaYHoraDeAlta,
+        diasDeHospitalizacion: diasDeHospitalizacion?.isPresent == true
+            ? diasDeHospitalizacion!.value
+            : this.diasDeHospitalizacion,
+        uciDias: uciDias?.isPresent == true ? uciDias!.value : this.uciDias,
+        detallesDeHospitalizacion: detallesDeHospitalizacion?.isPresent == true
+            ? detallesDeHospitalizacion!.value
+            : this.detallesDeHospitalizacion,
         disposicionODestinoDelPacienteDelHospitalizacion:
-            disposicionODestinoDelPacienteDelHospitalizacion ??
-                this.disposicionODestinoDelPacienteDelHospitalizacion,
+            disposicionODestinoDelPacienteDelHospitalizacion?.isPresent == true
+                ? disposicionODestinoDelPacienteDelHospitalizacion!.value
+                : this.disposicionODestinoDelPacienteDelHospitalizacion,
         donacionDeOrganosDelHospitalizacion:
-            donacionDeOrganosDelHospitalizacion ??
-                this.donacionDeOrganosDelHospitalizacion,
+            donacionDeOrganosDelHospitalizacion?.isPresent == true
+                ? donacionDeOrganosDelHospitalizacion!.value
+                : this.donacionDeOrganosDelHospitalizacion,
         autopsiaDelHospitalizacion:
-            autopsiaDelHospitalizacion ?? this.autopsiaDelHospitalizacion,
+            autopsiaDelHospitalizacion?.isPresent == true
+                ? autopsiaDelHospitalizacion!.value
+                : this.autopsiaDelHospitalizacion,
         muertePrevenibleDelHospitalizacion:
-            muertePrevenibleDelHospitalizacion ??
-                this.muertePrevenibleDelHospitalizacion,
+            muertePrevenibleDelHospitalizacion?.isPresent == true
+                ? muertePrevenibleDelHospitalizacion!.value
+                : this.muertePrevenibleDelHospitalizacion,
         numeroDeReferenciaDelHospitalizacion:
-            numeroDeReferenciaDelHospitalizacion ??
-                this.numeroDeReferenciaDelHospitalizacion,
-        agenciaDeTransporte: agenciaDeTransporte ?? this.agenciaDeTransporte,
-        origenDelTransporte: origenDelTransporte ?? this.origenDelTransporte,
+            numeroDeReferenciaDelHospitalizacion?.isPresent == true
+                ? numeroDeReferenciaDelHospitalizacion!.value
+                : this.numeroDeReferenciaDelHospitalizacion,
+        agenciaDeTransporte: agenciaDeTransporte?.isPresent == true
+            ? agenciaDeTransporte!.value
+            : this.agenciaDeTransporte,
+        origenDelTransporte: origenDelTransporte?.isPresent == true
+            ? origenDelTransporte!.value
+            : this.origenDelTransporte,
         numeroDeRegistroDelTransporte:
-            numeroDeRegistroDelTransporte ?? this.numeroDeRegistroDelTransporte,
+            numeroDeRegistroDelTransporte?.isPresent == true
+                ? numeroDeRegistroDelTransporte!.value
+                : this.numeroDeRegistroDelTransporte,
         fechaYHoraDeNotificacionPreHospitalaria:
-            fechaYHoraDeNotificacionPreHospitalaria ??
-                this.fechaYHoraDeNotificacionPreHospitalaria,
+            fechaYHoraDeNotificacionPreHospitalaria?.isPresent == true
+                ? fechaYHoraDeNotificacionPreHospitalaria!.value
+                : this.fechaYHoraDeNotificacionPreHospitalaria,
         fechaYHoraDeLlegadaALaEscena:
-            fechaYHoraDeLlegadaALaEscena ?? this.fechaYHoraDeLlegadaALaEscena,
+            fechaYHoraDeLlegadaALaEscena?.isPresent == true
+                ? fechaYHoraDeLlegadaALaEscena!.value
+                : this.fechaYHoraDeLlegadaALaEscena,
         fechaYHoraDeSalidaDeLaEscena:
-            fechaYHoraDeSalidaDeLaEscena ?? this.fechaYHoraDeSalidaDeLaEscena,
-        razonDeLaDemora: razonDeLaDemora ?? this.razonDeLaDemora,
+            fechaYHoraDeSalidaDeLaEscena?.isPresent == true
+                ? fechaYHoraDeSalidaDeLaEscena!.value
+                : this.fechaYHoraDeSalidaDeLaEscena,
+        razonDeLaDemora: razonDeLaDemora?.isPresent == true
+            ? razonDeLaDemora!.value
+            : this.razonDeLaDemora,
         reporteOFormularioPreHospitalarioEntregado:
-            reporteOFormularioPreHospitalarioEntregado ??
-                this.reporteOFormularioPreHospitalarioEntregado,
+            reporteOFormularioPreHospitalarioEntregado?.isPresent == true
+                ? reporteOFormularioPreHospitalarioEntregado!.value
+                : this.reporteOFormularioPreHospitalarioEntregado,
         ciudadHospitalMasCercanoAlSitioDelIncidente:
-            ciudadHospitalMasCercanoAlSitioDelIncidente ??
-                this.ciudadHospitalMasCercanoAlSitioDelIncidente,
-        tiempoDeExtricacionHoras:
-            tiempoDeExtricacionHoras ?? this.tiempoDeExtricacionHoras,
+            ciudadHospitalMasCercanoAlSitioDelIncidente?.isPresent == true
+                ? ciudadHospitalMasCercanoAlSitioDelIncidente!.value
+                : this.ciudadHospitalMasCercanoAlSitioDelIncidente,
+        tiempoDeExtricacionHoras: tiempoDeExtricacionHoras?.isPresent == true
+            ? tiempoDeExtricacionHoras!.value
+            : this.tiempoDeExtricacionHoras,
         tiempoDeExtricacionMinutos:
-            tiempoDeExtricacionMinutos ?? this.tiempoDeExtricacionMinutos,
+            tiempoDeExtricacionMinutos?.isPresent == true
+                ? tiempoDeExtricacionMinutos!.value
+                : this.tiempoDeExtricacionMinutos,
         duracionDelTransporteHoras:
-            duracionDelTransporteHoras ?? this.duracionDelTransporteHoras,
+            duracionDelTransporteHoras?.isPresent == true
+                ? duracionDelTransporteHoras!.value
+                : this.duracionDelTransporteHoras,
         duracionDelTransporteMinutos:
-            duracionDelTransporteMinutos ?? this.duracionDelTransporteMinutos,
-        procedimientoRealizado:
-            procedimientoRealizado ?? this.procedimientoRealizado,
+            duracionDelTransporteMinutos?.isPresent == true
+                ? duracionDelTransporteMinutos!.value
+                : this.duracionDelTransporteMinutos,
+        procedimientoRealizado: procedimientoRealizado?.isPresent == true
+            ? procedimientoRealizado!.value
+            : this.procedimientoRealizado,
         frecuenciaCardiacaEnLaEscena:
-            frecuenciaCardiacaEnLaEscena ?? this.frecuenciaCardiacaEnLaEscena,
+            frecuenciaCardiacaEnLaEscena?.isPresent == true
+                ? frecuenciaCardiacaEnLaEscena!.value
+                : this.frecuenciaCardiacaEnLaEscena,
         presionArterialSistolicaEnLaEscena:
-            presionArterialSistolicaEnLaEscena ??
-                this.presionArterialSistolicaEnLaEscena,
+            presionArterialSistolicaEnLaEscena?.isPresent == true
+                ? presionArterialSistolicaEnLaEscena!.value
+                : this.presionArterialSistolicaEnLaEscena,
         presionArterialDiastolicaEnLaEscena:
-            presionArterialDiastolicaEnLaEscena ??
-                this.presionArterialDiastolicaEnLaEscena,
-        frecuenciaRespiratoriaEnLaEscena: frecuenciaRespiratoriaEnLaEscena ??
-            this.frecuenciaRespiratoriaEnLaEscena,
+            presionArterialDiastolicaEnLaEscena?.isPresent == true
+                ? presionArterialDiastolicaEnLaEscena!.value
+                : this.presionArterialDiastolicaEnLaEscena,
+        frecuenciaRespiratoriaEnLaEscena:
+            frecuenciaRespiratoriaEnLaEscena?.isPresent == true
+                ? frecuenciaRespiratoriaEnLaEscena!.value
+                : this.frecuenciaRespiratoriaEnLaEscena,
         calificadorDeFrecuenciaRespiratoriaEnLaEscena:
-            calificadorDeFrecuenciaRespiratoriaEnLaEscena ??
-                this.calificadorDeFrecuenciaRespiratoriaEnLaEscena,
+            calificadorDeFrecuenciaRespiratoriaEnLaEscena?.isPresent == true
+                ? calificadorDeFrecuenciaRespiratoriaEnLaEscena!.value
+                : this.calificadorDeFrecuenciaRespiratoriaEnLaEscena,
         temperaturaEnLaEscenaCelsius:
-            temperaturaEnLaEscenaCelsius ?? this.temperaturaEnLaEscenaCelsius,
-        saturacionDeO2EnLaEscena:
-            saturacionDeO2EnLaEscena ?? this.saturacionDeO2EnLaEscena,
+            temperaturaEnLaEscenaCelsius?.isPresent == true
+                ? temperaturaEnLaEscenaCelsius!.value
+                : this.temperaturaEnLaEscenaCelsius,
+        saturacionDeO2EnLaEscena: saturacionDeO2EnLaEscena?.isPresent == true
+            ? saturacionDeO2EnLaEscena!.value
+            : this.saturacionDeO2EnLaEscena,
         frecuenciaCardiacaDuranteElTransporte:
-            frecuenciaCardiacaDuranteElTransporte ??
-                this.frecuenciaCardiacaDuranteElTransporte,
+            frecuenciaCardiacaDuranteElTransporte?.isPresent == true
+                ? frecuenciaCardiacaDuranteElTransporte!.value
+                : this.frecuenciaCardiacaDuranteElTransporte,
         presionArterialSistolicaDeTransporte:
-            presionArterialSistolicaDeTransporte ??
-                this.presionArterialSistolicaDeTransporte,
+            presionArterialSistolicaDeTransporte?.isPresent == true
+                ? presionArterialSistolicaDeTransporte!.value
+                : this.presionArterialSistolicaDeTransporte,
         presionDiastolicaDuranteElTransporte:
-            presionDiastolicaDuranteElTransporte ??
-                this.presionDiastolicaDuranteElTransporte,
+            presionDiastolicaDuranteElTransporte?.isPresent == true
+                ? presionDiastolicaDuranteElTransporte!.value
+                : this.presionDiastolicaDuranteElTransporte,
         frecuenciaRespiratoriaDuranteElTransporte:
-            frecuenciaRespiratoriaDuranteElTransporte ??
-                this.frecuenciaRespiratoriaDuranteElTransporte,
+            frecuenciaRespiratoriaDuranteElTransporte?.isPresent == true
+                ? frecuenciaRespiratoriaDuranteElTransporte!.value
+                : this.frecuenciaRespiratoriaDuranteElTransporte,
         calificadorDeFrecuenciaRespiratoriaDuranteElTransporte:
-            calificadorDeFrecuenciaRespiratoriaDuranteElTransporte ??
-                this.calificadorDeFrecuenciaRespiratoriaDuranteElTransporte,
+            calificadorDeFrecuenciaRespiratoriaDuranteElTransporte?.isPresent ==
+                    true
+                ? calificadorDeFrecuenciaRespiratoriaDuranteElTransporte!.value
+                : this.calificadorDeFrecuenciaRespiratoriaDuranteElTransporte,
         temperaturaDuranteElTransporteCelsius:
-            temperaturaDuranteElTransporteCelsius ??
-                this.temperaturaDuranteElTransporteCelsius,
-        saturacionDeO2DuranteElTransporte: saturacionDeO2DuranteElTransporte ??
-            this.saturacionDeO2DuranteElTransporte,
-        perdidaDeConciencia: perdidaDeConciencia ?? this.perdidaDeConciencia,
+            temperaturaDuranteElTransporteCelsius?.isPresent == true
+                ? temperaturaDuranteElTransporteCelsius!.value
+                : this.temperaturaDuranteElTransporteCelsius,
+        saturacionDeO2DuranteElTransporte:
+            saturacionDeO2DuranteElTransporte?.isPresent == true
+                ? saturacionDeO2DuranteElTransporte!.value
+                : this.saturacionDeO2DuranteElTransporte,
+        perdidaDeConciencia: perdidaDeConciencia?.isPresent == true
+            ? perdidaDeConciencia!.value
+            : this.perdidaDeConciencia,
         duracionDePerdidaDeConciencia:
-            duracionDePerdidaDeConciencia ?? this.duracionDePerdidaDeConciencia,
-        gcsOcular: gcsOcular ?? this.gcsOcular,
-        gcsVerbal: gcsVerbal ?? this.gcsVerbal,
-        gcsMotora: gcsMotora ?? this.gcsMotora,
-        gcsTotal: gcsTotal ?? this.gcsTotal,
-        sangreL: sangreL ?? this.sangreL,
-        coloidesL: coloidesL ?? this.coloidesL,
-        cristaloidesL: cristaloidesL ?? this.cristaloidesL,
-        hallazgosClinicosTexto:
-            hallazgosClinicosTexto ?? this.hallazgosClinicosTexto,
+            duracionDePerdidaDeConciencia?.isPresent == true
+                ? duracionDePerdidaDeConciencia!.value
+                : this.duracionDePerdidaDeConciencia,
+        gcsOcular:
+            gcsOcular?.isPresent == true ? gcsOcular!.value : this.gcsOcular,
+        gcsVerbal:
+            gcsVerbal?.isPresent == true ? gcsVerbal!.value : this.gcsVerbal,
+        gcsMotora:
+            gcsMotora?.isPresent == true ? gcsMotora!.value : this.gcsMotora,
+        gcsTotal: gcsTotal?.isPresent == true ? gcsTotal!.value : this.gcsTotal,
+        sangreL: sangreL?.isPresent == true ? sangreL!.value : this.sangreL,
+        coloidesL:
+            coloidesL?.isPresent == true ? coloidesL!.value : this.coloidesL,
+        cristaloidesL: cristaloidesL?.isPresent == true
+            ? cristaloidesL!.value
+            : this.cristaloidesL,
+        hallazgosClinicosTexto: hallazgosClinicosTexto?.isPresent == true
+            ? hallazgosClinicosTexto!.value
+            : this.hallazgosClinicosTexto,
         fechaYHoraDeEnvioDeContraReferencia:
-            fechaYHoraDeEnvioDeContraReferencia ??
-                this.fechaYHoraDeEnvioDeContraReferencia,
-        fechaDeAltaDeContrarReferencia: fechaDeAltaDeContrarReferencia ??
-            this.fechaDeAltaDeContrarReferencia,
+            fechaYHoraDeEnvioDeContraReferencia?.isPresent == true
+                ? fechaYHoraDeEnvioDeContraReferencia!.value
+                : this.fechaYHoraDeEnvioDeContraReferencia,
+        fechaDeAltaDeContrarReferencia:
+            fechaDeAltaDeContrarReferencia?.isPresent == true
+                ? fechaDeAltaDeContrarReferencia!.value
+                : this.fechaDeAltaDeContrarReferencia,
         hallazgosClinicosExistencia:
-            hallazgosClinicosExistencia ?? this.hallazgosClinicosExistencia,
-        servicioQueAtendio: servicioQueAtendio ?? this.servicioQueAtendio,
-        pacienteAdmitido: pacienteAdmitido ?? this.pacienteAdmitido,
-        hospitalQueRecibe: hospitalQueRecibe ?? this.hospitalQueRecibe,
-        otroServicio: otroServicio ?? this.otroServicio,
-        servicioQueRecibe: servicioQueRecibe ?? this.servicioQueRecibe,
-        recomendaciones: recomendaciones ?? this.recomendaciones,
+            hallazgosClinicosExistencia?.isPresent == true
+                ? hallazgosClinicosExistencia!.value
+                : this.hallazgosClinicosExistencia,
+        servicioQueAtendio: servicioQueAtendio?.isPresent == true
+            ? servicioQueAtendio!.value
+            : this.servicioQueAtendio,
+        pacienteAdmitido: pacienteAdmitido?.isPresent == true
+            ? pacienteAdmitido!.value
+            : this.pacienteAdmitido,
+        hospitalQueRecibe: hospitalQueRecibe?.isPresent == true
+            ? hospitalQueRecibe!.value
+            : this.hospitalQueRecibe,
+        otroServicio: otroServicio?.isPresent == true
+            ? otroServicio!.value
+            : this.otroServicio,
+        servicioQueRecibe: servicioQueRecibe?.isPresent == true
+            ? servicioQueRecibe!.value
+            : this.servicioQueRecibe,
+        recomendaciones: recomendaciones?.isPresent == true
+            ? recomendaciones!.value
+            : this.recomendaciones,
         numeroDeReferenciaDeReferenciasSalientes:
-            numeroDeReferenciaDeReferenciasSalientes ??
-                this.numeroDeReferenciaDeReferenciasSalientes,
-        fechaDeEnvioDeReferencia:
-            fechaDeEnvioDeReferencia ?? this.fechaDeEnvioDeReferencia,
-        fechaDeReferencia: fechaDeReferencia ?? this.fechaDeReferencia,
-        razonDeLaReferencia: razonDeLaReferencia ?? this.razonDeLaReferencia,
-        medicoQueRefiere: medicoQueRefiere ?? this.medicoQueRefiere,
-        estadoDeReferencia: estadoDeReferencia ?? this.estadoDeReferencia,
+            numeroDeReferenciaDeReferenciasSalientes?.isPresent == true
+                ? numeroDeReferenciaDeReferenciasSalientes!.value
+                : this.numeroDeReferenciaDeReferenciasSalientes,
+        fechaDeEnvioDeReferencia: fechaDeEnvioDeReferencia?.isPresent == true
+            ? fechaDeEnvioDeReferencia!.value
+            : this.fechaDeEnvioDeReferencia,
+        fechaDeReferencia: fechaDeReferencia?.isPresent == true
+            ? fechaDeReferencia!.value
+            : this.fechaDeReferencia,
+        razonDeLaReferencia: razonDeLaReferencia?.isPresent == true
+            ? razonDeLaReferencia!.value
+            : this.razonDeLaReferencia,
+        medicoQueRefiere: medicoQueRefiere?.isPresent == true
+            ? medicoQueRefiere!.value
+            : this.medicoQueRefiere,
+        estadoDeReferencia: estadoDeReferencia?.isPresent == true
+            ? estadoDeReferencia!.value
+            : this.estadoDeReferencia,
         fechaDeAceptacionDeReferencia:
-            fechaDeAceptacionDeReferencia ?? this.fechaDeAceptacionDeReferencia,
-        iss: iss ?? this.iss,
-        kts: kts ?? this.kts,
-        rts: rts ?? this.rts,
-        abdomen: abdomen ?? this.abdomen,
-        torax: torax ?? this.torax,
-        externo: externo ?? this.externo,
-        extremidades: extremidades ?? this.extremidades,
-        cara: cara ?? this.cara,
-        cabeza: cabeza ?? this.cabeza,
-        trissContuso: trissContuso ?? this.trissContuso,
-        trissPenetrante: trissPenetrante ?? this.trissPenetrante,
+            fechaDeAceptacionDeReferencia?.isPresent == true
+                ? fechaDeAceptacionDeReferencia!.value
+                : this.fechaDeAceptacionDeReferencia,
+        iss: iss?.isPresent == true ? iss!.value : this.iss,
+        kts: kts?.isPresent == true ? kts!.value : this.kts,
+        rts: rts?.isPresent == true ? rts!.value : this.rts,
+        abdomen: abdomen?.isPresent == true ? abdomen!.value : this.abdomen,
+        torax: torax?.isPresent == true ? torax!.value : this.torax,
+        externo: externo?.isPresent == true ? externo!.value : this.externo,
+        extremidades: extremidades?.isPresent == true
+            ? extremidades!.value
+            : this.extremidades,
+        cara: cara?.isPresent == true ? cara!.value : this.cara,
+        cabeza: cabeza?.isPresent == true ? cabeza!.value : this.cabeza,
+        trissContuso: trissContuso?.isPresent == true
+            ? trissContuso!.value
+            : this.trissContuso,
+        trissPenetrante: trissPenetrante?.isPresent == true
+            ? trissPenetrante!.value
+            : this.trissPenetrante,
       );
 
   factory HealthcareRecord.fromJson(Map<String, dynamic> json) =>

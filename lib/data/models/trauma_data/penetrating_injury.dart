@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class PenetratingInjury {
   final int? id;
   final String? tipoDeLesionPenetrante;
@@ -9,12 +11,13 @@ class PenetratingInjury {
 
   PenetratingInjury copyWith({
     int? id,
-    String? tipoDeLesionPenetrante,
+    Optional<String?>? tipoDeLesionPenetrante,
   }) =>
       PenetratingInjury(
         id: id ?? this.id,
-        tipoDeLesionPenetrante:
-            tipoDeLesionPenetrante ?? this.tipoDeLesionPenetrante,
+        tipoDeLesionPenetrante: tipoDeLesionPenetrante?.isPresent == true
+            ? tipoDeLesionPenetrante!.value
+            : this.tipoDeLesionPenetrante,
       );
 
   factory PenetratingInjury.fromJson(Map<String, dynamic> json) =>

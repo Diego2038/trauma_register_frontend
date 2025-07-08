@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class DrugAbuse {
   final int? id;
   final String? tipoDeDroga;
@@ -9,11 +11,13 @@ class DrugAbuse {
 
   DrugAbuse copyWith({
     int? id,
-    String? tipoDeDroga,
+    Optional<String?>? tipoDeDroga,
   }) =>
       DrugAbuse(
         id: id ?? this.id,
-        tipoDeDroga: tipoDeDroga ?? this.tipoDeDroga,
+        tipoDeDroga: tipoDeDroga?.isPresent == true
+            ? tipoDeDroga!.value
+            : this.tipoDeDroga,
       );
 
   factory DrugAbuse.fromJson(Map<String, dynamic> json) => DrugAbuse(

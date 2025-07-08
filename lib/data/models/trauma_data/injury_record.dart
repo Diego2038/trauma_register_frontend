@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class InjuryRecord {
   final int? id;
   final String? consumoDeAlcohol;
@@ -45,51 +47,79 @@ class InjuryRecord {
 
   InjuryRecord copyWith({
     int? id,
-    String? consumoDeAlcohol,
-    double? valorDeAlcoholemia,
-    String? unidadDeAlcohol,
-    String? otraSustanciaDeAbuso,
-    String? direccionNombreDelLugar,
-    String? ciudadDeEventoDeLaLesion,
-    String? condadoDeLesiones,
-    String? estadoProvinciaDeLesiones,
-    String? paisDeLesiones,
-    String? codigoPostalDeLesiones,
-    DateTime? fechaYHoraDelEvento,
-    bool? accidenteDeTrafico,
-    String? tipoDeVehiculo,
-    String? ocupante,
-    String? velocidadDeColision,
-    int? scq,
-    bool? caida,
-    double? alturaMetros,
-    String? tipoDeSuperficie,
+    Optional<String?>? consumoDeAlcohol,
+    Optional<double?>? valorDeAlcoholemia,
+    Optional<String?>? unidadDeAlcohol,
+    Optional<String?>? otraSustanciaDeAbuso,
+    Optional<String?>? direccionNombreDelLugar,
+    Optional<String?>? ciudadDeEventoDeLaLesion,
+    Optional<String?>? condadoDeLesiones,
+    Optional<String?>? estadoProvinciaDeLesiones,
+    Optional<String?>? paisDeLesiones,
+    Optional<String?>? codigoPostalDeLesiones,
+    Optional<DateTime?>? fechaYHoraDelEvento,
+    Optional<bool?>? accidenteDeTrafico,
+    Optional<String?>? tipoDeVehiculo,
+    Optional<String?>? ocupante,
+    Optional<String?>? velocidadDeColision,
+    Optional<int?>? scq,
+    Optional<bool?>? caida,
+    Optional<double?>? alturaMetros,
+    Optional<String?>? tipoDeSuperficie,
   }) =>
       InjuryRecord(
         id: id ?? this.id,
-        consumoDeAlcohol: consumoDeAlcohol ?? this.consumoDeAlcohol,
-        valorDeAlcoholemia: valorDeAlcoholemia ?? this.valorDeAlcoholemia,
-        unidadDeAlcohol: unidadDeAlcohol ?? this.unidadDeAlcohol,
-        otraSustanciaDeAbuso: otraSustanciaDeAbuso ?? this.otraSustanciaDeAbuso,
-        direccionNombreDelLugar:
-            direccionNombreDelLugar ?? this.direccionNombreDelLugar,
-        ciudadDeEventoDeLaLesion:
-            ciudadDeEventoDeLaLesion ?? this.ciudadDeEventoDeLaLesion,
-        condadoDeLesiones: condadoDeLesiones ?? this.condadoDeLesiones,
-        estadoProvinciaDeLesiones:
-            estadoProvinciaDeLesiones ?? this.estadoProvinciaDeLesiones,
-        paisDeLesiones: paisDeLesiones ?? this.paisDeLesiones,
-        codigoPostalDeLesiones:
-            codigoPostalDeLesiones ?? this.codigoPostalDeLesiones,
-        fechaYHoraDelEvento: fechaYHoraDelEvento ?? this.fechaYHoraDelEvento,
-        accidenteDeTrafico: accidenteDeTrafico ?? this.accidenteDeTrafico,
-        tipoDeVehiculo: tipoDeVehiculo ?? this.tipoDeVehiculo,
-        ocupante: ocupante ?? this.ocupante,
-        velocidadDeColision: velocidadDeColision ?? this.velocidadDeColision,
-        scq: scq ?? this.scq,
-        caida: caida ?? this.caida,
-        alturaMetros: alturaMetros ?? this.alturaMetros,
-        tipoDeSuperficie: tipoDeSuperficie ?? this.tipoDeSuperficie,
+        consumoDeAlcohol: consumoDeAlcohol?.isPresent == true
+            ? consumoDeAlcohol!.value
+            : this.consumoDeAlcohol,
+        valorDeAlcoholemia: valorDeAlcoholemia?.isPresent == true
+            ? valorDeAlcoholemia!.value
+            : this.valorDeAlcoholemia,
+        unidadDeAlcohol: unidadDeAlcohol?.isPresent == true
+            ? unidadDeAlcohol!.value
+            : this.unidadDeAlcohol,
+        otraSustanciaDeAbuso: otraSustanciaDeAbuso?.isPresent == true
+            ? otraSustanciaDeAbuso!.value
+            : this.otraSustanciaDeAbuso,
+        direccionNombreDelLugar: direccionNombreDelLugar?.isPresent == true
+            ? direccionNombreDelLugar!.value
+            : this.direccionNombreDelLugar,
+        ciudadDeEventoDeLaLesion: ciudadDeEventoDeLaLesion?.isPresent == true
+            ? ciudadDeEventoDeLaLesion!.value
+            : this.ciudadDeEventoDeLaLesion,
+        condadoDeLesiones: condadoDeLesiones?.isPresent == true
+            ? condadoDeLesiones!.value
+            : this.condadoDeLesiones,
+        estadoProvinciaDeLesiones: estadoProvinciaDeLesiones?.isPresent == true
+            ? estadoProvinciaDeLesiones!.value
+            : this.estadoProvinciaDeLesiones,
+        paisDeLesiones: paisDeLesiones?.isPresent == true
+            ? paisDeLesiones!.value
+            : this.paisDeLesiones,
+        codigoPostalDeLesiones: codigoPostalDeLesiones?.isPresent == true
+            ? codigoPostalDeLesiones!.value
+            : this.codigoPostalDeLesiones,
+        fechaYHoraDelEvento: fechaYHoraDelEvento?.isPresent == true
+            ? fechaYHoraDelEvento!.value
+            : this.fechaYHoraDelEvento,
+        accidenteDeTrafico: accidenteDeTrafico?.isPresent == true
+            ? accidenteDeTrafico!.value
+            : this.accidenteDeTrafico,
+        tipoDeVehiculo: tipoDeVehiculo?.isPresent == true
+            ? tipoDeVehiculo!.value
+            : this.tipoDeVehiculo,
+        ocupante: ocupante?.isPresent == true ? ocupante!.value : this.ocupante,
+        velocidadDeColision: velocidadDeColision?.isPresent == true
+            ? velocidadDeColision!.value
+            : this.velocidadDeColision,
+        scq: scq?.isPresent == true ? scq!.value : this.scq,
+        caida: caida?.isPresent == true ? caida!.value : this.caida,
+        alturaMetros: alturaMetros?.isPresent == true
+            ? alturaMetros!.value
+            : this.alturaMetros,
+        tipoDeSuperficie: tipoDeSuperficie?.isPresent == true
+            ? tipoDeSuperficie!.value
+            : this.tipoDeSuperficie,
       );
 
   factory InjuryRecord.fromJson(Map<String, dynamic> json) => InjuryRecord(

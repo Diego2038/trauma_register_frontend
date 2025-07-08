@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class TransportationMode {
   final int? id;
   final String? modoDeTransporte;
@@ -9,11 +11,13 @@ class TransportationMode {
 
   TransportationMode copyWith({
     int? id,
-    String? modoDeTransporte,
+    Optional<String?>? modoDeTransporte,
   }) =>
       TransportationMode(
         id: id ?? this.id,
-        modoDeTransporte: modoDeTransporte ?? this.modoDeTransporte,
+        modoDeTransporte: modoDeTransporte?.isPresent == true
+            ? modoDeTransporte!.value
+            : this.modoDeTransporte,
       );
 
   factory TransportationMode.fromJson(Map<String, dynamic> json) =>

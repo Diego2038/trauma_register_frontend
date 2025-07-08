@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class Collision {
   final int? id;
   final String? tipoDeColision;
@@ -9,11 +11,13 @@ class Collision {
 
   Collision copyWith({
     int? id,
-    String? tipoDeColision,
+    Optional<String?>? tipoDeColision,
   }) =>
       Collision(
         id: id ?? this.id,
-        tipoDeColision: tipoDeColision ?? this.tipoDeColision,
+        tipoDeColision: tipoDeColision?.isPresent == true
+            ? tipoDeColision!.value
+            : this.tipoDeColision,
       );
 
   factory Collision.fromJson(Map<String, dynamic> json) => Collision(

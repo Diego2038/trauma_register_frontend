@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class Device {
   final int? id;
   final String? tipoDeDispositivo;
@@ -9,11 +11,13 @@ class Device {
 
   Device copyWith({
     int? id,
-    String? tipoDeDispositivo,
+    Optional<String?>? tipoDeDispositivo,
   }) =>
       Device(
         id: id ?? this.id,
-        tipoDeDispositivo: tipoDeDispositivo ?? this.tipoDeDispositivo,
+        tipoDeDispositivo: tipoDeDispositivo?.isPresent == true
+            ? tipoDeDispositivo!.value
+            : this.tipoDeDispositivo,
       );
 
   factory Device.fromJson(Map<String, dynamic> json) => Device(

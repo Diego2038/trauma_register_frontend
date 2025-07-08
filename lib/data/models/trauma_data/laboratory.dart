@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class Laboratory {
   final int? id;
   final String? resultadoDeLaboratorio;
@@ -15,20 +17,26 @@ class Laboratory {
 
   Laboratory copyWith({
     int? id,
-    String? resultadoDeLaboratorio,
-    DateTime? fechaYHoraDeLaboratorio,
-    String? nombreDelLaboratorio,
-    String? nombreDeLaUnidadDeLaboratorio,
+    Optional<String?>? resultadoDeLaboratorio,
+    Optional<DateTime?>? fechaYHoraDeLaboratorio,
+    Optional<String?>? nombreDelLaboratorio,
+    Optional<String?>? nombreDeLaUnidadDeLaboratorio,
   }) =>
       Laboratory(
         id: id ?? this.id,
-        resultadoDeLaboratorio:
-            resultadoDeLaboratorio ?? this.resultadoDeLaboratorio,
-        fechaYHoraDeLaboratorio:
-            fechaYHoraDeLaboratorio ?? this.fechaYHoraDeLaboratorio,
-        nombreDelLaboratorio: nombreDelLaboratorio ?? this.nombreDelLaboratorio,
+        resultadoDeLaboratorio: resultadoDeLaboratorio?.isPresent == true
+            ? resultadoDeLaboratorio!.value
+            : this.resultadoDeLaboratorio,
+        fechaYHoraDeLaboratorio: fechaYHoraDeLaboratorio?.isPresent == true
+            ? fechaYHoraDeLaboratorio!.value
+            : this.fechaYHoraDeLaboratorio,
+        nombreDelLaboratorio: nombreDelLaboratorio?.isPresent == true
+            ? nombreDelLaboratorio!.value
+            : this.nombreDelLaboratorio,
         nombreDeLaUnidadDeLaboratorio:
-            nombreDeLaUnidadDeLaboratorio ?? this.nombreDeLaUnidadDeLaboratorio,
+            nombreDeLaUnidadDeLaboratorio?.isPresent == true
+                ? nombreDeLaUnidadDeLaboratorio!.value
+                : this.nombreDeLaUnidadDeLaboratorio,
       );
 
   factory Laboratory.fromJson(Map<String, dynamic> json) => Laboratory(

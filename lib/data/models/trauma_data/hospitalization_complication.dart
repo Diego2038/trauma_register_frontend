@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class HospitalizationComplication {
   final int? id;
   final String? tipoDeComplicacion;
@@ -13,16 +15,21 @@ class HospitalizationComplication {
 
   HospitalizationComplication copyWith({
     int? id,
-    String? tipoDeComplicacion,
-    DateTime? fechaYHoraDeComplicacion,
-    String? lugarDeComplicacion,
+    Optional<String?>? tipoDeComplicacion,
+    Optional<DateTime?>? fechaYHoraDeComplicacion,
+    Optional<String?>? lugarDeComplicacion,
   }) =>
       HospitalizationComplication(
         id: id ?? this.id,
-        tipoDeComplicacion: tipoDeComplicacion ?? this.tipoDeComplicacion,
-        fechaYHoraDeComplicacion:
-            fechaYHoraDeComplicacion ?? this.fechaYHoraDeComplicacion,
-        lugarDeComplicacion: lugarDeComplicacion ?? this.lugarDeComplicacion,
+        tipoDeComplicacion: tipoDeComplicacion?.isPresent == true
+            ? tipoDeComplicacion!.value
+            : this.tipoDeComplicacion,
+        fechaYHoraDeComplicacion: fechaYHoraDeComplicacion?.isPresent == true
+            ? fechaYHoraDeComplicacion!.value
+            : this.fechaYHoraDeComplicacion,
+        lugarDeComplicacion: lugarDeComplicacion?.isPresent == true
+            ? lugarDeComplicacion!.value
+            : this.lugarDeComplicacion,
       );
 
   factory HospitalizationComplication.fromJson(Map<String, dynamic> json) =>

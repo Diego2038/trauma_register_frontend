@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class BurnInjury {
   final int? id;
   final String? tipoDeQuemadura;
@@ -11,13 +13,17 @@ class BurnInjury {
 
   BurnInjury copyWith({
     int? id,
-    String? tipoDeQuemadura,
-    String? gradoDeQuemadura,
+    Optional<String?>? tipoDeQuemadura,
+    Optional<String?>? gradoDeQuemadura,
   }) =>
       BurnInjury(
         id: id ?? this.id,
-        tipoDeQuemadura: tipoDeQuemadura ?? this.tipoDeQuemadura,
-        gradoDeQuemadura: gradoDeQuemadura ?? this.gradoDeQuemadura,
+        tipoDeQuemadura: tipoDeQuemadura?.isPresent == true
+            ? tipoDeQuemadura!.value
+            : this.tipoDeQuemadura,
+        gradoDeQuemadura: gradoDeQuemadura?.isPresent == true
+            ? gradoDeQuemadura!.value
+            : this.gradoDeQuemadura,
       );
 
   factory BurnInjury.fromJson(Map<String, dynamic> json) => BurnInjury(

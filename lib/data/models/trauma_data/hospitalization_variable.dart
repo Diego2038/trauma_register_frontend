@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class HospitalizationVariable {
   final int? id;
   final String? tipoDeVariable;
@@ -15,19 +17,25 @@ class HospitalizationVariable {
 
   HospitalizationVariable copyWith({
     int? id,
-    String? tipoDeVariable,
-    String? valorDeLaVariable,
-    DateTime? fechaYHoraDeLaVariable,
-    String? localizacionDeVariable,
+    Optional<String?>? tipoDeVariable,
+    Optional<String?>? valorDeLaVariable,
+    Optional<DateTime?>? fechaYHoraDeLaVariable,
+    Optional<String?>? localizacionDeVariable,
   }) =>
       HospitalizationVariable(
         id: id ?? this.id,
-        tipoDeVariable: tipoDeVariable ?? this.tipoDeVariable,
-        valorDeLaVariable: valorDeLaVariable ?? this.valorDeLaVariable,
-        fechaYHoraDeLaVariable:
-            fechaYHoraDeLaVariable ?? this.fechaYHoraDeLaVariable,
-        localizacionDeVariable:
-            localizacionDeVariable ?? this.localizacionDeVariable,
+        tipoDeVariable: tipoDeVariable?.isPresent == true
+            ? tipoDeVariable!.value
+            : this.tipoDeVariable,
+        valorDeLaVariable: valorDeLaVariable?.isPresent == true
+            ? valorDeLaVariable!.value
+            : this.valorDeLaVariable,
+        fechaYHoraDeLaVariable: fechaYHoraDeLaVariable?.isPresent == true
+            ? fechaYHoraDeLaVariable!.value
+            : this.fechaYHoraDeLaVariable,
+        localizacionDeVariable: localizacionDeVariable?.isPresent == true
+            ? localizacionDeVariable!.value
+            : this.localizacionDeVariable,
       );
 
   factory HospitalizationVariable.fromJson(Map<String, dynamic> json) =>

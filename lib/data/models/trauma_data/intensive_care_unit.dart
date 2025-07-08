@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class IntensiveCareUnit {
   final int? id;
   final String? tipo;
@@ -17,19 +19,23 @@ class IntensiveCareUnit {
 
   IntensiveCareUnit copyWith({
     int? id,
-    String? tipo,
-    DateTime? fechaYHoraDeInicio,
-    DateTime? fechaYHoraDeTermino,
-    String? lugar,
-    double? icuDays,
+    Optional<String?>? tipo,
+    Optional<DateTime?>? fechaYHoraDeInicio,
+    Optional<DateTime?>? fechaYHoraDeTermino,
+    Optional<String?>? lugar,
+    Optional<double?>? icuDays,
   }) =>
       IntensiveCareUnit(
         id: id ?? this.id,
-        tipo: tipo ?? this.tipo,
-        fechaYHoraDeInicio: fechaYHoraDeInicio ?? this.fechaYHoraDeInicio,
-        fechaYHoraDeTermino: fechaYHoraDeTermino ?? this.fechaYHoraDeTermino,
-        lugar: lugar ?? this.lugar,
-        icuDays: icuDays ?? this.icuDays,
+        tipo: tipo?.isPresent == true ? tipo!.value : this.tipo,
+        fechaYHoraDeInicio: fechaYHoraDeInicio?.isPresent == true
+            ? fechaYHoraDeInicio!.value
+            : this.fechaYHoraDeInicio,
+        fechaYHoraDeTermino: fechaYHoraDeTermino?.isPresent == true
+            ? fechaYHoraDeTermino!.value
+            : this.fechaYHoraDeTermino,
+        lugar: lugar?.isPresent == true ? lugar!.value : this.lugar,
+        icuDays: icuDays?.isPresent == true ? icuDays!.value : this.icuDays,
       );
 
   factory IntensiveCareUnit.fromJson(Map<String, dynamic> json) =>

@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class TraumaRegisterIcd10 {
   final int? id;
   final String? descripcion;
@@ -11,13 +13,17 @@ class TraumaRegisterIcd10 {
 
   TraumaRegisterIcd10 copyWith({
     int? id,
-    String? descripcion,
-    String? mecanismoIcd,
+    Optional<String?>? descripcion,
+    Optional<String?>? mecanismoIcd,
   }) =>
       TraumaRegisterIcd10(
         id: id ?? this.id,
-        descripcion: descripcion ?? this.descripcion,
-        mecanismoIcd: mecanismoIcd ?? this.mecanismoIcd,
+        descripcion: descripcion?.isPresent == true
+            ? descripcion!.value
+            : this.descripcion,
+        mecanismoIcd: mecanismoIcd?.isPresent == true
+            ? mecanismoIcd!.value
+            : this.mecanismoIcd,
       );
 
   factory TraumaRegisterIcd10.fromJson(Map<String, dynamic> json) =>

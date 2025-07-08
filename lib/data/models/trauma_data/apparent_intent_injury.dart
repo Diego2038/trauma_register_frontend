@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class ApparentIntentInjury {
   final int? id;
   final String? intencionAparente;
@@ -9,11 +11,13 @@ class ApparentIntentInjury {
 
   ApparentIntentInjury copyWith({
     int? id,
-    String? intencionAparente,
+    Optional<String?>? intencionAparente,
   }) =>
       ApparentIntentInjury(
         id: id ?? this.id,
-        intencionAparente: intencionAparente ?? this.intencionAparente,
+        intencionAparente: intencionAparente?.isPresent == true
+            ? intencionAparente!.value
+            : this.intencionAparente,
       );
 
   factory ApparentIntentInjury.fromJson(Map<String, dynamic> json) =>

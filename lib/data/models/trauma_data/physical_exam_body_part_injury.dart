@@ -1,3 +1,5 @@
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
+
 class PhysicalExamBodyPartInjury {
   final int? id;
   final String? parteDelCuerpo;
@@ -11,13 +13,17 @@ class PhysicalExamBodyPartInjury {
 
   PhysicalExamBodyPartInjury copyWith({
     int? id,
-    String? parteDelCuerpo,
-    String? tipoDeLesion,
+    Optional<String?>? parteDelCuerpo,
+    Optional<String?>? tipoDeLesion,
   }) =>
       PhysicalExamBodyPartInjury(
         id: id ?? this.id,
-        parteDelCuerpo: parteDelCuerpo ?? this.parteDelCuerpo,
-        tipoDeLesion: tipoDeLesion ?? this.tipoDeLesion,
+        parteDelCuerpo: parteDelCuerpo?.isPresent == true
+            ? parteDelCuerpo!.value
+            : this.parteDelCuerpo,
+        tipoDeLesion: tipoDeLesion?.isPresent == true
+            ? tipoDeLesion!.value
+            : this.tipoDeLesion,
       );
 
   factory PhysicalExamBodyPartInjury.fromJson(Map<String, dynamic> json) =>
