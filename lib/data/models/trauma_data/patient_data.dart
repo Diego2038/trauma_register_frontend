@@ -92,8 +92,8 @@ class PatientData {
 
   PatientData copyWith({
     int? traumaRegisterRecordId,
-    HealthcareRecord? healthcareRecord,
-    InjuryRecord? injuryRecord,
+    Optional<HealthcareRecord?>? healthcareRecord,
+    Optional<InjuryRecord?>? injuryRecord,
     List<Collision>? collision,
     List<DrugAbuse>? drugAbuse,
     List<VitalSignGcsQualifier>? vitalSignGcsQualifier,
@@ -135,8 +135,8 @@ class PatientData {
   }) =>
       PatientData(
         traumaRegisterRecordId: traumaRegisterRecordId ?? this.traumaRegisterRecordId,
-        healthcareRecord: healthcareRecord ?? this.healthcareRecord,
-        injuryRecord: injuryRecord ?? this.injuryRecord,
+        healthcareRecord: healthcareRecord?.isPresent == true ? healthcareRecord!.value : this.healthcareRecord,
+        injuryRecord: injuryRecord?.isPresent == true ? injuryRecord!.value : this.injuryRecord,
         collision: collision ?? this.collision,
         drugAbuse: drugAbuse ?? this.drugAbuse,
         vitalSignGcsQualifier:

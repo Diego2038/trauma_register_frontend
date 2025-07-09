@@ -45,7 +45,8 @@ class HealthcareRecordContent extends StatelessWidget {
                               .patientData!;
                       _getCurrentProvider(context).updatePatientData(
                           currentPatientData.copyWith(
-                            healthcareRecord: HealthcareRecord(),
+                            healthcareRecord: Optional<HealthcareRecord?>.of(
+                                HealthcareRecord()),
                           ),
                           true);
                     },
@@ -88,6 +89,15 @@ class _ContentState extends State<_Content> {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      showDeleteButton: widget.isCreating,
+      onDelete: () {
+        _getCurrentProvider(context).updatePatientData(
+          _getCurrentPatientData(context).copyWith(
+            healthcareRecord: const Optional<HealthcareRecord?>.of(null),
+          ),
+          true,
+        );
+      },
       children: healthcareRecordContent(
         context: context,
         customSize: widget.customSize,
@@ -119,9 +129,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeHistoriaClinica: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      numeroDeHistoriaClinica: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -139,9 +150,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  hospital: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      hospital: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -162,9 +174,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeLlegadaDelPaciente: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeLlegadaDelPaciente: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -186,9 +199,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  referido: Optional<bool?>.of(
-                      TransformData.getTransformedValue<bool>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      referido: Optional<bool?>.of(
+                          TransformData.getTransformedValue<bool>(value)))),
             ),
           );
         },
@@ -210,9 +224,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  policiaNotificada: Optional<bool?>.of(
-                      TransformData.getTransformedValue<bool>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      policiaNotificada: Optional<bool?>.of(
+                          TransformData.getTransformedValue<bool>(value)))),
             ),
           );
         },
@@ -233,9 +248,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeLlegadaDelMedico: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeLlegadaDelMedico: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -256,9 +272,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeNotificacionAlMedico: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeNotificacionAlMedico: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -280,9 +297,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  alertaEquipoDeTrauma: Optional<bool?>.of(
-                      TransformData.getTransformedValue<bool>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      alertaEquipoDeTrauma: Optional<bool?>.of(
+                          TransformData.getTransformedValue<bool>(value)))),
             ),
           );
         },
@@ -300,9 +318,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  nivelDeAlerta: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      nivelDeAlerta: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -324,9 +343,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  pacienteAsegurado: Optional<bool?>.of(
-                      TransformData.getTransformedValue<bool>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      pacienteAsegurado: Optional<bool?>.of(
+                          TransformData.getTransformedValue<bool>(value)))),
             ),
           );
         },
@@ -344,9 +364,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tipoDeSeguro: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      tipoDeSeguro: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -363,9 +384,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  motivoDeConsulta: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      motivoDeConsulta: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -383,9 +405,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  inmunizacionContraElTetanos: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      inmunizacionContraElTetanos: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -403,9 +426,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  descripcionDelExamenFisico: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      descripcionDelExamenFisico: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -423,9 +447,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  mecanismoPrimario: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      mecanismoPrimario: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -443,9 +468,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeLesionesSerias: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      numeroDeLesionesSerias: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -463,9 +489,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  descripcionDelDiagnostico: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      descripcionDelDiagnostico: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -483,9 +510,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  disposicionODestinoDelPaciente: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      disposicionODestinoDelPaciente: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -503,9 +531,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  donacionDeOrganos: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      donacionDeOrganos: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -523,9 +552,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  autopsia: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      autopsia: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -543,9 +573,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  muertePrevenible: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      muertePrevenible: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -563,9 +594,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tipoDeAdmision: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      tipoDeAdmision: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -586,9 +618,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeLaDisposicion: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeLaDisposicion: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -606,9 +639,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tiempoEnSalaDeEmergenciasHoras: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      tiempoEnSalaDeEmergenciasHoras: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -626,9 +660,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tiempoEnSalaDeEmergenciasMinutos: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      tiempoEnSalaDeEmergenciasMinutos: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -646,9 +681,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeReferenciaDelEd: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      numeroDeReferenciaDelEd: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -669,9 +705,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeAdmision: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeAdmision: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -692,9 +729,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeAlta: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeAlta: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -712,9 +750,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  diasDeHospitalizacion: Optional<double?>.of(
-                      TransformData.getTransformedValue<double>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      diasDeHospitalizacion: Optional<double?>.of(
+                          TransformData.getTransformedValue<double>(value)))),
             ),
           );
         },
@@ -732,9 +771,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  uciDias: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      uciDias: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -752,9 +792,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  detallesDeHospitalizacion: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      detallesDeHospitalizacion: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -774,10 +815,12 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  disposicionODestinoDelPacienteDelHospitalizacion:
-                      Optional<String?>.of(
-                          TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      disposicionODestinoDelPacienteDelHospitalizacion:
+                          Optional<String?>.of(
+                              TransformData.getTransformedValue<String>(
+                                  value)))),
             ),
           );
         },
@@ -795,9 +838,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  donacionDeOrganosDelHospitalizacion: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      donacionDeOrganosDelHospitalizacion: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -815,9 +859,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  autopsiaDelHospitalizacion: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      autopsiaDelHospitalizacion: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -835,9 +880,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  muertePrevenibleDelHospitalizacion: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      muertePrevenibleDelHospitalizacion: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -855,9 +901,12 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeReferenciaDelHospitalizacion: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      numeroDeReferenciaDelHospitalizacion:
+                          Optional<String?>.of(
+                              TransformData.getTransformedValue<String>(
+                                  value)))),
             ),
           );
         },
@@ -875,9 +924,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  agenciaDeTransporte: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      agenciaDeTransporte: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -895,9 +945,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  origenDelTransporte: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      origenDelTransporte: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -915,9 +966,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeRegistroDelTransporte: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      numeroDeRegistroDelTransporte: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -938,10 +990,12 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeNotificacionPreHospitalaria:
-                      Optional<DateTime?>.of(
-                          TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeNotificacionPreHospitalaria:
+                          Optional<DateTime?>.of(
+                              TransformData.getTransformedValue<DateTime>(
+                                  value)))),
             ),
           );
         },
@@ -962,9 +1016,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeLlegadaALaEscena: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeLlegadaALaEscena: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -985,9 +1040,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeSalidaDeLaEscena: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeSalidaDeLaEscena: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -1005,9 +1061,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  razonDeLaDemora: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      razonDeLaDemora: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1030,10 +1087,11 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  reporteOFormularioPreHospitalarioEntregado:
-                      Optional<bool?>.of(
-                          TransformData.getTransformedValue<bool>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      reporteOFormularioPreHospitalarioEntregado:
+                          Optional<bool?>.of(
+                              TransformData.getTransformedValue<bool>(value)))),
             ),
           );
         },
@@ -1052,10 +1110,12 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  ciudadHospitalMasCercanoAlSitioDelIncidente:
-                      Optional<String?>.of(
-                          TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      ciudadHospitalMasCercanoAlSitioDelIncidente:
+                          Optional<String?>.of(
+                              TransformData.getTransformedValue<String>(
+                                  value)))),
             ),
           );
         },
@@ -1073,9 +1133,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tiempoDeExtricacionHoras: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      tiempoDeExtricacionHoras: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1093,9 +1154,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tiempoDeExtricacionMinutos: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      tiempoDeExtricacionMinutos: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1113,9 +1175,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  duracionDelTransporteHoras: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      duracionDelTransporteHoras: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1133,9 +1196,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  duracionDelTransporteMinutos: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      duracionDelTransporteMinutos: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1153,9 +1217,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  procedimientoRealizado: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      procedimientoRealizado: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1173,9 +1238,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  frecuenciaCardiacaEnLaEscena: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      frecuenciaCardiacaEnLaEscena: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1193,9 +1259,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  presionArterialSistolicaEnLaEscena: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      presionArterialSistolicaEnLaEscena: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1213,9 +1280,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  presionArterialDiastolicaEnLaEscena: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      presionArterialDiastolicaEnLaEscena: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1233,9 +1301,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  frecuenciaRespiratoriaEnLaEscena: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      frecuenciaRespiratoriaEnLaEscena: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1254,10 +1323,12 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  calificadorDeFrecuenciaRespiratoriaEnLaEscena:
-                      Optional<String?>.of(
-                          TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      calificadorDeFrecuenciaRespiratoriaEnLaEscena:
+                          Optional<String?>.of(
+                              TransformData.getTransformedValue<String>(
+                                  value)))),
             ),
           );
         },
@@ -1276,9 +1347,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  temperaturaEnLaEscenaCelsius: Optional<double?>.of(
-                      TransformData.getTransformedValue<double>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      temperaturaEnLaEscenaCelsius: Optional<double?>.of(
+                          TransformData.getTransformedValue<double>(value)))),
             ),
           );
         },
@@ -1296,9 +1368,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  saturacionDeO2EnLaEscena: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      saturacionDeO2EnLaEscena: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1316,9 +1389,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  frecuenciaCardiacaDuranteElTransporte: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      frecuenciaCardiacaDuranteElTransporte: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1336,9 +1410,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  presionArterialSistolicaDeTransporte: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      presionArterialSistolicaDeTransporte: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1357,9 +1432,11 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  frecuenciaRespiratoriaDuranteElTransporte: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      frecuenciaRespiratoriaDuranteElTransporte:
+                          Optional<int?>.of(
+                              TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1379,10 +1456,12 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  calificadorDeFrecuenciaRespiratoriaDuranteElTransporte:
-                      Optional<String?>.of(
-                          TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      calificadorDeFrecuenciaRespiratoriaDuranteElTransporte:
+                          Optional<String?>.of(
+                              TransformData.getTransformedValue<String>(
+                                  value)))),
             ),
           );
         },
@@ -1401,9 +1480,13 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  temperaturaDuranteElTransporteCelsius: Optional<double?>.of(
-                      TransformData.getTransformedValue<double>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(patientData
+                  .healthcareRecord!
+                  .copyWith(
+                      temperaturaDuranteElTransporteCelsius:
+                          Optional<double?>.of(
+                              TransformData.getTransformedValue<double>(
+                                  value)))),
             ),
           );
         },
@@ -1421,9 +1504,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  saturacionDeO2DuranteElTransporte: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      saturacionDeO2DuranteElTransporte: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1441,9 +1525,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  perdidaDeConciencia: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      perdidaDeConciencia: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1461,9 +1546,11 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  duracionDePerdidaDeConciencia: Optional<t.TimeOfDay?>.of(
-                      TransformData.getTransformedValue<t.TimeOfDay>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      duracionDePerdidaDeConciencia: Optional<t.TimeOfDay?>.of(
+                          TransformData.getTransformedValue<t.TimeOfDay>(
+                              value)))),
             ),
           );
         },
@@ -1481,9 +1568,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  gcsOcular: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      gcsOcular: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1501,9 +1589,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  gcsVerbal: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      gcsVerbal: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1521,9 +1610,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  gcsMotora: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      gcsMotora: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1541,9 +1631,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  gcsTotal: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      gcsTotal: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -1561,9 +1652,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  sangreL: Optional<double?>.of(
-                      TransformData.getTransformedValue<double>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      sangreL: Optional<double?>.of(
+                          TransformData.getTransformedValue<double>(value)))),
             ),
           );
         },
@@ -1581,9 +1673,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  coloidesL: Optional<double?>.of(
-                      TransformData.getTransformedValue<double>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      coloidesL: Optional<double?>.of(
+                          TransformData.getTransformedValue<double>(value)))),
             ),
           );
         },
@@ -1601,9 +1694,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  cristaloidesL: Optional<double?>.of(
-                      TransformData.getTransformedValue<double>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      cristaloidesL: Optional<double?>.of(
+                          TransformData.getTransformedValue<double>(value)))),
             ),
           );
         },
@@ -1621,9 +1715,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  hallazgosClinicosTexto: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      hallazgosClinicosTexto: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1644,9 +1739,12 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeEnvioDeContraReferencia: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeEnvioDeContraReferencia:
+                          Optional<DateTime?>.of(
+                              TransformData.getTransformedValue<DateTime>(
+                                  value)))),
             ),
           );
         },
@@ -1668,9 +1766,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeAltaDeContrarReferencia: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeAltaDeContrarReferencia: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -1692,9 +1791,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  hallazgosClinicosExistencia: Optional<bool?>.of(
-                      TransformData.getTransformedValue<bool>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      hallazgosClinicosExistencia: Optional<bool?>.of(
+                          TransformData.getTransformedValue<bool>(value)))),
             ),
           );
         },
@@ -1712,9 +1812,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  servicioQueAtendio: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      servicioQueAtendio: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1736,9 +1837,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  pacienteAdmitido: Optional<bool?>.of(
-                      TransformData.getTransformedValue<bool>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      pacienteAdmitido: Optional<bool?>.of(
+                          TransformData.getTransformedValue<bool>(value)))),
             ),
           );
         },
@@ -1756,9 +1858,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  hospitalQueRecibe: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      hospitalQueRecibe: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1776,9 +1879,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  otroServicio: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      otroServicio: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1796,9 +1900,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  servicioQueRecibe: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      servicioQueRecibe: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1816,9 +1921,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  recomendaciones: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      recomendaciones: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1836,10 +1942,12 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeReferenciaDeReferenciasSalientes:
-                      Optional<String?>.of(
-                          TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      numeroDeReferenciaDeReferenciasSalientes:
+                          Optional<String?>.of(
+                              TransformData.getTransformedValue<String>(
+                                  value)))),
             ),
           );
         },
@@ -1861,9 +1969,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeEnvioDeReferencia: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeEnvioDeReferencia: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -1885,9 +1994,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeReferencia: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeReferencia: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -1905,9 +2015,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  razonDeLaReferencia: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      razonDeLaReferencia: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1925,9 +2036,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  medicoQueRefiere: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      medicoQueRefiere: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1945,9 +2057,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  estadoDeReferencia: Optional<String?>.of(
-                      TransformData.getTransformedValue<String>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      estadoDeReferencia: Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value)))),
             ),
           );
         },
@@ -1969,9 +2082,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeAceptacionDeReferencia: Optional<DateTime?>.of(
-                      TransformData.getTransformedValue<DateTime>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeAceptacionDeReferencia: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value)))),
             ),
           );
         },
@@ -1989,9 +2103,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  iss: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      iss: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -2009,9 +2124,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  kts: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      kts: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -2029,9 +2145,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  rts: Optional<double?>.of(
-                      TransformData.getTransformedValue<double>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      rts: Optional<double?>.of(
+                          TransformData.getTransformedValue<double>(value)))),
             ),
           );
         },
@@ -2049,9 +2166,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  abdomen: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      abdomen: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -2069,9 +2187,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  torax: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      torax: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -2089,9 +2208,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  externo: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      externo: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -2109,9 +2229,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  extremidades: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      extremidades: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -2129,9 +2250,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  cara: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      cara: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -2149,9 +2271,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  cabeza: Optional<int?>.of(
-                      TransformData.getTransformedValue<int>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      cabeza: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
             ),
           );
         },
@@ -2169,9 +2292,10 @@ class _ContentState extends State<_Content> {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  trissContuso: Optional<double?>.of(
-                      TransformData.getTransformedValue<double>(value))),
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      trissContuso: Optional<double?>.of(
+                          TransformData.getTransformedValue<double>(value)))),
             ),
           );
         },
@@ -2188,9 +2312,10 @@ class _ContentState extends State<_Content> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            healthcareRecord: patientData.healthcareRecord!.copyWith(
-              trissPenetrante: Optional<double?>.of(
-                  TransformData.getTransformedValue<double>(value)),
+            healthcareRecord: Optional<HealthcareRecord?>.of(
+              patientData.healthcareRecord!.copyWith(
+                  trissPenetrante: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           ));
         },

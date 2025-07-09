@@ -114,6 +114,21 @@ class _ContentState extends State<_Content> {
   Widget build(BuildContext context) {
     return CustomContainer(
       maxWidth: 600,
+      showDeleteButton: widget.isCreating,
+      onDelete: () {
+        _getCurrentProvider(context).updatePatientData(
+          _getCurrentPatientData(context).copyWith(
+            transportationMode: _getCurrentPatientData(context)
+                .transportationMode
+                ?.asMap()
+                .entries
+                .where((e) => e.key != widget.keyy)
+                .map((e) => e.value)
+                .toList(),
+          ),
+          true,
+        );
+      },
       children: transportationModeContent(
         context: context,
         index: widget.keyy,

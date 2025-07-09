@@ -113,6 +113,21 @@ class _ContentState extends State<_Content> {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      showDeleteButton: widget.isCreating,
+      onDelete: () {
+        _getCurrentProvider(context).updatePatientData(
+          _getCurrentPatientData(context).copyWith(
+            collision: _getCurrentPatientData(context)
+                .collision
+                ?.asMap()
+                .entries
+                .where((e) => e.key != widget.keyy)
+                .map((e) => e.value)
+                .toList(),
+          ),
+          true,
+        );
+      },
       children: collisionContent(
         context: context,
         collision: widget.value,
