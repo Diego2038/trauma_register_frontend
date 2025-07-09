@@ -839,8 +839,9 @@ class HealthcareRecord {
         "tiempo_en_sala_de_emergencias_minutos":
             tiempoEnSalaDeEmergenciasMinutos,
         "numero_de_referencia_del_ed": numeroDeReferenciaDelEd,
-        "fecha_de_admision":
-            "${fechaDeAdmision!.year.toString().padLeft(4, '0')}-${fechaDeAdmision!.month.toString().padLeft(2, '0')}-${fechaDeAdmision!.day.toString().padLeft(2, '0')}",
+        "fecha_de_admision": fechaDeAdmision == null
+            ? null
+            : "${fechaDeAdmision!.year.toString().padLeft(4, '0')}-${fechaDeAdmision!.month.toString().padLeft(2, '0')}-${fechaDeAdmision!.day.toString().padLeft(2, '0')}",
         "fecha_y_hora_de_alta": fechaYHoraDeAlta?.toIso8601String(),
         "dias_de_hospitalizacion": diasDeHospitalizacion,
         "uci_dias": uciDias,
@@ -924,13 +925,16 @@ class HealthcareRecord {
             numeroDeReferenciaDeReferenciasSalientes,
         "fecha_de_envio_de_referencia":
             fechaDeEnvioDeReferencia?.toIso8601String(),
-        "fecha_de_referencia":
-            "${fechaDeReferencia!.year.toString().padLeft(4, '0')}-${fechaDeReferencia!.month.toString().padLeft(2, '0')}-${fechaDeReferencia!.day.toString().padLeft(2, '0')}",
+        "fecha_de_referencia": fechaDeReferencia == null
+            ? null
+            : "${fechaDeReferencia!.year.toString().padLeft(4, '0')}-${fechaDeReferencia!.month.toString().padLeft(2, '0')}-${fechaDeReferencia!.day.toString().padLeft(2, '0')}",
         "razon_de_la_referencia": razonDeLaReferencia,
         "medico_que_refiere": medicoQueRefiere,
         "estado_de_referencia": estadoDeReferencia,
-        "fecha_de_aceptacion_de_referencia":
-            "${fechaDeAceptacionDeReferencia!.year.toString().padLeft(4, '0')}-${fechaDeAceptacionDeReferencia!.month.toString().padLeft(2, '0')}-${fechaDeAceptacionDeReferencia!.day.toString().padLeft(2, '0')}",
+        "fecha_de_aceptacion_de_referencia": fechaDeAceptacionDeReferencia ==
+                null
+            ? null
+            : "${fechaDeAceptacionDeReferencia!.year.toString().padLeft(4, '0')}-${fechaDeAceptacionDeReferencia!.month.toString().padLeft(2, '0')}-${fechaDeAceptacionDeReferencia!.day.toString().padLeft(2, '0')}",
         "iss": iss,
         "kts": kts,
         "rts": rts,
