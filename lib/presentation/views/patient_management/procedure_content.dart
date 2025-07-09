@@ -40,6 +40,7 @@ class ProcedureContent extends StatelessWidget {
           : SizedBox(
               width: double.infinity,
               child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
                 runSpacing: 10,
                 spacing: 10,
                 children: [
