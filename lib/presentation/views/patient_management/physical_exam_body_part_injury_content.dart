@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/physical_exam_body_part_injury.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
@@ -49,16 +50,12 @@ class PhysicalExamBodyPartInjuryContent extends StatelessWidget {
                           .asMap()
                           .entries
                           .map(
-                            (entry) => CustomContainer(
-                              maxWidth: 600,
-                              children: physicalExamBodyPartInjuryContent(
-                                context: context,
-                                index: entry.key,
-                                physicalExamBodyPartInjury: entry.value,
-                                isCreating: isCreating,
-                                freeSize: freeSize,
-                                customSize: customSize,
-                              ),
+                            (entry) => _Content(
+                              keyy: entry.key,
+                              value: entry.value,
+                              isCreating: isCreating,
+                              freeSize: freeSize,
+                              customSize: customSize,
                             ),
                           ),
                       if (isCreating) _addNewElement(context),
@@ -83,6 +80,50 @@ class PhysicalExamBodyPartInjuryContent extends StatelessWidget {
             ),
             true);
       },
+    );
+  }
+
+  PatientData _getCurrentPatientData(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+
+  TraumaDataProvider _getCurrentProvider(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+}
+
+class _Content extends StatefulWidget {
+  const _Content({
+    required this.keyy,
+    required this.value,
+    required this.isCreating,
+    required this.freeSize,
+    required this.customSize,
+  });
+
+  final int keyy;
+  final PhysicalExamBodyPartInjury value;
+  final bool isCreating;
+  final bool freeSize;
+  final CustomSize customSize;
+
+  @override
+  State<_Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<_Content> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomContainer(
+      maxWidth: 600,
+      children: physicalExamBodyPartInjuryContent(
+        context: context,
+        index: widget.keyy,
+        physicalExamBodyPartInjury: widget.value,
+        isCreating: widget.isCreating,
+        freeSize: widget.freeSize,
+        customSize: widget.customSize,
+      ),
     );
   }
 
@@ -112,8 +153,8 @@ class PhysicalExamBodyPartInjuryContent extends StatelessWidget {
                 .entries
                 .map((e) => e.key == index
                     ? e.value.copyWith(
-                        parteDelCuerpo:
-                            TransformData.getTransformedValue<String>(value))
+                        parteDelCuerpo: Optional<String?>.of(
+                            TransformData.getTransformedValue<String>(value)))
                     : e.value)
                 .toList(),
           ));
@@ -135,8 +176,8 @@ class PhysicalExamBodyPartInjuryContent extends StatelessWidget {
                 .entries
                 .map((e) => e.key == index
                     ? e.value.copyWith(
-                        tipoDeLesion:
-                            TransformData.getTransformedValue<String>(value))
+                        tipoDeLesion: Optional<String?>.of(
+                            TransformData.getTransformedValue<String>(value)))
                     : e.value)
                 .toList(),
           ));

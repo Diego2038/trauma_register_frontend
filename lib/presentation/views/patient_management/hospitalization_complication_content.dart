@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/hospitalization_complication.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
@@ -50,16 +51,12 @@ class HospitalizationComplicationContent extends StatelessWidget {
                           .asMap()
                           .entries
                           .map(
-                            (entry) => CustomContainer(
-                              maxWidth: 600,
-                              children: hospitalizationComplicationContent(
-                                context: context,
-                                index: entry.key,
-                                hospitalizationComplication: entry.value,
-                                isCreating: isCreating,
-                                freeSize: freeSize,
-                                customSize: customSize,
-                              ),
+                            (entry) => _Content(
+                              keyy: entry.key,
+                              value: entry.value,
+                              isCreating: isCreating,
+                              freeSize: freeSize,
+                              customSize: customSize,
                             ),
                           ),
                       if (isCreating) _addNewElement(context),
@@ -84,6 +81,50 @@ class HospitalizationComplicationContent extends StatelessWidget {
             ),
             true);
       },
+    );
+  }
+
+  PatientData _getCurrentPatientData(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+
+  TraumaDataProvider _getCurrentProvider(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+}
+
+class _Content extends StatefulWidget {
+  const _Content({
+    required this.keyy,
+    required this.value,
+    required this.isCreating,
+    required this.freeSize,
+    required this.customSize,
+  });
+
+  final int keyy;
+  final HospitalizationComplication value;
+  final bool isCreating;
+  final bool freeSize;
+  final CustomSize customSize;
+
+  @override
+  State<_Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<_Content> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomContainer(
+      maxWidth: 600,
+      children: hospitalizationComplicationContent(
+        context: context,
+        index: widget.keyy,
+        hospitalizationComplication: widget.value,
+        isCreating: widget.isCreating,
+        freeSize: widget.freeSize,
+        customSize: widget.customSize,
+      ),
     );
   }
 
@@ -113,8 +154,8 @@ class HospitalizationComplicationContent extends StatelessWidget {
                 .entries
                 .map((e) => e.key == index
                     ? e.value.copyWith(
-                        tipoDeComplicacion:
-                            TransformData.getTransformedValue<String>(value))
+                        tipoDeComplicacion: Optional<String?>.of(
+                            TransformData.getTransformedValue<String>(value)))
                     : e.value)
                 .toList(),
           ));
@@ -140,8 +181,8 @@ class HospitalizationComplicationContent extends StatelessWidget {
                 .entries
                 .map((e) => e.key == index
                     ? e.value.copyWith(
-                        fechaYHoraDeComplicacion:
-                            TransformData.getTransformedValue<DateTime>(value))
+                        fechaYHoraDeComplicacion: Optional<DateTime?>.of(
+                            TransformData.getTransformedValue<DateTime>(value)))
                     : e.value)
                 .toList(),
           ));
@@ -164,8 +205,8 @@ class HospitalizationComplicationContent extends StatelessWidget {
                 .entries
                 .map((e) => e.key == index
                     ? e.value.copyWith(
-                        lugarDeComplicacion:
-                            TransformData.getTransformedValue<String>(value))
+                        lugarDeComplicacion: Optional<String?>.of(
+                            TransformData.getTransformedValue<String>(value)))
                     : e.value)
                 .toList(),
           ));

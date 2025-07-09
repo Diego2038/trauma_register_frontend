@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:trauma_register_frontend/core/constants/null_value.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/trauma_data.dart';
 
@@ -135,9 +134,7 @@ class PatientData {
     Optional<String?>? numDocDeIdentificacion,
   }) =>
       PatientData(
-        traumaRegisterRecordId: traumaRegisterRecordId != NullValue.nullInt
-            ? (traumaRegisterRecordId ?? this.traumaRegisterRecordId)
-            : null,
+        traumaRegisterRecordId: traumaRegisterRecordId ?? this.traumaRegisterRecordId,
         healthcareRecord: healthcareRecord ?? this.healthcareRecord,
         injuryRecord: injuryRecord ?? this.injuryRecord,
         collision: collision ?? this.collision,

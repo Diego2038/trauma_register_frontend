@@ -4,13 +4,14 @@ import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
-class PatientDataContent extends StatefulWidget {
+class PatientDataContent extends StatelessWidget {
   const PatientDataContent({
     super.key,
     required this.customSize,
@@ -27,10 +28,41 @@ class PatientDataContent extends StatefulWidget {
   final bool freeSize;
 
   @override
-  State<PatientDataContent> createState() => _PatientDataContentState();
+  Widget build(BuildContext context) {
+    return ExpandableTitleWidget(
+      title: "Datos generales",
+      index: 0,
+      expandedWidget: _Content(
+        customSize: customSize,
+        traumaDataProvider: traumaDataProvider,
+        isCreating: isCreating,
+        isCreatingPatientData: isCreatingPatientData,
+        freeSize: freeSize,
+      ),
+    );
+  }
 }
 
-class _PatientDataContentState extends State<PatientDataContent> {
+class _Content extends StatefulWidget {
+  const _Content({
+    required this.customSize,
+    required this.traumaDataProvider,
+    required this.isCreating,
+    required this.isCreatingPatientData,
+    required this.freeSize,
+  });
+
+  final CustomSize customSize;
+  final TraumaDataProvider traumaDataProvider;
+  final bool isCreating;
+  final bool isCreatingPatientData;
+  final bool freeSize;
+
+  @override
+  State<_Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<_Content> {
   late TextEditingController _traumaRegisterRecordIdController;
   late TextEditingController _direccionLinea1Controller;
   late TextEditingController _direccionLinea2Controller;
@@ -116,18 +148,14 @@ class _PatientDataContentState extends State<PatientDataContent> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpandableTitleWidget(
-      title: "Datos generales",
-      index: 0,
-      expandedWidget: CustomContainer(
-        children: patientDataContent(
-          customSize: widget.customSize,
-          patientData: widget.traumaDataProvider.patientData!,
-          isCreating: widget.isCreating,
-          isCreatingPatientData: widget.isCreatingPatientData,
-          traumaDataProvider: widget.traumaDataProvider,
-          freeSize: widget.freeSize,
-        ),
+    return CustomContainer(
+      children: patientDataContent(
+        customSize: widget.customSize,
+        patientData: widget.traumaDataProvider.patientData!,
+        isCreating: widget.isCreating,
+        isCreatingPatientData: widget.isCreatingPatientData,
+        traumaDataProvider: widget.traumaDataProvider,
+        freeSize: widget.freeSize,
       ),
     );
   }
@@ -155,7 +183,9 @@ class _PatientDataContentState extends State<PatientDataContent> {
             print("value: $value");
             final patientData = _getCurrentPatientData(context);
             traumaDataProvider.updatePatientData(
-              patientData.copyWith(traumaRegisterRecordId: TransformData.getTransformedValue<int>(value)),
+              patientData.copyWith(
+                  traumaRegisterRecordId:
+                      TransformData.getTransformedValue<int>(value)),
               true,
             );
           },
@@ -171,7 +201,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            direccionLinea1: TransformData.getTransformedValue<String>(value),
+            direccionLinea1: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -186,7 +217,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            direccionLinea2: TransformData.getTransformedValue<String>(value),
+            direccionLinea2: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -201,7 +233,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            ciudad: TransformData.getTransformedValue<String>(value),
+            ciudad: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -216,7 +249,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            cantonMunicipio: TransformData.getTransformedValue<String>(value),
+            cantonMunicipio: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -231,7 +265,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            provinciaEstado: TransformData.getTransformedValue<String>(value),
+            provinciaEstado: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -247,7 +282,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            codigoPostal: TransformData.getTransformedValue<String>(value),
+            codigoPostal: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -263,7 +299,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            pais: TransformData.getTransformedValue<String>(value),
+            pais: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -278,8 +315,9 @@ class _PatientDataContentState extends State<PatientDataContent> {
         height: 94,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
-          traumaDataProvider
-              .updatePatientData(patientData.copyWith(edad: TransformData.getTransformedValue<int>(value)));
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+              edad: Optional<int?>.of(
+                  TransformData.getTransformedValue<int>(value))));
         },
       ),
       CustomInputWithLabel(
@@ -294,8 +332,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            unidadDeEdad: TransformData.getTransformedValue<String>(value)
-          ));
+              unidadDeEdad: Optional<String?>.of(
+                  TransformData.getTransformedValue<String>(value))));
         },
       ),
       CustomInputWithLabel(
@@ -310,7 +348,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            genero: TransformData.getTransformedValue<String>(value),
+            genero: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -327,7 +366,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            fechaDeNacimiento: TransformData.getTransformedValue<DateTime>(value),
+            fechaDeNacimiento: Optional<DateTime?>.of(
+                TransformData.getTransformedValue<DateTime>(value)),
           ));
         },
       ),
@@ -342,7 +382,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            ocupacion: TransformData.getTransformedValue<String>(value),
+            ocupacion: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -358,7 +399,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            estadoCivil: TransformData.getTransformedValue<String>(value),
+            estadoCivil: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -374,7 +416,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            nacionalidad: TransformData.getTransformedValue<String>(value),
+            nacionalidad: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -390,7 +433,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            grupoEtnico: TransformData.getTransformedValue<String>(value),
+            grupoEtnico: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -406,7 +450,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            otroGrupoEtnico: TransformData.getTransformedValue<String>(value),
+            otroGrupoEtnico: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -422,7 +467,8 @@ class _PatientDataContentState extends State<PatientDataContent> {
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
-            numDocDeIdentificacion: TransformData.getTransformedValue<String>(value),
+            numDocDeIdentificacion: Optional<String?>.of(
+                TransformData.getTransformedValue<String>(value)),
           ));
         },
       ),
@@ -432,5 +478,4 @@ class _PatientDataContentState extends State<PatientDataContent> {
   PatientData _getCurrentPatientData(BuildContext context) {
     return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
   }
-  
 }

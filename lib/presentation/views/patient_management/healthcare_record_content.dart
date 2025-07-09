@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/healthcare_record.dart';
 import 'package:trauma_register_frontend/data/models/custom/time_of_day.dart'
     as t;
@@ -51,27 +52,59 @@ class HealthcareRecordContent extends StatelessWidget {
                   ),
                 )
               : noDataWidget
-          : CustomContainer(
-              children: healthcareRecordContent(
-                context: context,
-                customSize: customSize,
-                healthcareRecord:
-                    _getCurrentPatientData(context).healthcareRecord!,
-                isCreating: isCreating,
-                freeSize: freeSize,
-              ),
+          : _Content(
+              customSize: customSize,
+              isCreating: isCreating,
+              freeSize: freeSize,
             ),
+    );
+  }
+
+  PatientData _getCurrentPatientData(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+
+  TraumaDataProvider _getCurrentProvider(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+}
+
+class _Content extends StatefulWidget {
+  const _Content({
+    required this.customSize,
+    required this.isCreating,
+    required this.freeSize,
+  });
+
+  final CustomSize customSize;
+  final bool isCreating;
+  final bool freeSize;
+
+  @override
+  State<_Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<_Content> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomContainer(
+      children: healthcareRecordContent(
+        context: context,
+        customSize: widget.customSize,
+        isCreating: widget.isCreating,
+        freeSize: widget.freeSize,
+      ),
     );
   }
 
   List<Widget> healthcareRecordContent({
     required BuildContext context,
-    required HealthcareRecord healthcareRecord,
     required CustomSize customSize,
     required bool isCreating,
     required bool freeSize,
   }) {
     final traumaDataProvider = _getCurrentProvider(context);
+    final healthcareRecord = _getCurrentPatientData(context).healthcareRecord!;
     return [
       CustomInputWithLabel(
         size: customSize,
@@ -87,8 +120,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeHistoriaClinica:
-                      TransformData.getTransformedValue<String>(value)),
+                  numeroDeHistoriaClinica: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -107,7 +140,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  hospital: TransformData.getTransformedValue<String>(value)),
+                  hospital: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -129,8 +163,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeLlegadaDelPaciente:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDeLlegadaDelPaciente: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -153,7 +187,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  referido: TransformData.getTransformedValue<bool>(value)),
+                  referido: Optional<bool?>.of(
+                      TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -176,8 +211,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  policiaNotificada:
-                      TransformData.getTransformedValue<bool>(value)),
+                  policiaNotificada: Optional<bool?>.of(
+                      TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -199,8 +234,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeLlegadaDelMedico:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDeLlegadaDelMedico: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -222,8 +257,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeNotificacionAlMedico:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDeNotificacionAlMedico: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -246,8 +281,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  alertaEquipoDeTrauma:
-                      TransformData.getTransformedValue<bool>(value)),
+                  alertaEquipoDeTrauma: Optional<bool?>.of(
+                      TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -266,8 +301,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  nivelDeAlerta:
-                      TransformData.getTransformedValue<String>(value)),
+                  nivelDeAlerta: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -290,8 +325,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  pacienteAsegurado:
-                      TransformData.getTransformedValue<bool>(value)),
+                  pacienteAsegurado: Optional<bool?>.of(
+                      TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -310,8 +345,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tipoDeSeguro:
-                      TransformData.getTransformedValue<String>(value)),
+                  tipoDeSeguro: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -329,8 +364,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  motivoDeConsulta:
-                      TransformData.getTransformedValue<String>(value)),
+                  motivoDeConsulta: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -349,8 +384,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  inmunizacionContraElTetanos:
-                      TransformData.getTransformedValue<String>(value)),
+                  inmunizacionContraElTetanos: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -369,8 +404,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  descripcionDelExamenFisico:
-                      TransformData.getTransformedValue<String>(value)),
+                  descripcionDelExamenFisico: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -389,8 +424,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  mecanismoPrimario:
-                      TransformData.getTransformedValue<String>(value)),
+                  mecanismoPrimario: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -409,8 +444,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeLesionesSerias:
-                      TransformData.getTransformedValue<String>(value)),
+                  numeroDeLesionesSerias: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -429,8 +464,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  descripcionDelDiagnostico:
-                      TransformData.getTransformedValue<String>(value)),
+                  descripcionDelDiagnostico: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -449,8 +484,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  disposicionODestinoDelPaciente:
-                      TransformData.getTransformedValue<String>(value)),
+                  disposicionODestinoDelPaciente: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -469,8 +504,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  donacionDeOrganos:
-                      TransformData.getTransformedValue<String>(value)),
+                  donacionDeOrganos: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -489,7 +524,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  autopsia: TransformData.getTransformedValue<String>(value)),
+                  autopsia: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -508,8 +544,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  muertePrevenible:
-                      TransformData.getTransformedValue<String>(value)),
+                  muertePrevenible: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -528,8 +564,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tipoDeAdmision:
-                      TransformData.getTransformedValue<String>(value)),
+                  tipoDeAdmision: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -551,8 +587,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeLaDisposicion:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDeLaDisposicion: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -571,8 +607,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tiempoEnSalaDeEmergenciasHoras:
-                      TransformData.getTransformedValue<int>(value)),
+                  tiempoEnSalaDeEmergenciasHoras: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -591,8 +627,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tiempoEnSalaDeEmergenciasMinutos:
-                      TransformData.getTransformedValue<int>(value)),
+                  tiempoEnSalaDeEmergenciasMinutos: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -611,8 +647,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeReferenciaDelEd:
-                      TransformData.getTransformedValue<String>(value)),
+                  numeroDeReferenciaDelEd: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -634,8 +670,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeAdmision:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaDeAdmision: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -657,8 +693,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeAlta:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDeAlta: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -677,8 +713,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  diasDeHospitalizacion:
-                      TransformData.getTransformedValue<double>(value)),
+                  diasDeHospitalizacion: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -697,7 +733,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  uciDias: TransformData.getTransformedValue<int>(value)),
+                  uciDias: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -716,8 +753,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  detallesDeHospitalizacion:
-                      TransformData.getTransformedValue<String>(value)),
+                  detallesDeHospitalizacion: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -739,7 +776,8 @@ class HealthcareRecordContent extends StatelessWidget {
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
                   disposicionODestinoDelPacienteDelHospitalizacion:
-                      TransformData.getTransformedValue<String>(value)),
+                      Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -758,8 +796,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  donacionDeOrganosDelHospitalizacion:
-                      TransformData.getTransformedValue<String>(value)),
+                  donacionDeOrganosDelHospitalizacion: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -778,8 +816,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  autopsiaDelHospitalizacion:
-                      TransformData.getTransformedValue<String>(value)),
+                  autopsiaDelHospitalizacion: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -798,8 +836,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  muertePrevenibleDelHospitalizacion:
-                      TransformData.getTransformedValue<String>(value)),
+                  muertePrevenibleDelHospitalizacion: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -818,8 +856,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeReferenciaDelHospitalizacion:
-                      TransformData.getTransformedValue<String>(value)),
+                  numeroDeReferenciaDelHospitalizacion: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -838,8 +876,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  agenciaDeTransporte:
-                      TransformData.getTransformedValue<String>(value)),
+                  agenciaDeTransporte: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -858,8 +896,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  origenDelTransporte:
-                      TransformData.getTransformedValue<String>(value)),
+                  origenDelTransporte: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -878,8 +916,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  numeroDeRegistroDelTransporte:
-                      TransformData.getTransformedValue<String>(value)),
+                  numeroDeRegistroDelTransporte: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -902,7 +940,8 @@ class HealthcareRecordContent extends StatelessWidget {
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
                   fechaYHoraDeNotificacionPreHospitalaria:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                      Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -924,8 +963,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeLlegadaALaEscena:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDeLlegadaALaEscena: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -947,8 +986,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeSalidaDeLaEscena:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDeSalidaDeLaEscena: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -967,8 +1006,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  razonDeLaDemora:
-                      TransformData.getTransformedValue<String>(value)),
+                  razonDeLaDemora: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -993,7 +1032,8 @@ class HealthcareRecordContent extends StatelessWidget {
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
                   reporteOFormularioPreHospitalarioEntregado:
-                      TransformData.getTransformedValue<bool>(value)),
+                      Optional<bool?>.of(
+                          TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -1014,7 +1054,8 @@ class HealthcareRecordContent extends StatelessWidget {
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
                   ciudadHospitalMasCercanoAlSitioDelIncidente:
-                      TransformData.getTransformedValue<String>(value)),
+                      Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1033,8 +1074,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tiempoDeExtricacionHoras:
-                      TransformData.getTransformedValue<int>(value)),
+                  tiempoDeExtricacionHoras: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1053,8 +1094,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  tiempoDeExtricacionMinutos:
-                      TransformData.getTransformedValue<int>(value)),
+                  tiempoDeExtricacionMinutos: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1073,8 +1114,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  duracionDelTransporteHoras:
-                      TransformData.getTransformedValue<int>(value)),
+                  duracionDelTransporteHoras: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1093,8 +1134,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  duracionDelTransporteMinutos:
-                      TransformData.getTransformedValue<int>(value)),
+                  duracionDelTransporteMinutos: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1113,8 +1154,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  procedimientoRealizado:
-                      TransformData.getTransformedValue<String>(value)),
+                  procedimientoRealizado: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1133,8 +1174,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  frecuenciaCardiacaEnLaEscena:
-                      TransformData.getTransformedValue<int>(value)),
+                  frecuenciaCardiacaEnLaEscena: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1153,8 +1194,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  presionArterialSistolicaEnLaEscena:
-                      TransformData.getTransformedValue<int>(value)),
+                  presionArterialSistolicaEnLaEscena: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1173,8 +1214,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  presionArterialDiastolicaEnLaEscena:
-                      TransformData.getTransformedValue<int>(value)),
+                  presionArterialDiastolicaEnLaEscena: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1193,8 +1234,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  frecuenciaRespiratoriaEnLaEscena:
-                      TransformData.getTransformedValue<int>(value)),
+                  frecuenciaRespiratoriaEnLaEscena: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1215,7 +1256,8 @@ class HealthcareRecordContent extends StatelessWidget {
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
                   calificadorDeFrecuenciaRespiratoriaEnLaEscena:
-                      TransformData.getTransformedValue<String>(value)),
+                      Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1235,8 +1277,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  temperaturaEnLaEscenaCelsius:
-                      TransformData.getTransformedValue<double>(value)),
+                  temperaturaEnLaEscenaCelsius: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -1255,8 +1297,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  saturacionDeO2EnLaEscena:
-                      TransformData.getTransformedValue<int>(value)),
+                  saturacionDeO2EnLaEscena: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1275,8 +1317,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  frecuenciaCardiacaDuranteElTransporte:
-                      TransformData.getTransformedValue<int>(value)),
+                  frecuenciaCardiacaDuranteElTransporte: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1295,8 +1337,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  presionArterialSistolicaDeTransporte:
-                      TransformData.getTransformedValue<int>(value)),
+                  presionArterialSistolicaDeTransporte: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1316,8 +1358,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  frecuenciaRespiratoriaDuranteElTransporte:
-                      TransformData.getTransformedValue<int>(value)),
+                  frecuenciaRespiratoriaDuranteElTransporte: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1339,7 +1381,8 @@ class HealthcareRecordContent extends StatelessWidget {
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
                   calificadorDeFrecuenciaRespiratoriaDuranteElTransporte:
-                      TransformData.getTransformedValue<String>(value)),
+                      Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1359,8 +1402,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  temperaturaDuranteElTransporteCelsius:
-                      TransformData.getTransformedValue<double>(value)),
+                  temperaturaDuranteElTransporteCelsius: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -1379,8 +1422,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  saturacionDeO2DuranteElTransporte:
-                      TransformData.getTransformedValue<int>(value)),
+                  saturacionDeO2DuranteElTransporte: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1399,8 +1442,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  perdidaDeConciencia:
-                      TransformData.getTransformedValue<int>(value)),
+                  perdidaDeConciencia: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1419,8 +1462,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  duracionDePerdidaDeConciencia:
-                      TransformData.getTransformedValue<t.TimeOfDay>(value)),
+                  duracionDePerdidaDeConciencia: Optional<t.TimeOfDay?>.of(
+                      TransformData.getTransformedValue<t.TimeOfDay>(value))),
             ),
           );
         },
@@ -1439,7 +1482,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  gcsOcular: TransformData.getTransformedValue<int>(value)),
+                  gcsOcular: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1458,7 +1502,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  gcsVerbal: TransformData.getTransformedValue<int>(value)),
+                  gcsVerbal: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1477,7 +1522,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  gcsMotora: TransformData.getTransformedValue<int>(value)),
+                  gcsMotora: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1496,7 +1542,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  gcsTotal: TransformData.getTransformedValue<int>(value)),
+                  gcsTotal: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1515,7 +1562,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  sangreL: TransformData.getTransformedValue<double>(value)),
+                  sangreL: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -1534,7 +1582,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  coloidesL: TransformData.getTransformedValue<double>(value)),
+                  coloidesL: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -1553,8 +1602,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  cristaloidesL:
-                      TransformData.getTransformedValue<double>(value)),
+                  cristaloidesL: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -1573,8 +1622,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  hallazgosClinicosTexto:
-                      TransformData.getTransformedValue<String>(value)),
+                  hallazgosClinicosTexto: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1596,8 +1645,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaYHoraDeEnvioDeContraReferencia:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDeEnvioDeContraReferencia: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -1620,8 +1669,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeAltaDeContrarReferencia:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaDeAltaDeContrarReferencia: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -1644,8 +1693,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  hallazgosClinicosExistencia:
-                      TransformData.getTransformedValue<bool>(value)),
+                  hallazgosClinicosExistencia: Optional<bool?>.of(
+                      TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -1664,8 +1713,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  servicioQueAtendio:
-                      TransformData.getTransformedValue<String>(value)),
+                  servicioQueAtendio: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1688,8 +1737,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  pacienteAdmitido:
-                      TransformData.getTransformedValue<bool>(value)),
+                  pacienteAdmitido: Optional<bool?>.of(
+                      TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -1708,8 +1757,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  hospitalQueRecibe:
-                      TransformData.getTransformedValue<String>(value)),
+                  hospitalQueRecibe: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1728,8 +1777,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  otroServicio:
-                      TransformData.getTransformedValue<String>(value)),
+                  otroServicio: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1748,8 +1797,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  servicioQueRecibe:
-                      TransformData.getTransformedValue<String>(value)),
+                  servicioQueRecibe: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1768,8 +1817,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  recomendaciones:
-                      TransformData.getTransformedValue<String>(value)),
+                  recomendaciones: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1789,7 +1838,8 @@ class HealthcareRecordContent extends StatelessWidget {
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
                   numeroDeReferenciaDeReferenciasSalientes:
-                      TransformData.getTransformedValue<String>(value)),
+                      Optional<String?>.of(
+                          TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1812,8 +1862,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeEnvioDeReferencia:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaDeEnvioDeReferencia: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -1836,8 +1886,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeReferencia:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaDeReferencia: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -1856,8 +1906,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  razonDeLaReferencia:
-                      TransformData.getTransformedValue<String>(value)),
+                  razonDeLaReferencia: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1876,8 +1926,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  medicoQueRefiere:
-                      TransformData.getTransformedValue<String>(value)),
+                  medicoQueRefiere: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1896,8 +1946,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  estadoDeReferencia:
-                      TransformData.getTransformedValue<String>(value)),
+                  estadoDeReferencia: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -1920,8 +1970,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  fechaDeAceptacionDeReferencia:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaDeAceptacionDeReferencia: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -1939,8 +1989,9 @@ class HealthcareRecordContent extends StatelessWidget {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!
-                  .copyWith(iss: TransformData.getTransformedValue<int>(value)),
+              healthcareRecord: patientData.healthcareRecord!.copyWith(
+                  iss: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1958,8 +2009,9 @@ class HealthcareRecordContent extends StatelessWidget {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!
-                  .copyWith(kts: TransformData.getTransformedValue<int>(value)),
+              healthcareRecord: patientData.healthcareRecord!.copyWith(
+                  kts: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -1978,7 +2030,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  rts: TransformData.getTransformedValue<double>(value)),
+                  rts: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -1997,7 +2050,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  abdomen: TransformData.getTransformedValue<int>(value)),
+                  abdomen: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -2016,7 +2070,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  torax: TransformData.getTransformedValue<int>(value)),
+                  torax: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -2035,7 +2090,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  externo: TransformData.getTransformedValue<int>(value)),
+                  externo: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -2054,7 +2110,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  extremidades: TransformData.getTransformedValue<int>(value)),
+                  extremidades: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -2073,7 +2130,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  cara: TransformData.getTransformedValue<int>(value)),
+                  cara: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -2092,7 +2150,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  cabeza: TransformData.getTransformedValue<int>(value)),
+                  cabeza: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -2111,8 +2170,8 @@ class HealthcareRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  trissContuso:
-                      TransformData.getTransformedValue<double>(value)),
+                  trissContuso: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -2128,12 +2187,12 @@ class HealthcareRecordContent extends StatelessWidget {
         height: freeSize ? null : 124,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
-          traumaDataProvider.updatePatientData(
-            patientData.copyWith(
-              healthcareRecord: patientData.healthcareRecord!.copyWith(
-                  trissPenetrante: TransformData.getTransformedValue(value)),
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            healthcareRecord: patientData.healthcareRecord!.copyWith(
+              trissPenetrante: Optional<double?>.of(
+                  TransformData.getTransformedValue<double>(value)),
             ),
-          );
+          ));
         },
       ),
     ];

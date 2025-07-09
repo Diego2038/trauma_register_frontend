@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/firearm_injury.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
@@ -46,16 +47,12 @@ class FirearmInjuryContent extends StatelessWidget {
                       .asMap()
                       .entries
                       .map(
-                        (entry) => CustomContainer(
-                          maxWidth: 600,
-                          children: firearmInjuryContent(
-                            context: context,
-                            index: entry.key,
-                            firearmInjury: entry.value,
-                            customSize: customSize,
-                            isCreating: isCreating,
-                            freeSize: freeSize,
-                          ),
+                        (entry) => _Content(
+                          keyy: entry.key,
+                          value: entry.value,
+                          customSize: customSize,
+                          isCreating: isCreating,
+                          freeSize: freeSize,
                         ),
                       ),
                   if (isCreating) _addNewElement(context),
@@ -80,6 +77,50 @@ class FirearmInjuryContent extends StatelessWidget {
             ),
             true);
       },
+    );
+  }
+
+  PatientData _getCurrentPatientData(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+
+  TraumaDataProvider _getCurrentProvider(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+}
+
+class _Content extends StatefulWidget {
+  const _Content({
+    required this.keyy,
+    required this.value,
+    required this.customSize,
+    required this.isCreating,
+    required this.freeSize,
+  });
+
+  final int keyy;
+  final FirearmInjury value;
+  final CustomSize customSize;
+  final bool isCreating;
+  final bool freeSize;
+
+  @override
+  State<_Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<_Content> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomContainer(
+      maxWidth: 600,
+      children: firearmInjuryContent(
+        context: context,
+        index: widget.keyy,
+        firearmInjury: widget.value,
+        customSize: widget.customSize,
+        isCreating: widget.isCreating,
+        freeSize: widget.freeSize,
+      ),
     );
   }
 
@@ -109,8 +150,8 @@ class FirearmInjuryContent extends StatelessWidget {
                 .entries
                 .map((e) => e.key == index
                     ? e.value.copyWith(
-                        tipoDeArmaDeFuego:
-                            TransformData.getTransformedValue<String>(value))
+                        tipoDeArmaDeFuego: Optional<String?>.of(
+                            TransformData.getTransformedValue<String>(value)))
                     : e.value)
                 .toList(),
           ));

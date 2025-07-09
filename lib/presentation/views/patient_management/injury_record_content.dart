@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
+import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/injury_record.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
@@ -49,26 +50,59 @@ class InjuryRecordContent extends StatelessWidget {
                   ),
                 )
               : noDataWidget
-          : CustomContainer(
-              children: injuryRecordContent(
-                context: context,
-                customSize: customSize,
-                injuryRecord: _getCurrentPatientData(context).injuryRecord!,
-                isCreating: isCreating,
-                freeSize: freeSize,
-              ),
+          : _Content(
+              customSize: customSize,
+              isCreating: isCreating,
+              freeSize: freeSize,
             ),
+    );
+  }
+
+  PatientData _getCurrentPatientData(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+
+  TraumaDataProvider _getCurrentProvider(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+}
+
+class _Content extends StatefulWidget {
+  const _Content({
+    required this.customSize,
+    required this.isCreating,
+    required this.freeSize,
+  });
+
+  final CustomSize customSize;
+  final bool isCreating;
+  final bool freeSize;
+
+  @override
+  State<_Content> createState() => _ContentState();
+}
+
+class _ContentState extends State<_Content> {
+  @override
+  Widget build(BuildContext context) {
+    return CustomContainer(
+      children: injuryRecordContent(
+        context: context,
+        customSize: widget.customSize,
+        isCreating: widget.isCreating,
+        freeSize: widget.freeSize,
+      ),
     );
   }
 
   List<Widget> injuryRecordContent({
     required BuildContext context,
-    required InjuryRecord injuryRecord,
     required CustomSize customSize,
     required bool isCreating,
     required bool freeSize,
   }) {
     final traumaDataProvider = _getCurrentProvider(context);
+    final injuryRecord = _getCurrentPatientData(context).injuryRecord!;
     return [
       CustomInputWithLabel(
         size: customSize,
@@ -84,8 +118,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  consumoDeAlcohol:
-                      TransformData.getTransformedValue<String>(value)),
+                  consumoDeAlcohol: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -104,8 +138,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  valorDeAlcoholemia:
-                      TransformData.getTransformedValue<double>(value)),
+                  valorDeAlcoholemia: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -124,8 +158,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  unidadDeAlcohol:
-                      TransformData.getTransformedValue<String>(value)),
+                  unidadDeAlcohol: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -144,8 +178,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  otraSustanciaDeAbuso:
-                      TransformData.getTransformedValue<String>(value)),
+                  otraSustanciaDeAbuso: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -164,8 +198,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  direccionNombreDelLugar:
-                      TransformData.getTransformedValue<String>(value)),
+                  direccionNombreDelLugar: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -184,8 +218,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  ciudadDeEventoDeLaLesion:
-                      TransformData.getTransformedValue<String>(value)),
+                  ciudadDeEventoDeLaLesion: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -204,8 +238,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  condadoDeLesiones:
-                      TransformData.getTransformedValue<String>(value)),
+                  condadoDeLesiones: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -224,8 +258,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  estadoProvinciaDeLesiones:
-                      TransformData.getTransformedValue<String>(value)),
+                  estadoProvinciaDeLesiones: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -244,8 +278,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  paisDeLesiones:
-                      TransformData.getTransformedValue<String>(value)),
+                  paisDeLesiones: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -264,8 +298,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  codigoPostalDeLesiones:
-                      TransformData.getTransformedValue<String>(value)),
+                  codigoPostalDeLesiones: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -288,8 +322,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  fechaYHoraDelEvento:
-                      TransformData.getTransformedValue<DateTime>(value)),
+                  fechaYHoraDelEvento: Optional<DateTime?>.of(
+                      TransformData.getTransformedValue<DateTime>(value))),
             ),
           );
         },
@@ -312,8 +346,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  accidenteDeTrafico:
-                      TransformData.getTransformedValue<bool>(value)),
+                  accidenteDeTrafico: Optional<bool?>.of(
+                      TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -332,8 +366,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  tipoDeVehiculo:
-                      TransformData.getTransformedValue<String>(value)),
+                  tipoDeVehiculo: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -352,7 +386,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  ocupante: TransformData.getTransformedValue<String>(value)),
+                  ocupante: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -371,8 +406,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  velocidadDeColision:
-                      TransformData.getTransformedValue<String>(value)),
+                  velocidadDeColision: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
@@ -390,8 +425,9 @@ class InjuryRecordContent extends StatelessWidget {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
-              injuryRecord: patientData.injuryRecord!
-                  .copyWith(scq: TransformData.getTransformedValue<int>(value)),
+              injuryRecord: patientData.injuryRecord!.copyWith(
+                  scq: Optional<int?>.of(
+                      TransformData.getTransformedValue<int>(value))),
             ),
           );
         },
@@ -414,7 +450,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  caida: TransformData.getTransformedValue<bool>(value)),
+                  caida: Optional<bool?>.of(
+                      TransformData.getTransformedValue<bool>(value))),
             ),
           );
         },
@@ -433,8 +470,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  alturaMetros:
-                      TransformData.getTransformedValue<double>(value)),
+                  alturaMetros: Optional<double?>.of(
+                      TransformData.getTransformedValue<double>(value))),
             ),
           );
         },
@@ -453,8 +490,8 @@ class InjuryRecordContent extends StatelessWidget {
           traumaDataProvider.updatePatientData(
             patientData.copyWith(
               injuryRecord: patientData.injuryRecord!.copyWith(
-                  tipoDeSuperficie:
-                      TransformData.getTransformedValue<String>(value)),
+                  tipoDeSuperficie: Optional<String?>.of(
+                      TransformData.getTransformedValue<String>(value))),
             ),
           );
         },
