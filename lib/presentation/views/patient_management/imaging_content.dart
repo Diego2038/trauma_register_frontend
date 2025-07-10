@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
@@ -159,6 +160,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -183,6 +185,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -210,6 +213,7 @@ class _ContentState extends State<_Content> {
             : "",
         lines: 1,
         width: freeSize ? null : 220,
+        inputType: InputType.boolean,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -233,6 +237,7 @@ class _ContentState extends State<_Content> {
         text: imaging.descripcion ?? "",
         lines: 9,
         width: freeSize ? null : 460,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(

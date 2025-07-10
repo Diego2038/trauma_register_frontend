@@ -198,6 +198,7 @@ class _ContentState extends State<_Content> {
         controller: _direccionLinea1Controller,
         lines: 2,
         width: freeSize ? null : 220,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -214,6 +215,7 @@ class _ContentState extends State<_Content> {
         controller: _direccionLinea2Controller,
         lines: 2,
         width: freeSize ? null : 220,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -230,6 +232,7 @@ class _ContentState extends State<_Content> {
         controller: _ciudadController,
         lines: 2,
         width: freeSize ? null : 220,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -246,6 +249,7 @@ class _ContentState extends State<_Content> {
         controller: _cantonMunicipioController,
         lines: 2,
         width: freeSize ? null : 220,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -262,6 +266,7 @@ class _ContentState extends State<_Content> {
         controller: _provinciaEstadoController,
         lines: 2,
         width: freeSize ? null : 220,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -279,6 +284,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -296,6 +302,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -313,6 +320,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.integer,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -329,6 +337,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -345,6 +354,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -363,6 +373,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.datetime,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -379,6 +390,7 @@ class _ContentState extends State<_Content> {
         controller: _ocupacionController,
         lines: 2,
         width: freeSize ? null : 460,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -396,6 +408,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -413,6 +426,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -430,6 +444,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -447,6 +462,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -464,6 +480,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(

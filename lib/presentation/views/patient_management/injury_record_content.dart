@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
+import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
@@ -123,6 +124,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -144,6 +146,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.double,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -165,6 +168,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -186,6 +190,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -207,6 +212,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -228,6 +234,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -249,6 +256,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -270,6 +278,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 440,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -291,6 +300,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -312,6 +322,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -337,6 +348,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.datetime,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -362,6 +374,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.boolean,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -383,6 +396,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -404,6 +418,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -425,6 +440,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -446,6 +462,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.integer,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -471,6 +488,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.boolean,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -492,6 +510,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.double,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -513,6 +532,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
