@@ -3,12 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
+import 'package:trauma_register_frontend/core/helpers/content_options.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class PatientDataContent extends StatelessWidget {
@@ -64,23 +66,7 @@ class _Content extends StatefulWidget {
 
 class _ContentState extends State<_Content> {
   late TextEditingController _traumaRegisterRecordIdController;
-  late TextEditingController _direccionLinea1Controller;
-  late TextEditingController _direccionLinea2Controller;
-  late TextEditingController _ciudadController;
-  late TextEditingController _cantonMunicipioController;
-  late TextEditingController _provinciaEstadoController;
-  late TextEditingController _codigoPostalController;
-  late TextEditingController _paisController;
-  late TextEditingController _edadController;
-  late TextEditingController _unidadDeEdadController;
-  late TextEditingController _generoController;
   late TextEditingController _fechaDeNacimientoController;
-  late TextEditingController _ocupacionController;
-  late TextEditingController _estadoCivilController;
-  late TextEditingController _nacionalidadController;
-  late TextEditingController _grupoEtnicoController;
-  late TextEditingController _otroGrupoEtnicoController;
-  late TextEditingController _numDocDeIdentificacionController;
 
   @override
   void initState() {
@@ -90,59 +76,16 @@ class _ContentState extends State<_Content> {
     if (patientData == null) return;
     _traumaRegisterRecordIdController = TextEditingController(
         text: patientData.traumaRegisterRecordId?.toString());
-    _direccionLinea1Controller =
-        TextEditingController(text: patientData.direccionLinea1);
-    _direccionLinea2Controller =
-        TextEditingController(text: patientData.direccionLinea2);
-    _ciudadController = TextEditingController(text: patientData.ciudad);
-    _cantonMunicipioController =
-        TextEditingController(text: patientData.cantonMunicipio);
-    _provinciaEstadoController =
-        TextEditingController(text: patientData.provinciaEstado);
-    _codigoPostalController =
-        TextEditingController(text: patientData.codigoPostal);
-    _paisController = TextEditingController(text: patientData.pais);
-    _edadController = TextEditingController(text: patientData.edad?.toString());
-    _unidadDeEdadController =
-        TextEditingController(text: patientData.unidadDeEdad);
-    _generoController = TextEditingController(text: patientData.genero);
     _fechaDeNacimientoController = TextEditingController(
         text: patientData.fechaDeNacimiento == null
             ? null
             : DateFormat('dd/MM/yyyy').format(patientData.fechaDeNacimiento!));
-    _ocupacionController = TextEditingController(text: patientData.ocupacion);
-    _estadoCivilController =
-        TextEditingController(text: patientData.estadoCivil);
-    _nacionalidadController =
-        TextEditingController(text: patientData.nacionalidad);
-    _grupoEtnicoController =
-        TextEditingController(text: patientData.grupoEtnico);
-    _otroGrupoEtnicoController =
-        TextEditingController(text: patientData.otroGrupoEtnico);
-    _numDocDeIdentificacionController =
-        TextEditingController(text: patientData.numDocDeIdentificacion);
   }
 
   @override
   void dispose() {
     _traumaRegisterRecordIdController.dispose();
-    _direccionLinea1Controller.dispose();
-    _direccionLinea2Controller.dispose();
-    _ciudadController.dispose();
-    _cantonMunicipioController.dispose();
-    _provinciaEstadoController.dispose();
-    _codigoPostalController.dispose();
-    _paisController.dispose();
-    _edadController.dispose();
-    _unidadDeEdadController.dispose();
-    _generoController.dispose();
     _fechaDeNacimientoController.dispose();
-    _ocupacionController.dispose();
-    _estadoCivilController.dispose();
-    _nacionalidadController.dispose();
-    _grupoEtnicoController.dispose();
-    _otroGrupoEtnicoController.dispose();
-    _numDocDeIdentificacionController.dispose();
     super.dispose();
   }
 
@@ -195,7 +138,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Dirección línea 1",
         hintText: "No registra",
-        controller: _direccionLinea1Controller,
+        text: patientData.direccionLinea1,
         lines: 2,
         width: freeSize ? null : 220,
         inputType: InputType.string,
@@ -212,7 +155,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Dirección línea 2",
         hintText: "No registra",
-        controller: _direccionLinea2Controller,
+        text: patientData.direccionLinea2,
         lines: 2,
         width: freeSize ? null : 220,
         inputType: InputType.string,
@@ -229,7 +172,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Ciudad",
         hintText: "No registra",
-        controller: _ciudadController,
+        text: patientData.ciudad,
         lines: 2,
         width: freeSize ? null : 220,
         inputType: InputType.string,
@@ -246,7 +189,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Cantón / municipio",
         hintText: "No registra",
-        controller: _cantonMunicipioController,
+        text: patientData.cantonMunicipio,
         lines: 2,
         width: freeSize ? null : 220,
         inputType: InputType.string,
@@ -263,7 +206,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Provincia / estado",
         hintText: "No registra",
-        controller: _provinciaEstadoController,
+        text: patientData.provinciaEstado,
         lines: 2,
         width: freeSize ? null : 220,
         inputType: InputType.string,
@@ -280,7 +223,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Código postal",
         hintText: "No registra",
-        controller: _codigoPostalController,
+        text: patientData.codigoPostal,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
@@ -298,10 +241,11 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "País",
         hintText: "No registra",
-        controller: _paisController,
+        text: patientData.pais,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        suggestions: ContentOptions.patientData.pais,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -316,7 +260,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Edad",
         hintText: "No registra",
-        controller: _edadController,
+        text: (patientData.edad ?? '').toString(),
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
@@ -333,10 +277,11 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Unidad de edad",
         hintText: "No registra",
-        controller: _unidadDeEdadController,
+        text: patientData.unidadDeEdad,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        suggestions: ContentOptions.patientData.unidadEdad,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -350,10 +295,11 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Género",
         hintText: "No registra",
-        controller: _generoController,
+        text: patientData.genero,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        suggestions: ContentOptions.patientData.genero,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -368,7 +314,10 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Fecha de nacimiento",
         hintText: "No registra",
-        controller: _fechaDeNacimientoController,
+        text: patientData.fechaDeNacimiento != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(patientData.fechaDeNacimiento!)
+            : "",
         rightIcon: Icons.calendar_month_outlined,
         lines: 1,
         width: freeSize ? null : 220,
@@ -381,15 +330,35 @@ class _ContentState extends State<_Content> {
                 TransformData.getTransformedValue<DateTime>(value)),
           ));
         },
+        controller: _fechaDeNacimientoController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaDeNacimientoController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            fechaDeNacimiento: Optional<DateTime?>.of(
+                TransformData.getTransformedValue<DateTime>(
+                    _fechaDeNacimientoController.text)),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
         readOnly: !isCreating,
         title: "Ocupación",
         hintText: "No registra",
-        controller: _ocupacionController,
+        text: patientData.ocupacion,
         lines: 2,
         width: freeSize ? null : 460,
+        suggestions: ContentOptions.patientData.ocupacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -404,10 +373,11 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Estado civil",
         hintText: "No registra",
-        controller: _estadoCivilController,
+        text: patientData.estadoCivil,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        suggestions: ContentOptions.patientData.estadoCivil,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -422,10 +392,11 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Nacionalidad",
         hintText: "No registra",
-        controller: _nacionalidadController,
+        text: patientData.nacionalidad,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        suggestions: ContentOptions.patientData.nacionalidad,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -440,10 +411,11 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Grupo étnico",
         hintText: "No registra",
-        controller: _grupoEtnicoController,
+        text: patientData.grupoEtnico,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
+        suggestions: ContentOptions.patientData.grupoEtnico,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -458,7 +430,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Otro grupo étnico",
         hintText: "No registra",
-        controller: _otroGrupoEtnicoController,
+        text: patientData.otroGrupoEtnico,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
@@ -476,7 +448,7 @@ class _ContentState extends State<_Content> {
         readOnly: !isCreating,
         title: "Núm. de identificación",
         hintText: "No registra",
-        controller: _numDocDeIdentificacionController,
+        text: patientData.numDocDeIdentificacion,
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,

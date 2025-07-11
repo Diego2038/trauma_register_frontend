@@ -203,8 +203,10 @@ class _AutoCompleteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Autocomplete<String>(
       optionsBuilder: (TextEditingValue textEditingValue) {
-        if (textEditingValue.text.isEmpty || suggestions!.isEmpty) {
+        if (suggestions?.isEmpty ?? true) {
           return const Iterable<String>.empty();
+        } else if (textEditingValue.text.isEmpty) {
+          return suggestions!;
         }
         return suggestions!.where((String option) {
           return option

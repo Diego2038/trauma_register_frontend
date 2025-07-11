@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
+import 'package:trauma_register_frontend/core/helpers/content_options.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
@@ -148,6 +149,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.hospital,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -323,6 +325,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.nivelDeAlerta,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -371,6 +374,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.tipoDeSeguro,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -414,6 +418,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.inmunizacionContraElTetanos,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -458,6 +463,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.mecanismoPrimario,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -480,6 +486,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.numeroDeLesionesSerias,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -524,6 +531,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.disposicionODestinoDelPaciente,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -546,6 +554,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.donacionDeOrganos,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -568,6 +577,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.autopsia,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -590,6 +600,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.muertePrevenible,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -612,6 +623,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.tipoDeAdmision,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -843,6 +855,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.disposicionODestinoDelPacienteDeHospitalizacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -867,6 +880,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.donacionDeOrganosDeHospitalizacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -889,6 +903,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.autopsiaDeHospitalizacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -911,6 +926,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.muertePrevenibleDeHospitalizacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -1374,6 +1390,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.calificadorDeFrecuenciaRespiratoriaEnLaEscena,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -1513,6 +1530,7 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.calificadorDeFrecuenciaRespiratoriaDuranteElTransporte,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -2141,6 +2159,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
+        suggestions: ContentOptions.healthcareRecord.estadoDeReferencia,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
