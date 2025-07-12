@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
+import 'package:trauma_register_frontend/core/helpers/content_options.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_size_text.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
@@ -123,7 +124,7 @@ class CustomInputWithLabel extends StatelessWidget {
       color: AppColors.grey200,
       size: dimensionSize,
     );
-    return readOnly || suggestions == null
+    return readOnly || (inputType != InputType.boolean && suggestions == null)
         ? _CustomTextField(
             controller: controller,
             text: text,
@@ -201,14 +202,16 @@ class _AutoCompleteWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<String>? establishedSuggestions = suggestions ??
+        (inputType == InputType.boolean ? ContentOptions.booleanValues : null);
     return Autocomplete<String>(
       optionsBuilder: (TextEditingValue textEditingValue) {
-        if (suggestions?.isEmpty ?? true) {
+        if (establishedSuggestions?.isEmpty ?? true) {
           return const Iterable<String>.empty();
         } else if (textEditingValue.text.isEmpty) {
-          return suggestions!;
+          return establishedSuggestions!;
         }
-        return suggestions!.where((String option) {
+        return establishedSuggestions!.where((String option) {
           return option
               .toLowerCase()
               .contains(textEditingValue.text.toLowerCase());

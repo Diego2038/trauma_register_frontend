@@ -272,7 +272,6 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
-        suggestions: const ["Sí", "No"],
         inputType: InputType.boolean,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
