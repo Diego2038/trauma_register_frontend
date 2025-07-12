@@ -13,6 +13,7 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_data_prov
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class IntensiveCareUnitContent extends StatelessWidget {
@@ -114,6 +115,31 @@ class _Content extends StatefulWidget {
 }
 
 class _ContentState extends State<_Content> {
+  late TextEditingController _fechaYHoraDeInicioController;
+  late TextEditingController _fechaYHoraDeTerminoController;
+
+  @override
+  void initState() {
+    super.initState();
+    _fechaYHoraDeInicioController = TextEditingController(
+        text: widget.value.fechaYHoraDeInicio != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(widget.value.fechaYHoraDeInicio!)
+            : "");
+    _fechaYHoraDeTerminoController = TextEditingController(
+        text: widget.value.fechaYHoraDeTermino != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(widget.value.fechaYHoraDeTermino!)
+            : "");
+  }
+
+  @override
+  void dispose() {
+    _fechaYHoraDeInicioController.dispose();
+    _fechaYHoraDeTerminoController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
@@ -207,6 +233,32 @@ class _ContentState extends State<_Content> {
                 .toList(),
           ));
         },
+        controller: _fechaYHoraDeInicioController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeInicioController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            intensiveCareUnit: patientData.intensiveCareUnit
+                ?.asMap()
+                .entries
+                .map((e) => e.key == index
+                    ? e.value.copyWith(
+                        fechaYHoraDeInicio: Optional<DateTime?>.of(
+                            TransformData.getTransformedValue<DateTime>(
+                                _fechaYHoraDeInicioController.text)))
+                    : e.value)
+                .toList(),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -231,6 +283,32 @@ class _ContentState extends State<_Content> {
                     ? e.value.copyWith(
                         fechaYHoraDeTermino: Optional<DateTime?>.of(
                             TransformData.getTransformedValue<DateTime>(value)))
+                    : e.value)
+                .toList(),
+          ));
+        },
+        controller: _fechaYHoraDeTerminoController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeTerminoController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            intensiveCareUnit: patientData.intensiveCareUnit
+                ?.asMap()
+                .entries
+                .map((e) => e.key == index
+                    ? e.value.copyWith(
+                        fechaYHoraDeTermino: Optional<DateTime?>.of(
+                            TransformData.getTransformedValue<DateTime>(
+                                _fechaYHoraDeTerminoController.text)))
                     : e.value)
                 .toList(),
           ));

@@ -13,6 +13,7 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_data_prov
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class HospitalizationVariableContent extends StatelessWidget {
@@ -116,6 +117,24 @@ class _Content extends StatefulWidget {
 }
 
 class _ContentState extends State<_Content> {
+  late TextEditingController _fechaYHoraDeLaVariableController;
+
+  @override
+  void initState() {
+    super.initState();
+    _fechaYHoraDeLaVariableController = TextEditingController(
+        text: widget.value.fechaYHoraDeLaVariable != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(widget.value.fechaYHoraDeLaVariable!)
+            : "");
+  }
+
+  @override
+  void dispose() {
+    _fechaYHoraDeLaVariableController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
@@ -234,6 +253,33 @@ class _ContentState extends State<_Content> {
                 .toList(),
           ));
         },
+        controller: _fechaYHoraDeLaVariableController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeLaVariableController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            hospitalizationVariable: patientData
+                .hospitalizationVariable
+                ?.asMap()
+                .entries
+                .map((e) => e.key == index
+                    ? e.value.copyWith(
+                        fechaYHoraDeLaVariable: Optional<DateTime?>.of(
+                            TransformData.getTransformedValue<DateTime>(
+                                _fechaYHoraDeLaVariableController.text)))
+                    : e.value)
+                .toList(),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -244,7 +290,8 @@ class _ContentState extends State<_Content> {
         lines: 3,
         width: freeSize ? null : 220,
         height: freeSize ? null : 153,
-        suggestions: ContentOptions.hospitalizationVariable.localizacionDeVariable,
+        suggestions:
+            ContentOptions.hospitalizationVariable.localizacionDeVariable,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);

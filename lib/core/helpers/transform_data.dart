@@ -56,8 +56,10 @@ class TransformData {
   static DateTime? _parseDate(String? date) {
     try {
       if (date?.isEmpty ?? true) return null;
-      return DateFormat('dd/MM/yyyy HH:mm:ss').parse(date!);
-    } catch (_) {
+      if (date!.length <= 10 ) return DateFormat('dd/MM/yyyy').parse(date.trim());
+      return DateFormat('dd/MM/yyyy HH:mm:ss').parse(date.trim());
+    } catch (e) {
+      print("ERROR: $e");
       return null;
     }
   }

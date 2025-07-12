@@ -13,6 +13,7 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_data_prov
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class HospitalizationComplicationContent extends StatelessWidget {
@@ -116,6 +117,24 @@ class _Content extends StatefulWidget {
 }
 
 class _ContentState extends State<_Content> {
+  late TextEditingController _fechaYHoraDeComplicacionController;
+
+  @override
+  void initState() {
+    super.initState();
+    _fechaYHoraDeComplicacionController = TextEditingController(
+        text: widget.value.fechaYHoraDeComplicacion != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(widget.value.fechaYHoraDeComplicacion!)
+            : "");
+  }
+
+  @override
+  void dispose() {
+    _fechaYHoraDeComplicacionController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
@@ -164,7 +183,8 @@ class _ContentState extends State<_Content> {
         text: hospitalizationComplication.tipoDeComplicacion ?? "",
         lines: 2,
         width: freeSize ? null : 460,
-        suggestions: ContentOptions.hospitalizationComplication.tipoDeComplicacion,
+        suggestions:
+            ContentOptions.hospitalizationComplication.tipoDeComplicacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -208,6 +228,32 @@ class _ContentState extends State<_Content> {
                 .toList(),
           ));
         },
+        controller: _fechaYHoraDeComplicacionController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeComplicacionController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            hospitalizationComplication: patientData.hospitalizationComplication
+                ?.asMap()
+                .entries
+                .map((e) => e.key == index
+                    ? e.value.copyWith(
+                        fechaYHoraDeComplicacion: Optional<DateTime?>.of(
+                            TransformData.getTransformedValue<DateTime>(
+                                _fechaYHoraDeComplicacionController.text)))
+                    : e.value)
+                .toList(),
+          ));
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -218,7 +264,8 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
-        suggestions: ContentOptions.hospitalizationComplication.lugarDeComplicacion,
+        suggestions:
+            ContentOptions.hospitalizationComplication.lugarDeComplicacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);

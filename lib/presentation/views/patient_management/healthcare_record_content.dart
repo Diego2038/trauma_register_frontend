@@ -15,6 +15,7 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_data_prov
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class HealthcareRecordContent extends StatelessWidget {
@@ -88,6 +89,116 @@ class _Content extends StatefulWidget {
 }
 
 class _ContentState extends State<_Content> {
+  late TextEditingController _fechaYHoraDeLlegadaDelPacienteController;
+  late TextEditingController _fechaYHoraDeLlegadaDelMedicoController;
+  late TextEditingController _fechaYHoraDeNotificacionAlMedicoController;
+  late TextEditingController _fechaYHoraDeLaDisposicionController;
+  late TextEditingController _fechaDeAdmisionController;
+  late TextEditingController _fechaYHoraDeAltaController;
+  late TextEditingController _fechaYHoraDeNotificacionPreHospitalariaController;
+  late TextEditingController _fechaYHoraDeLlegadaALaEscenaController;
+  late TextEditingController _fechaYHoraDeSalidaDeLaEscenaController;
+  late TextEditingController _fechaYHoraDeEnvioDeContraReferenciaController;
+  late TextEditingController _fechaDeAltaDeContrarReferenciaController;
+  late TextEditingController _fechaDeEnvioDeReferenciaController;
+  late TextEditingController _fechaDeReferenciaController;
+  late TextEditingController _fechaDeAceptacionDeReferenciaController;
+
+  @override
+  void initState() {
+    super.initState();
+    final healthcareRecord = _getCurrentPatientData(context).healthcareRecord!;
+
+    _fechaYHoraDeLlegadaDelPacienteController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeLlegadaDelPaciente != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaYHoraDeLlegadaDelPaciente!)
+            : "");
+    _fechaYHoraDeLlegadaDelMedicoController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeLlegadaDelMedico != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaYHoraDeLlegadaDelMedico!)
+            : "");
+    _fechaYHoraDeNotificacionAlMedicoController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeNotificacionAlMedico != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaYHoraDeNotificacionAlMedico!)
+            : "");
+    _fechaYHoraDeLaDisposicionController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeLaDisposicion != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaYHoraDeLaDisposicion!)
+            : "");
+    _fechaDeAdmisionController = TextEditingController(
+        text: healthcareRecord.fechaDeAdmision != null
+            ? DateFormat('dd/MM/yyyy').format(healthcareRecord.fechaDeAdmision!)
+            : "");
+    _fechaYHoraDeAltaController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeAlta != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaYHoraDeAlta!)
+            : "");
+    _fechaYHoraDeNotificacionPreHospitalariaController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeNotificacionPreHospitalaria != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss').format(
+                healthcareRecord.fechaYHoraDeNotificacionPreHospitalaria!)
+            : "");
+    _fechaYHoraDeLlegadaALaEscenaController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeLlegadaALaEscena != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaYHoraDeLlegadaALaEscena!)
+            : "");
+    _fechaYHoraDeSalidaDeLaEscenaController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeSalidaDeLaEscena != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaYHoraDeSalidaDeLaEscena!)
+            : "");
+    _fechaYHoraDeEnvioDeContraReferenciaController = TextEditingController(
+        text: healthcareRecord.fechaYHoraDeEnvioDeContraReferencia != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaYHoraDeEnvioDeContraReferencia!)
+            : "");
+    _fechaDeAltaDeContrarReferenciaController = TextEditingController(
+        text: healthcareRecord.fechaDeAltaDeContrarReferencia != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaDeAltaDeContrarReferencia!)
+            : "");
+    _fechaDeEnvioDeReferenciaController = TextEditingController(
+        text: healthcareRecord.fechaDeEnvioDeReferencia != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(healthcareRecord.fechaDeEnvioDeReferencia!)
+            : "");
+    _fechaDeReferenciaController = TextEditingController(
+        text: healthcareRecord.fechaDeReferencia != null
+            ? DateFormat('dd/MM/yyyy')
+                .format(healthcareRecord.fechaDeReferencia!)
+            : "");
+    _fechaDeAceptacionDeReferenciaController = TextEditingController(
+        text: healthcareRecord.fechaDeAceptacionDeReferencia != null
+            ? DateFormat('dd/MM/yyyy')
+                .format(healthcareRecord.fechaDeAceptacionDeReferencia!)
+            : "");
+  }
+
+  @override
+  void dispose() {
+    _fechaYHoraDeLlegadaDelPacienteController.dispose();
+    _fechaYHoraDeLlegadaDelMedicoController.dispose();
+    _fechaYHoraDeNotificacionAlMedicoController.dispose();
+    _fechaYHoraDeLaDisposicionController.dispose();
+    _fechaDeAdmisionController.dispose();
+    _fechaYHoraDeAltaController.dispose();
+    _fechaYHoraDeNotificacionPreHospitalariaController.dispose();
+    _fechaYHoraDeLlegadaALaEscenaController.dispose();
+    _fechaYHoraDeSalidaDeLaEscenaController.dispose();
+    _fechaYHoraDeEnvioDeContraReferenciaController.dispose();
+    _fechaDeAltaDeContrarReferenciaController.dispose();
+    _fechaDeEnvioDeReferenciaController.dispose();
+    _fechaDeReferenciaController.dispose();
+    _fechaDeAceptacionDeReferenciaController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
@@ -187,6 +298,30 @@ class _ContentState extends State<_Content> {
             ),
           );
         },
+        controller: _fechaYHoraDeLlegadaDelPacienteController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeLlegadaDelPacienteController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeLlegadaDelPaciente: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDeLlegadaDelPacienteController
+                                  .text)))),
+            ),
+          );
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -264,6 +399,29 @@ class _ContentState extends State<_Content> {
             ),
           );
         },
+        controller: _fechaYHoraDeLlegadaDelMedicoController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeLlegadaDelMedicoController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeLlegadaDelMedico: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDeLlegadaDelMedicoController.text)))),
+            ),
+          );
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -286,6 +444,30 @@ class _ContentState extends State<_Content> {
                   patientData.healthcareRecord!.copyWith(
                       fechaYHoraDeNotificacionAlMedico: Optional<DateTime?>.of(
                           TransformData.getTransformedValue<DateTime>(value)))),
+            ),
+          );
+        },
+        controller: _fechaYHoraDeNotificacionAlMedicoController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeNotificacionAlMedicoController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeNotificacionAlMedico: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDeNotificacionAlMedicoController
+                                  .text)))),
             ),
           );
         },
@@ -418,7 +600,8 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
-        suggestions: ContentOptions.healthcareRecord.inmunizacionContraElTetanos,
+        suggestions:
+            ContentOptions.healthcareRecord.inmunizacionContraElTetanos,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -531,7 +714,8 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
-        suggestions: ContentOptions.healthcareRecord.disposicionODestinoDelPaciente,
+        suggestions:
+            ContentOptions.healthcareRecord.disposicionODestinoDelPaciente,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -661,6 +845,29 @@ class _ContentState extends State<_Content> {
             ),
           );
         },
+        controller: _fechaYHoraDeLaDisposicionController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeLaDisposicionController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeLaDisposicion: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDeLaDisposicionController.text)))),
+            ),
+          );
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -740,7 +947,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
-        inputType: InputType.datetime,
+        inputType: InputType.date,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -749,6 +956,29 @@ class _ContentState extends State<_Content> {
                   patientData.healthcareRecord!.copyWith(
                       fechaDeAdmision: Optional<DateTime?>.of(
                           TransformData.getTransformedValue<DateTime>(value)))),
+            ),
+          );
+        },
+        controller: _fechaDeAdmisionController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaDeAdmisionController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeAdmision: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaDeAdmisionController.text)))),
             ),
           );
         },
@@ -774,6 +1004,29 @@ class _ContentState extends State<_Content> {
                   patientData.healthcareRecord!.copyWith(
                       fechaYHoraDeAlta: Optional<DateTime?>.of(
                           TransformData.getTransformedValue<DateTime>(value)))),
+            ),
+          );
+        },
+        controller: _fechaYHoraDeAltaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeAltaController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeAlta: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDeAltaController.text)))),
             ),
           );
         },
@@ -855,7 +1108,8 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
-        suggestions: ContentOptions.healthcareRecord.disposicionODestinoDelPacienteDeHospitalizacion,
+        suggestions: ContentOptions
+            .healthcareRecord.disposicionODestinoDelPacienteDeHospitalizacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -880,7 +1134,8 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
-        suggestions: ContentOptions.healthcareRecord.donacionDeOrganosDeHospitalizacion,
+        suggestions:
+            ContentOptions.healthcareRecord.donacionDeOrganosDeHospitalizacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -926,7 +1181,8 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
-        suggestions: ContentOptions.healthcareRecord.muertePrevenibleDeHospitalizacion,
+        suggestions:
+            ContentOptions.healthcareRecord.muertePrevenibleDeHospitalizacion,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -1056,6 +1312,32 @@ class _ContentState extends State<_Content> {
             ),
           );
         },
+        controller: _fechaYHoraDeNotificacionPreHospitalariaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeNotificacionPreHospitalariaController.text =
+              resultDate != null
+                  ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+                  : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeNotificacionPreHospitalaria: Optional<
+                              DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDeNotificacionPreHospitalariaController
+                                  .text)))),
+            ),
+          );
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1081,6 +1363,29 @@ class _ContentState extends State<_Content> {
             ),
           );
         },
+        controller: _fechaYHoraDeLlegadaALaEscenaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeLlegadaALaEscenaController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeLlegadaALaEscena: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDeLlegadaALaEscenaController.text)))),
+            ),
+          );
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1103,6 +1408,29 @@ class _ContentState extends State<_Content> {
                   patientData.healthcareRecord!.copyWith(
                       fechaYHoraDeSalidaDeLaEscena: Optional<DateTime?>.of(
                           TransformData.getTransformedValue<DateTime>(value)))),
+            ),
+          );
+        },
+        controller: _fechaYHoraDeSalidaDeLaEscenaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeSalidaDeLaEscenaController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeSalidaDeLaEscena: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDeSalidaDeLaEscenaController.text)))),
             ),
           );
         },
@@ -1390,7 +1718,8 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
-        suggestions: ContentOptions.healthcareRecord.calificadorDeFrecuenciaRespiratoriaEnLaEscena,
+        suggestions: ContentOptions
+            .healthcareRecord.calificadorDeFrecuenciaRespiratoriaEnLaEscena,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -1530,7 +1859,8 @@ class _ContentState extends State<_Content> {
         lines: 2,
         width: freeSize ? null : 460,
         height: freeSize ? null : 124,
-        suggestions: ContentOptions.healthcareRecord.calificadorDeFrecuenciaRespiratoriaDuranteElTransporte,
+        suggestions: ContentOptions.healthcareRecord
+            .calificadorDeFrecuenciaRespiratoriaDuranteElTransporte,
         inputType: InputType.string,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
@@ -1841,6 +2171,32 @@ class _ContentState extends State<_Content> {
             ),
           );
         },
+        controller: _fechaYHoraDeEnvioDeContraReferenciaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeEnvioDeContraReferenciaController.text =
+              resultDate != null
+                  ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+                  : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaYHoraDeEnvioDeContraReferencia:
+                          Optional<DateTime?>.of(
+                              TransformData.getTransformedValue<DateTime>(
+                                  _fechaYHoraDeEnvioDeContraReferenciaController
+                                      .text)))),
+            ),
+          );
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -1864,6 +2220,30 @@ class _ContentState extends State<_Content> {
                   patientData.healthcareRecord!.copyWith(
                       fechaDeAltaDeContrarReferencia: Optional<DateTime?>.of(
                           TransformData.getTransformedValue<DateTime>(value)))),
+            ),
+          );
+        },
+        controller: _fechaDeAltaDeContrarReferenciaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaDeAltaDeContrarReferenciaController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeAltaDeContrarReferencia: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaDeAltaDeContrarReferenciaController
+                                  .text)))),
             ),
           );
         },
@@ -2079,6 +2459,29 @@ class _ContentState extends State<_Content> {
             ),
           );
         },
+        controller: _fechaDeEnvioDeReferenciaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaDeEnvioDeReferenciaController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeEnvioDeReferencia: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaDeEnvioDeReferenciaController.text)))),
+            ),
+          );
+        },
       ),
       CustomInputWithLabel(
         size: customSize,
@@ -2093,7 +2496,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
-        inputType: InputType.datetime,
+        inputType: InputType.date,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -2102,6 +2505,29 @@ class _ContentState extends State<_Content> {
                   patientData.healthcareRecord!.copyWith(
                       fechaDeReferencia: Optional<DateTime?>.of(
                           TransformData.getTransformedValue<DateTime>(value)))),
+            ),
+          );
+        },
+        controller: _fechaDeReferenciaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaDeReferenciaController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeReferencia: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaDeReferenciaController.text)))),
             ),
           );
         },
@@ -2186,7 +2612,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
-        inputType: InputType.datetime,
+        inputType: InputType.date,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(
@@ -2195,6 +2621,29 @@ class _ContentState extends State<_Content> {
                   patientData.healthcareRecord!.copyWith(
                       fechaDeAceptacionDeReferencia: Optional<DateTime?>.of(
                           TransformData.getTransformedValue<DateTime>(value)))),
+            ),
+          );
+        },
+        controller: _fechaDeAceptacionDeReferenciaController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaDeAceptacionDeReferenciaController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      fechaDeAceptacionDeReferencia: Optional<DateTime?>.of(
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaDeAceptacionDeReferenciaController.text)))),
             ),
           );
         },

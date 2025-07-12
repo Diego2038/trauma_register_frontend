@@ -143,14 +143,17 @@ class CustomModal {
       },
     );
 
-    final String? pickedTime = await determineTime(
-      context: context,
-      focusNode: FocusNode(),
-    );
-    final transformedTime = _getTimeFromText(pickedTime);
-    int hour = transformedTime.isNotEmpty ? transformedTime[0] : 0;
-    int minute = transformedTime.length > 1 ? transformedTime[1] : 0;
-    int second = transformedTime.length > 2 ? transformedTime[2] : 0;
+    List<int>? transformedTime;
+    if (includeTime) {
+      final String? pickedTime = await determineTime(
+        context: context,
+        focusNode: FocusNode(),
+      );
+      transformedTime = _getTimeFromText(pickedTime);
+    }
+    int hour = (transformedTime?.isNotEmpty ?? false) ? transformedTime![0] : 0;
+    int minute = (transformedTime?.length ?? 0) > 1 ? transformedTime![1] : 0;
+    int second = (transformedTime?.length ?? 0) > 2 ? transformedTime![2] : 0;
 
     if (pickedDate != null) {
       DateTime finalDate = DateTime(

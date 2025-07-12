@@ -322,7 +322,7 @@ class _ContentState extends State<_Content> {
         lines: 1,
         width: freeSize ? null : 220,
         height: 94,
-        inputType: InputType.datetime,
+        inputType: InputType.date,
         onChanged: (String? value) {
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(
@@ -337,10 +337,9 @@ class _ContentState extends State<_Content> {
             initialDate: DateTime.now(),
             firstDate: DateTime(1950),
             lastDate: DateTime.now(),
-            includeTime: true,
           );
           _fechaDeNacimientoController.text = resultDate != null
-              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              ? DateFormat('dd/MM/yyyy').format(resultDate)
               : "";
           final patientData = _getCurrentPatientData(context);
           traumaDataProvider.updatePatientData(patientData.copyWith(

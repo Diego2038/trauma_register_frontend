@@ -13,6 +13,7 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_data_prov
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class LaboratoryContent extends StatelessWidget {
@@ -113,6 +114,24 @@ class _Content extends StatefulWidget {
 }
 
 class _ContentState extends State<_Content> {
+  late TextEditingController _fechaYHoraDeLaboratorioController;
+
+  @override
+  void initState() {
+    super.initState();
+    _fechaYHoraDeLaboratorioController = TextEditingController(
+        text: widget.value.fechaYHoraDeLaboratorio != null
+            ? DateFormat('dd/MM/yyyy HH:mm:ss')
+                .format(widget.value.fechaYHoraDeLaboratorio!)
+            : "");
+  }
+
+  @override
+  void dispose() {
+    _fechaYHoraDeLaboratorioController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
@@ -201,6 +220,32 @@ class _ContentState extends State<_Content> {
                     ? e.value.copyWith(
                         fechaYHoraDeLaboratorio: Optional<DateTime?>.of(
                             TransformData.getTransformedValue<DateTime>(value)))
+                    : e.value)
+                .toList(),
+          ));
+        },
+        controller: _fechaYHoraDeLaboratorioController,
+        onTap: () async {
+          final DateTime? resultDate = await CustomModal.determineDate(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1950),
+            lastDate: DateTime.now(),
+            includeTime: true,
+          );
+          _fechaYHoraDeLaboratorioController.text = resultDate != null
+              ? DateFormat('dd/MM/yyyy HH:mm:ss').format(resultDate)
+              : "";
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(patientData.copyWith(
+            laboratory: patientData.laboratory
+                ?.asMap()
+                .entries
+                .map((e) => e.key == index
+                    ? e.value.copyWith(
+                        fechaYHoraDeLaboratorio: Optional<DateTime?>.of(
+                            TransformData.getTransformedValue<DateTime>(
+                                _fechaYHoraDeLaboratorioController.text)))
                     : e.value)
                 .toList(),
           ));
