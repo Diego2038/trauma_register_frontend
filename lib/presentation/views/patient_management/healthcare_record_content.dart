@@ -1827,6 +1827,28 @@ class _ContentState extends State<_Content> {
       CustomInputWithLabel(
         size: customSize,
         readOnly: !isCreating,
+        title: "Presión diastólica durante el transporte",
+        hintText: "No registra",
+        text: "${healthcareRecord.presionDiastolicaDuranteElTransporte ?? ""}",
+        lines: 1,
+        width: freeSize ? null : 220,
+        height: freeSize ? null : 124,
+        inputType: InputType.integer,
+        onChanged: (String? value) {
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      presionDiastolicaDuranteElTransporte: Optional<int?>.of(
+                          TransformData.getTransformedValue<int>(value)))),
+            ),
+          );
+        },
+      ),
+      CustomInputWithLabel(
+        size: customSize,
+        readOnly: !isCreating,
         title: "Frecuencia respiratoria durante el transporte",
         hintText: "No registra",
         text:
