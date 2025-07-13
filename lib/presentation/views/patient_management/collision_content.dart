@@ -143,6 +143,7 @@ class _ContentState extends State<_Content> {
             context: context,
             title: null,
             text: result.message!,
+            showCancelButton: false,
           );
         }
         _getCurrentProvider(context).updatePatientData(
