@@ -443,7 +443,7 @@ class _ContentDataPatient extends StatelessWidget {
         HealthcareRecordContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),

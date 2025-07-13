@@ -58,6 +58,47 @@ class TraumaDataProvider extends ChangeNotifier {
     }
   }
 
+  Future<CustomHttpStatusResponse> createHealthcareRecord(
+      HealthcareRecord element, int patientDataId) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      final CustomHttpStatusResponse result =
+          await traumaDataService.createHealthcareRecord(element, patientDataId);
+      return result;
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+      rethrow;
+    }
+  }
+
+  Future<CustomHttpStatusResponse> updateHealthcareRecord(
+      HealthcareRecord element, int patientDataId) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      final CustomHttpStatusResponse result =
+          await traumaDataService.updateHealthcareRecord(element, patientDataId);
+      return result;
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+      rethrow;
+    }
+  }
+
+  Future<CustomHttpStatusResponse> deleteHealthcareRecordById(String id) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      final CustomHttpStatusResponse result =
+          await traumaDataService.deleteHealthcareRecordById(id);
+      return result;
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+      rethrow;
+    }
+  }
+
   Future<CustomHttpStatusResponse> createInjuryRecord(
       InjuryRecord element, int patientDataId) async {
     try {

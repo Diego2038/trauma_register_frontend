@@ -68,6 +68,100 @@ class TraumaDataService {
     }
   }
 
+  Future<CustomHttpStatusResponse> createHealthcareRecord(
+      HealthcareRecord element, int patientDataId) async {
+    try {
+      final String? token = LocalStorage.prefs.getString('token');
+      final response = await EndpointHelper.postRequest(
+        path: "/medical_records/healthcare-record/",
+        token: token,
+        data: {
+          "trauma_register_record_id": patientDataId,
+          ...element.toJson(),
+        },
+      );
+      if ((response.statusCode ?? 400) >= 400) {
+        return CustomHttpStatusResponse(
+          code: response.statusCode,
+          result: false,
+          message: _convertMessage(_getFirstString(response.data)),
+        );
+      }
+      return CustomHttpStatusResponse(
+        code: response.statusCode,
+        result: true,
+        message: "Elemento creado con éxito.",
+      );
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_service.dart', stack: s);
+      return CustomHttpStatusResponse(
+        result: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  Future<CustomHttpStatusResponse> updateHealthcareRecord(
+      HealthcareRecord element, int patientDataId) async {
+    try {
+      final String? token = LocalStorage.prefs.getString('token');
+      final response = await EndpointHelper.putRequest(
+        path: "/medical_records/healthcare-record/$patientDataId/",
+        token: token,
+        data: element.toJson(),
+      );
+      if ((response.statusCode ?? 400) >= 400) {
+        return CustomHttpStatusResponse(
+          code: response.statusCode,
+          result: false,
+          message: _convertMessage(_getFirstString(response.data)),
+        );
+      }
+      return CustomHttpStatusResponse(
+        code: response.statusCode,
+        result: true,
+        message: "Elemento actualizado con éxito.",
+      );
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_service.dart', stack: s);
+      return CustomHttpStatusResponse(
+        result: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  Future<CustomHttpStatusResponse> deleteHealthcareRecordById(String id) async {
+    try {
+      final String? token = LocalStorage.prefs.getString('token');
+      final response = await EndpointHelper.deleteRequest(
+        path: "/medical_records/healthcare-record/$id/",
+        token: token,
+      );
+      if ((response.statusCode ?? 400) >= 400) {
+        return CustomHttpStatusResponse(
+          code: response.statusCode,
+          result: false,
+          message: _convertMessage(_getFirstString(response.data)),
+        );
+      }
+      return CustomHttpStatusResponse(
+        code: response.statusCode,
+        result: true,
+        message: "Elemento eliminado con éxito",
+      );
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_service.dart', stack: s);
+      return CustomHttpStatusResponse(
+        result: false,
+        message: e.toString(),
+      );
+    }
+  }
+
   Future<CustomHttpStatusResponse> createInjuryRecord(
       InjuryRecord element, int patientDataId) async {
     try {

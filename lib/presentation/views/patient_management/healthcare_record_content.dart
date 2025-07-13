@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/content_options.dart';
@@ -24,22 +25,24 @@ class HealthcareRecordContent extends StatelessWidget {
     super.key,
     required this.noDataWidget,
     required this.customSize,
-    required this.isCreating,
     required this.freeSize,
+    required this.action,
   });
 
   final NormalText noDataWidget;
   final CustomSize customSize;
-  final bool isCreating;
   final bool freeSize;
+  final ActionType action;
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges =
+        action == ActionType.crear || action == ActionType.actualizar;
     return ExpandableTitleWidget(
       title: "Registro de atención médica",
       index: 1,
       expandedWidget: _getCurrentPatientData(context).healthcareRecord == null
-          ? isCreating
+          ? allowChanges
               ? Center(
                   child: CustomIconButton(
                     onPressed: () {
@@ -59,8 +62,8 @@ class HealthcareRecordContent extends StatelessWidget {
               : noDataWidget
           : _Content(
               customSize: customSize,
-              isCreating: isCreating,
               freeSize: freeSize,
+              action: action,
             ),
     );
   }
@@ -77,13 +80,13 @@ class HealthcareRecordContent extends StatelessWidget {
 class _Content extends StatefulWidget {
   const _Content({
     required this.customSize,
-    required this.isCreating,
     required this.freeSize,
+    required this.action,
   });
 
   final CustomSize customSize;
-  final bool isCreating;
   final bool freeSize;
+  final ActionType action;
 
   @override
   State<_Content> createState() => _ContentState();
@@ -207,9 +210,53 @@ class _ContentState extends State<_Content> {
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges = widget.action == ActionType.crear ||
+        widget.action == ActionType.actualizar;
     return CustomContainer(
-      showDeleteButton: widget.isCreating,
-      onDelete: () {
+      showUpdateButton: widget.action == ActionType.actualizar,
+      onUpdate: () async {
+        final element = _getCurrentPatientData(context).healthcareRecord!;
+        final bool isANewElement = element.id == null;
+        final bool confirmFlow = await CustomModal.showModal(
+          context: context,
+          title: null,
+          text: isANewElement
+              ? "¿Desea crear el nuevo elemento?"
+              : "¿Desea confirmar la actualización?",
+        );
+        if (!confirmFlow) return;
+        final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
+        final result = await (isANewElement
+            ? _getCurrentProvider(context).createHealthcareRecord(element, id)
+            : _getCurrentProvider(context).updateHealthcareRecord(element, id));
+        CustomModal.showModal(
+          context: context,
+          title: null,
+          text: result.message!,
+          showCancelButton: false,
+        );
+      },
+      showDeleteButton: allowChanges,
+      onDelete: () async {
+        final element = _getCurrentPatientData(context).healthcareRecord!;
+        if (widget.action == ActionType.actualizar && element.id != null) {
+          final deleteElement = await CustomModal.showModal(
+            context: context,
+            title: null,
+            text: "¿Está seguro que desea eliminar el elemento?",
+          );
+          if (!deleteElement) return;
+          final result = await _getCurrentProvider(context)
+              .deleteHealthcareRecordById(_getCurrentPatientData(context)
+                  .traumaRegisterRecordId
+                  .toString());
+          CustomModal.showModal(
+            context: context,
+            title: null,
+            text: result.message!,
+            showCancelButton: false,
+          );
+        }
         _getCurrentProvider(context).updatePatientData(
           _getCurrentPatientData(context).copyWith(
             healthcareRecord: const Optional<HealthcareRecord?>.of(null),
@@ -220,7 +267,7 @@ class _ContentState extends State<_Content> {
       children: healthcareRecordContent(
         context: context,
         customSize: widget.customSize,
-        isCreating: widget.isCreating,
+        isCreating: allowChanges,
         freeSize: widget.freeSize,
       ),
     );
