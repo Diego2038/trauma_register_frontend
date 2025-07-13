@@ -58,11 +58,66 @@ class TraumaDataProvider extends ChangeNotifier {
     }
   }
 
+  Future<CustomHttpStatusResponse> createInjuryRecord(
+      InjuryRecord element, int patientDataId) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      final CustomHttpStatusResponse result =
+          await traumaDataService.createInjuryRecord(element, patientDataId);
+      return result;
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+      rethrow;
+    }
+  }
+
+  Future<CustomHttpStatusResponse> updateInjuryRecord(
+      InjuryRecord element, int patientDataId) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      final CustomHttpStatusResponse result =
+          await traumaDataService.updateInjuryRecord(element, patientDataId);
+      return result;
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+      rethrow;
+    }
+  }
+
   Future<CustomHttpStatusResponse> deleteInjuryRecordById(String id) async {
     try {
       final traumaDataService = TraumaDataService();
       final CustomHttpStatusResponse result =
           await traumaDataService.deleteInjuryRecordById(id);
+      return result;
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+      rethrow;
+    }
+  }
+
+  Future<CustomHttpStatusResponse> createCollision(
+      Collision element, int patientDataId) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      final CustomHttpStatusResponse result =
+          await traumaDataService.createCollision(element, patientDataId);
+      return result;
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_provider.dart', stack: s);
+      rethrow;
+    }
+  }
+
+  Future<CustomHttpStatusResponse> updateCollision(Collision element) async {
+    try {
+      final traumaDataService = TraumaDataService();
+      final CustomHttpStatusResponse result =
+          await traumaDataService.updateCollision(element);
       return result;
     } catch (e, s) {
       PrintError.makePrint(

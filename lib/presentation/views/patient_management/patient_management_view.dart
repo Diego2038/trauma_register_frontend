@@ -185,10 +185,13 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                             leftIcon: Icons.person_search_outlined,
                             rightIcon: Icons.search,
                             onPressedRightIcon: () async {
+                              if (controller.text.trim().isEmpty) return;
                               await searchPatient(controller.text);
                             },
-                            onSubmitted: (String? value) async =>
-                                await searchPatient(value ?? ''),
+                            onSubmitted: (String? value) async {
+                              if (controller.text.trim().isEmpty) return;
+                              await searchPatient(value ?? '');
+                            },
                           )
                         else
                           Padding(

@@ -5,13 +5,17 @@ class CustomContainer extends StatelessWidget {
   final List<Widget> children;
   final double? maxWidth;
   final bool showDeleteButton;
+  final bool showUpdateButton;
   final VoidCallback? onDelete;
+  final Future<void> Function()? onUpdate;
   const CustomContainer({
     super.key,
     required this.children,
     this.maxWidth,
     this.showDeleteButton = false,
+    this.showUpdateButton = false,
     this.onDelete,
+    this.onUpdate,
   });
 
   @override
@@ -30,6 +34,28 @@ class CustomContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (showUpdateButton)
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (showUpdateButton)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: IconButton(
+                        icon: const Icon(Icons.save),
+                        onPressed: () async {
+                          if (onUpdate != null) await onUpdate!();
+                        },
+                        color: AppColors.base,
+                        iconSize: 25,
+                      ),
+                    ),
+                ],
+              ),
+            ),
           Wrap(
             runAlignment: WrapAlignment.end,
             runSpacing: 20,

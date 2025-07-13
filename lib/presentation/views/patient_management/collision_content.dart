@@ -125,9 +125,32 @@ class _ContentState extends State<_Content> {
     final bool allowChanges = widget.action == ActionType.crear ||
         widget.action == ActionType.actualizar;
     return CustomContainer(
+      showUpdateButton: widget.action == ActionType.actualizar,
+      onUpdate: () async {
+        final bool isANewElement = widget.value.id == null;
+        final bool confirmFlow = await CustomModal.showModal(
+          context: context,
+          title: null,
+          text: isANewElement
+              ? "¿Desea crear el nuevo elemento?"
+              : "¿Desea confirmar la actualización?",
+        );
+        if (!confirmFlow) return;
+        final element = _getCurrentPatientData(context).collision![widget.keyy];
+        final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
+        final result = await (isANewElement
+            ? _getCurrentProvider(context).createCollision(element, id)
+            : _getCurrentProvider(context).updateCollision(element));
+        CustomModal.showModal(
+          context: context,
+          title: null,
+          text: result.message!,
+          showCancelButton: false,
+        );
+      },
       showDeleteButton: allowChanges,
       onDelete: () async {
-        if (widget.action == ActionType.actualizar) {
+        if (widget.action == ActionType.actualizar && widget.value.id != null) {
           final deleteElement = await CustomModal.showModal(
             context: context,
             title: null,

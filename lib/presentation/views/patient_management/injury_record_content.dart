@@ -119,7 +119,29 @@ class _ContentState extends State<_Content> {
     final bool allowChanges = widget.action == ActionType.crear ||
         widget.action == ActionType.actualizar;
     return CustomContainer(
-      // showDeleteButton: widget.isCreating,
+      showUpdateButton: widget.action == ActionType.actualizar,
+      onUpdate: () async {
+        final element = _getCurrentPatientData(context).injuryRecord!;
+        final bool isANewElement = element.id == null;
+        final bool confirmFlow = await CustomModal.showModal(
+          context: context,
+          title: null,
+          text: isANewElement
+              ? "¿Desea crear el nuevo elemento?"
+              : "¿Desea confirmar la actualización?",
+        );
+        if (!confirmFlow) return;
+        final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
+        final result = await (isANewElement
+            ? _getCurrentProvider(context).createInjuryRecord(element, id)
+            : _getCurrentProvider(context).updateInjuryRecord(element, id));
+        CustomModal.showModal(
+          context: context,
+          title: null,
+          text: result.message!,
+          showCancelButton: false,
+        );
+      },
       showDeleteButton: allowChanges,
       onDelete: () async {
         if (widget.action == ActionType.actualizar) {
@@ -130,8 +152,9 @@ class _ContentState extends State<_Content> {
           );
           if (!deleteElement) return;
           final result = await _getCurrentProvider(context)
-              .deleteInjuryRecordById(
-                  _getCurrentPatientData(context).traumaRegisterRecordId.toString());
+              .deleteInjuryRecordById(_getCurrentPatientData(context)
+                  .traumaRegisterRecordId
+                  .toString());
           CustomModal.showModal(
             context: context,
             title: null,
