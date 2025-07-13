@@ -367,8 +367,8 @@ class _ContentState extends State<_Content> {
             ? DateFormat('dd/MM/yyyy HH:mm:ss')
                 .format(injuryRecord.fechaYHoraDelEvento!)
             : "",
-        // rightIcon: Icons.calendar_month_outlined,
         lines: 1,
+        rightIcon: Icons.calendar_month_outlined,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
         inputType: InputType.datetime,

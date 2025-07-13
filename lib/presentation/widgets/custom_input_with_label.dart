@@ -138,7 +138,7 @@ class CustomInputWithLabel extends StatelessWidget {
             customSpace: customSpace,
             iconConstrain: iconConstrain,
             rightIcon: rightIcon,
-            onPressedRightIcon: onPressedRightIcon,
+            onPressedRightIcon: readOnly ? null : onPressedRightIcon ?? onTap,
             rightIconWidget: rightIconWidget,
             inputType: inputType,
           )
@@ -153,7 +153,7 @@ class CustomInputWithLabel extends StatelessWidget {
             hintText: hintText,
             leftIcon: leftIcon,
             rightIcon: rightIcon,
-            onPressedRightIcon: onPressedRightIcon,
+            onPressedRightIcon: readOnly ? null : onPressedRightIcon ?? onTap,
             dimensionSize: dimensionSize,
             customSpace: customSpace,
             iconConstrain: iconConstrain,

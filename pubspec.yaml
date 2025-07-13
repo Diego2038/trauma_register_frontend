@@ -46,6 +46,7 @@ dependencies:
   dotted_border: ^2.1.0
   file_picker: ^8.3.2
   flutter_time_duration_picker: ^1.0.0
+  font_awesome_flutter: ^10.8.0
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,10 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
+  fonts:
+  - family: FontAwesome
+    fonts:
+      - asset: packages/font_awesome_flutter/fonts/fa-solid-900.ttf
+      - asset: packages/font_awesome_flutter/fonts/fa-brands-400.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

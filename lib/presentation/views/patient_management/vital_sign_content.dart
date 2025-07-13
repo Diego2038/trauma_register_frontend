@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
@@ -215,6 +216,7 @@ class _ContentState extends State<_Content> {
                 .format(vitalSign.fechaYHoraDeSignosVitales!)
             : "",
         lines: 1,
+        rightIcon: Icons.calendar_month_outlined,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
         inputType: InputType.datetime,
@@ -558,6 +560,7 @@ class _ContentState extends State<_Content> {
         hintText: "No registra",
         text: (vitalSign.duracionDePerdidaDeConciencia ?? "").toString(),
         lines: 1,
+        rightIcon: FontAwesomeIcons.clock,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
         inputType: InputType.time,

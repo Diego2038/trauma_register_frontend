@@ -241,6 +241,7 @@ class _ContentState extends State<_Content> {
                 .format(procedure.fechaYHoraDeInicio!)
             : "",
         lines: 1,
+        rightIcon: Icons.calendar_month_outlined,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
         inputType: InputType.datetime,
@@ -295,6 +296,7 @@ class _ContentState extends State<_Content> {
                 .format(procedure.fechaYHoraDeTermino!)
             : "",
         lines: 1,
+        rightIcon: Icons.calendar_month_outlined,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
         inputType: InputType.datetime,

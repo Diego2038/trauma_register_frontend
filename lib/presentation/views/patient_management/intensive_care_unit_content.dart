@@ -216,6 +216,7 @@ class _ContentState extends State<_Content> {
                 .format(intensiveCareUnit.fechaYHoraDeInicio!)
             : "",
         lines: 1,
+        rightIcon: Icons.calendar_month_outlined,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
         inputType: InputType.datetime,
@@ -270,6 +271,7 @@ class _ContentState extends State<_Content> {
                 .format(intensiveCareUnit.fechaYHoraDeTermino!)
             : "",
         lines: 1,
+        rightIcon: Icons.calendar_month_outlined,
         width: freeSize ? null : 220,
         height: freeSize ? null : 108,
         inputType: InputType.datetime,

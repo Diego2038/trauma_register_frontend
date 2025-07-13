@@ -207,6 +207,7 @@ class _ContentState extends State<_Content> {
                 .format(laboratory.fechaYHoraDeLaboratorio!)
             : "",
         lines: 1,
+        rightIcon: Icons.calendar_month_outlined,
         width: freeSize ? null : 220,
         height: freeSize ? null : 124,
         inputType: InputType.datetime,
