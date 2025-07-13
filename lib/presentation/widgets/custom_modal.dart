@@ -174,14 +174,24 @@ class CustomModal {
     required BuildContext context,
     required FocusNode focusNode,
     String maxHourAllowed = "",
+    bool setCurrentTime = false,
   }) async {
     final now = DateTime.now();
-    final advHourController =
-        TimeColumnController(initialValue: now.hour, minValue: 0, maxValue: 23);
+    final advHourController = TimeColumnController(
+      initialValue: setCurrentTime ? now.hour : 0,
+      minValue: 0,
+      maxValue: 23,
+    );
     final advMinuteController = TimeColumnController(
-        initialValue: now.minute, minValue: 0, maxValue: 59);
+      initialValue: setCurrentTime ? now.minute : 0,
+      minValue: 0,
+      maxValue: 59,
+    );
     final advSecondController = TimeColumnController(
-        initialValue: now.second, minValue: 0, maxValue: 59);
+      initialValue: setCurrentTime ? now.second : 0,
+      minValue: 0,
+      maxValue: 59,
+    );
 
     final result = await showModalBottomSheet<String>(
       context: context,

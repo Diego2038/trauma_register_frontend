@@ -99,6 +99,7 @@ class _ContentState extends State<_Content> {
   late TextEditingController _fechaYHoraDeNotificacionPreHospitalariaController;
   late TextEditingController _fechaYHoraDeLlegadaALaEscenaController;
   late TextEditingController _fechaYHoraDeSalidaDeLaEscenaController;
+  late TextEditingController _duracionDePerdidaDeConcienciaController;
   late TextEditingController _fechaYHoraDeEnvioDeContraReferenciaController;
   late TextEditingController _fechaDeAltaDeContrarReferenciaController;
   late TextEditingController _fechaDeEnvioDeReferenciaController;
@@ -154,6 +155,9 @@ class _ContentState extends State<_Content> {
             ? DateFormat('dd/MM/yyyy HH:mm:ss')
                 .format(healthcareRecord.fechaYHoraDeSalidaDeLaEscena!)
             : "");
+    _duracionDePerdidaDeConcienciaController = TextEditingController(
+        text:
+            (healthcareRecord.duracionDePerdidaDeConciencia ?? "").toString());
     _fechaYHoraDeEnvioDeContraReferenciaController = TextEditingController(
         text: healthcareRecord.fechaYHoraDeEnvioDeContraReferencia != null
             ? DateFormat('dd/MM/yyyy HH:mm:ss')
@@ -192,6 +196,7 @@ class _ContentState extends State<_Content> {
     _fechaYHoraDeNotificacionPreHospitalariaController.dispose();
     _fechaYHoraDeLlegadaALaEscenaController.dispose();
     _fechaYHoraDeSalidaDeLaEscenaController.dispose();
+    _duracionDePerdidaDeConcienciaController.dispose();
     _fechaYHoraDeEnvioDeContraReferenciaController.dispose();
     _fechaDeAltaDeContrarReferenciaController.dispose();
     _fechaDeEnvioDeReferenciaController.dispose();
@@ -1997,6 +2002,24 @@ class _ContentState extends State<_Content> {
                       duracionDePerdidaDeConciencia: Optional<t.TimeOfDay?>.of(
                           TransformData.getTransformedValue<t.TimeOfDay>(
                               value)))),
+            ),
+          );
+        },
+        controller: _duracionDePerdidaDeConcienciaController,
+        onTap: () async {
+          final String? hour = await CustomModal.determineTimeWithSeconds(
+            context: context,
+            focusNode: FocusNode(),
+          );
+          _duracionDePerdidaDeConcienciaController.text = hour ?? '';
+          final patientData = _getCurrentPatientData(context);
+          traumaDataProvider.updatePatientData(
+            patientData.copyWith(
+              healthcareRecord: Optional<HealthcareRecord?>.of(
+                  patientData.healthcareRecord!.copyWith(
+                      duracionDePerdidaDeConciencia: Optional<t.TimeOfDay?>.of(
+                          TransformData.getTransformedValue<t.TimeOfDay>(
+                              _duracionDePerdidaDeConcienciaController.text)))),
             ),
           );
         },
