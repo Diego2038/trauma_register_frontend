@@ -205,17 +205,21 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                   onPressedAccept: () async {
                                     print(
                                         ">>>>>>>               ${traumaDataProvider.patientData}");
-                                    final bool result = await traumaDataProvider
-                                        .createPatientData(
-                                            traumaDataProvider.patientData!);
+                                    await traumaDataProvider.createPatientData(
+                                        traumaDataProvider.patientData!);
+                                    final response =
+                                        traumaDataProvider.response;
                                     CustomModal.showModal(
                                       context: NavigationService
                                           .navigatorKey.currentContext!,
-                                      title: null,
+                                      title: response.result ?? false
+                                          ? null
+                                          : "Error ${response.code ?? 500}",
                                       showCancelButton: false,
-                                      text: result
+                                      text: response.result ?? false
                                           ? "El usuario se ha creado satisfactoriamente."
-                                          : "El usuario no se pudo crear, por favor inténtelo nuevamente.",
+                                          : response.message ??
+                                              "El usuario no se pudo crear, por favor inténtelo nuevamente.",
                                     );
                                   },
                                 ),
