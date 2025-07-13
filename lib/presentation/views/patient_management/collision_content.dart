@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/content_options.dart';
@@ -12,6 +13,7 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_data_prov
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class CollisionContent extends StatelessWidget {
@@ -19,23 +21,27 @@ class CollisionContent extends StatelessWidget {
     super.key,
     required this.noDataWidget,
     required this.customSize,
-    required this.isCreating,
+    // required this.isCreating,
+    required this.action,
     required this.freeSize,
   });
 
   final NormalText noDataWidget;
   final CustomSize customSize;
-  final bool isCreating;
+  // final bool isCreating;
+  final ActionType action;
   final bool freeSize;
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges =
+        action == ActionType.crear || action == ActionType.actualizar;
     return ExpandableTitleWidget(
       title: "Colisiones",
       index: 3,
       expandedWidget: _getCurrentPatientData(context).collision == null ||
               _getCurrentPatientData(context).collision!.isEmpty
-          ? isCreating
+          ? allowChanges
               ? Center(child: _addNewElement(context))
               : noDataWidget
           : SizedBox(
@@ -54,11 +60,11 @@ class CollisionContent extends StatelessWidget {
                           value: entry.value,
                           keyy: entry.key,
                           customSize: customSize,
-                          isCreating: isCreating,
+                          action: action,
                           freeSize: freeSize,
                         ),
                       ),
-                  if (isCreating) _addNewElement(context),
+                  if (allowChanges) _addNewElement(context),
                 ],
               ),
             ),
@@ -97,14 +103,16 @@ class _Content extends StatefulWidget {
     required this.keyy,
     required this.value,
     required this.customSize,
-    required this.isCreating,
+    // required this.isCreating,
+    required this.action,
     required this.freeSize,
   });
 
   final int keyy;
   final Collision value;
   final CustomSize customSize;
-  final bool isCreating;
+  // final bool isCreating;
+  final ActionType action;
   final bool freeSize;
 
   @override
@@ -114,9 +122,29 @@ class _Content extends StatefulWidget {
 class _ContentState extends State<_Content> {
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges = widget.action == ActionType.crear ||
+        widget.action == ActionType.actualizar;
     return CustomContainer(
-      showDeleteButton: widget.isCreating,
-      onDelete: () {
+      showDeleteButton: allowChanges,
+      onDelete: () async {
+        if (widget.action == ActionType.actualizar) {
+          final deleteElement = await CustomModal.showModal(
+            context: context,
+            title: null,
+            text: "¿Está seguro que desea eliminar el elemento?",
+          );
+          if (!deleteElement) return;
+          final result = await _getCurrentProvider(context).deleteCollisionById(
+              _getCurrentPatientData(context)
+                  .collision![widget.keyy]
+                  .id
+                  .toString());
+          CustomModal.showModal(
+            context: context,
+            title: null,
+            text: result.message!,
+          );
+        }
         _getCurrentProvider(context).updatePatientData(
           _getCurrentPatientData(context).copyWith(
             collision: _getCurrentPatientData(context)
@@ -135,7 +163,7 @@ class _ContentState extends State<_Content> {
         collision: widget.value,
         index: widget.keyy,
         customSize: widget.customSize,
-        isCreating: widget.isCreating,
+        isCreating: allowChanges,
         freeSize: widget.freeSize,
       ),
     );

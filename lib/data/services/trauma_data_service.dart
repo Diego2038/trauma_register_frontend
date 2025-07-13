@@ -68,6 +68,64 @@ class TraumaDataService {
     }
   }
 
+  Future<CustomHttpStatusResponse> deleteInjuryRecordById(String id) async {
+    try {
+      final String? token = LocalStorage.prefs.getString('token');
+      final response = await EndpointHelper.deleteRequest(
+        path: "/medical_records/injury-record/$id/",
+        token: token,
+      );
+      if ((response.statusCode ?? 400) >= 400) {
+        return CustomHttpStatusResponse(
+          code: response.statusCode,
+          result: false,
+          message: _convertMessage(_getFirstString(response.data)),
+        );
+      }
+      return CustomHttpStatusResponse(
+        code: response.statusCode,
+        result: true,
+        message: "Elemento eliminado con éxito",
+      );
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_service.dart', stack: s);
+      return CustomHttpStatusResponse(
+        result: false,
+        message: e.toString(),
+      );
+    }
+  }
+
+  Future<CustomHttpStatusResponse> deleteCollisionById(String id) async {
+    try {
+      final String? token = LocalStorage.prefs.getString('token');
+      final response = await EndpointHelper.deleteRequest(
+        path: "/medical_records/collision/$id/",
+        token: token,
+      );
+      if ((response.statusCode ?? 400) >= 400) {
+        return CustomHttpStatusResponse(
+          code: response.statusCode,
+          result: false,
+          message: _convertMessage(_getFirstString(response.data)),
+        );
+      }
+      return CustomHttpStatusResponse(
+        code: response.statusCode,
+        result: true,
+        message: "Elemento eliminado con éxito",
+      );
+    } catch (e, s) {
+      PrintError.makePrint(
+          e: e, ubication: 'trauma_data_service.dart', stack: s);
+      return CustomHttpStatusResponse(
+        result: false,
+        message: e.toString(),
+      );
+    }
+  }
+
   String? _convertMessage(String? value) {
     switch (value) {
       case "patient data with this trauma register record id already exists.":

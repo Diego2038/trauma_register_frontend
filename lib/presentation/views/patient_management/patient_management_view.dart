@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
@@ -28,7 +29,6 @@ class _PatientManagementViewState extends State<PatientManagementView> {
   bool isMounted = false;
   bool isCreating = false;
   bool freeSize = false;
-  String query = "Buscar";
 
   @override
   void didChangeDependencies() {
@@ -68,22 +68,25 @@ class _PatientManagementViewState extends State<PatientManagementView> {
       }
     });
 
-    final PatientData? patientData =
-        Provider.of<TraumaDataProvider>(context, listen: true).patientData;
+    final TraumaDataProvider traumaDataProvider =
+        Provider.of<TraumaDataProvider>(context, listen: true);
+    final PatientData? patientData = traumaDataProvider.patientData;
+    final ActionType query = traumaDataProvider.action;
 
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _customSearchBox(),
+          _customSearchBox(query: query),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 50,
               vertical: 40,
             ),
-            child: query == 'Crear'
+            child: query == ActionType.crear
                 ? _ContentDataPatient(
                     isCreating: isCreating,
+                    action: query,
                     freeSize: freeSize,
                     customSize: CustomSize.h5,
                     isCreatingPatientData: true,
@@ -124,6 +127,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                       if (patientData != null && startSearch && !isLoading)
                         _ContentDataPatient(
                           isCreating: isCreating,
+                          action: query,
                           freeSize: freeSize,
                           customSize: CustomSize.h5,
                           isCreatingPatientData: false,
@@ -136,7 +140,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
     );
   }
 
-  Center _customSearchBox() {
+  Center _customSearchBox({required ActionType query}) {
     return Center(
       child: Container(
         // height: 140,
@@ -167,7 +171,8 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (query == 'Buscar')
+                        if (query == ActionType.buscar ||
+                            query == ActionType.actualizar)
                           CustomInputWithLabel(
                             size: CustomSize.h2,
                             width: 400,
@@ -267,7 +272,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                 Consumer<TraumaDataProvider>(
                                   builder: (context, traumaDataProvider,
                                           child) =>
-                                      (query == "Buscar" &&
+                                      (query == ActionType.actualizar &&
                                               traumaDataProvider.patientData !=
                                                   null)
                                           ? IconButton(
@@ -320,24 +325,48 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                         size: CustomSize.h5,
                         title: "Selecciona la opción",
                         hintText: "Crear",
-                        selectedValue: query,
+                        // selectedValue: query,
+                        selectedValue: "Buscar",
                         width: 190,
                         items: const [
-                          "Crear",
+                          "Actualizar",
                           "Buscar",
+                          "Crear",
                         ],
                         onItemSelected: (String? value) {
-                          if (query == value) return;
-                          isCreating = value == 'Crear';
-                          Provider.of<TraumaDataProvider>(context,
-                                  listen: false)
-                              .updatePatientData(
-                                  isCreating ? PatientData() : null);
-                          if (!isCreating) {
+                          if (query == _convertToActionType(value)) return;
+                          isCreating =
+                              _convertToActionType(value) == ActionType.crear;
+                          bool isPassingFromCreatingToOtherAction =
+                              !((value == 'Buscar' &&
+                                      query == ActionType.actualizar) ||
+                                  (value == 'Actualizar' &&
+                                      query == ActionType.buscar));
+                          if (isPassingFromCreatingToOtherAction) {
+                            Provider.of<TraumaDataProvider>(context,
+                                    listen: false)
+                                .updatePatientData(
+                                    isCreating ? PatientData() : null);
                             startSearch = false;
+                          }
+                          if (!isCreating) {
+                            // startSearch = false;
                             isLoading = false;
                           }
-                          setState(() => query = value!);
+                          ActionType actionSelected;
+                          switch (value) {
+                            case "Actualizar":
+                              actionSelected = ActionType.actualizar;
+                              break;
+                            case "Crear":
+                              actionSelected = ActionType.crear;
+                              break;
+                            default:
+                              actionSelected = ActionType.buscar;
+                          }
+                          Provider.of<TraumaDataProvider>(context,
+                                  listen: false)
+                              .updateAction(actionSelected);
                         },
                       ),
                     ),
@@ -360,6 +389,21 @@ class _PatientManagementViewState extends State<PatientManagementView> {
         .updatePatientData(await traumaDataProvider.getPatientDataById(id));
     setState(() => isLoading = false);
   }
+
+  ActionType _convertToActionType(String? actionType) {
+    ActionType actionSelected;
+    switch (actionType) {
+      case "Actualizar":
+        actionSelected = ActionType.actualizar;
+        break;
+      case "Crear":
+        actionSelected = ActionType.crear;
+        break;
+      default:
+        actionSelected = ActionType.buscar;
+    }
+    return actionSelected;
+  }
 }
 
 class _ContentDataPatient extends StatelessWidget {
@@ -367,12 +411,14 @@ class _ContentDataPatient extends StatelessWidget {
   final bool isCreating;
   final bool freeSize;
   final bool isCreatingPatientData;
+  final ActionType action;
 
   const _ContentDataPatient({
     required this.customSize,
     required this.isCreating,
     required this.freeSize,
     required this.isCreatingPatientData,
+    required this.action,
   });
 
   @override
@@ -401,14 +447,16 @@ class _ContentDataPatient extends StatelessWidget {
         InjuryRecordContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          // isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         CollisionContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          // isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),

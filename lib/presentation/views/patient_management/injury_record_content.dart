@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/content_options.dart';
@@ -21,22 +22,26 @@ class InjuryRecordContent extends StatelessWidget {
     super.key,
     required this.noDataWidget,
     required this.customSize,
-    required this.isCreating,
+    // required this.isCreating,
     required this.freeSize,
+    required this.action,
   });
 
   final NormalText noDataWidget;
   final CustomSize customSize;
-  final bool isCreating;
+  // final bool isCreating;
   final bool freeSize;
+  final ActionType action;
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges =
+        action == ActionType.crear || action == ActionType.actualizar;
     return ExpandableTitleWidget(
       title: "Registro de lesión",
       index: 2,
       expandedWidget: _getCurrentPatientData(context).injuryRecord == null
-          ? isCreating
+          ? allowChanges
               ? Center(
                   child: CustomIconButton(
                     onPressed: () {
@@ -56,8 +61,9 @@ class InjuryRecordContent extends StatelessWidget {
               : noDataWidget
           : _Content(
               customSize: customSize,
-              isCreating: isCreating,
+              // isCreating: isCreating,
               freeSize: freeSize,
+              action: action,
             ),
     );
   }
@@ -74,13 +80,15 @@ class InjuryRecordContent extends StatelessWidget {
 class _Content extends StatefulWidget {
   const _Content({
     required this.customSize,
-    required this.isCreating,
+    // required this.isCreating,
     required this.freeSize,
+    required this.action,
   });
 
   final CustomSize customSize;
-  final bool isCreating;
+  // final bool isCreating;
   final bool freeSize;
+  final ActionType action;
 
   @override
   State<_Content> createState() => _ContentState();
@@ -108,9 +116,28 @@ class _ContentState extends State<_Content> {
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges = widget.action == ActionType.crear ||
+        widget.action == ActionType.actualizar;
     return CustomContainer(
-      showDeleteButton: widget.isCreating,
-      onDelete: () {
+      // showDeleteButton: widget.isCreating,
+      showDeleteButton: allowChanges,
+      onDelete: () async {
+        if (widget.action == ActionType.actualizar) {
+          final deleteElement = await CustomModal.showModal(
+            context: context,
+            title: null,
+            text: "¿Está seguro que desea eliminar el elemento?",
+          );
+          if (!deleteElement) return;
+          final result = await _getCurrentProvider(context)
+              .deleteInjuryRecordById(
+                  _getCurrentPatientData(context).traumaRegisterRecordId.toString());
+          CustomModal.showModal(
+            context: context,
+            title: null,
+            text: result.message!,
+          );
+        }
         _getCurrentProvider(context).updatePatientData(
           _getCurrentPatientData(context).copyWith(
             injuryRecord: const Optional<InjuryRecord?>.of(null),
@@ -121,7 +148,7 @@ class _ContentState extends State<_Content> {
       children: injuryRecordContent(
         context: context,
         customSize: widget.customSize,
-        isCreating: widget.isCreating,
+        isCreating: allowChanges,
         freeSize: widget.freeSize,
       ),
     );
@@ -401,7 +428,8 @@ class _ContentState extends State<_Content> {
               injuryRecord: Optional<InjuryRecord?>.of(patientData.injuryRecord!
                   .copyWith(
                       fechaYHoraDelEvento: Optional<DateTime?>.of(
-                          TransformData.getTransformedValue<DateTime>(_fechaYHoraDelEventoController.text)))),
+                          TransformData.getTransformedValue<DateTime>(
+                              _fechaYHoraDelEventoController.text)))),
             ),
           );
         },

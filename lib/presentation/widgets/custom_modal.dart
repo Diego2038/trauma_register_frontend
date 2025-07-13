@@ -4,7 +4,7 @@ import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 
 class CustomModal {
-  static Future<void> showModal({
+  static Future<bool> showModal({
     required BuildContext context,
     required String? title,
     required String text,
@@ -16,7 +16,7 @@ class CustomModal {
     Future<void> Function()? onPressedAccept,
   }) async {
     if (minWidth > 680) throw Exception('minWidth cannot be greater than 680');
-    return showDialog(
+    final bool? result = await showDialog(
       context: context,
       barrierColor: Colors.transparent,
       builder: (context) => Dialog(
@@ -75,7 +75,7 @@ class CustomModal {
                   if (showCancelButton)
                     InkWell(
                       onTap: () async {
-                        Navigator.of(context.mounted ? context : context).pop();
+                        Navigator.of(context.mounted ? context : context).pop(false);
                         if (onPressedCancel != null) await onPressedCancel();
                       },
                       child: _customButton(isAcceptButton: false),
@@ -83,7 +83,7 @@ class CustomModal {
                   if (showAcceptButton)
                     InkWell(
                       onTap: () async {
-                        Navigator.of(context.mounted ? context : context).pop();
+                        Navigator.of(context.mounted ? context : context).pop(true);
                         if (onPressedAccept != null) await onPressedAccept();
                       },
                       child: _customButton(isAcceptButton: true),
@@ -95,6 +95,7 @@ class CustomModal {
         ),
       ),
     );
+    return result ?? false;
   }
 
   static Future<DateTime?> determineDate({
