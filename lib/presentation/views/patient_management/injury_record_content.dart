@@ -144,7 +144,8 @@ class _ContentState extends State<_Content> {
       },
       showDeleteButton: allowChanges,
       onDelete: () async {
-        if (widget.action == ActionType.actualizar) {
+        final element = _getCurrentPatientData(context).injuryRecord!;
+        if (widget.action == ActionType.actualizar && element.id != null) {
           final deleteElement = await CustomModal.showModal(
             context: context,
             title: null,
