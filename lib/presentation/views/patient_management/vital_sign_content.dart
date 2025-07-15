@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/content_options.dart';
@@ -24,23 +25,25 @@ class VitalSignContent extends StatelessWidget {
     super.key,
     required this.noDataWidget,
     required this.customSize,
-    required this.isCreating,
+    required this.action,
     required this.freeSize,
   });
 
   final NormalText noDataWidget;
   final CustomSize customSize;
-  final bool isCreating;
+  final ActionType action;
   final bool freeSize;
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges =
+        action == ActionType.crear || action == ActionType.actualizar;
     return ExpandableTitleWidget(
       title: "Signos vitales",
       index: 23,
       expandedWidget: _getCurrentPatientData(context).vitalSign == null ||
               _getCurrentPatientData(context).vitalSign!.isEmpty
-          ? isCreating
+          ? allowChanges
               ? Center(child: _addNewElement(context))
               : noDataWidget
           : SizedBox(
@@ -59,11 +62,11 @@ class VitalSignContent extends StatelessWidget {
                           keyy: entry.key,
                           value: entry.value,
                           customSize: customSize,
-                          isCreating: isCreating,
+                          action: action,
                           freeSize: freeSize,
                         ),
                       ),
-                  if (isCreating) _addNewElement(context),
+                  if (allowChanges) _addNewElement(context),
                 ],
               ),
             ),
@@ -102,14 +105,14 @@ class _Content extends StatefulWidget {
     required this.keyy,
     required this.value,
     required this.customSize,
-    required this.isCreating,
+    required this.action,
     required this.freeSize,
   });
 
   final int keyy;
   final VitalSign value;
   final CustomSize customSize;
-  final bool isCreating;
+  final ActionType action;
   final bool freeSize;
 
   @override
@@ -141,10 +144,55 @@ class _ContentState extends State<_Content> {
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges = widget.action == ActionType.crear ||
+        widget.action == ActionType.actualizar;
     return CustomContainer(
       maxWidth: 600,
-      showDeleteButton: widget.isCreating,
-      onDelete: () {
+      showUpdateButton: widget.action == ActionType.actualizar,
+      onUpdate: () async {
+        final bool isANewElement = widget.value.recordId == null;
+        final bool confirmFlow = await CustomModal.showModal(
+          context: context,
+          title: null,
+          text: isANewElement
+              ? "¿Desea crear el nuevo elemento?"
+              : "¿Desea confirmar la actualización?",
+        );
+        if (!confirmFlow) return;
+        final element = _getCurrentPatientData(context).vitalSign![widget.keyy];
+        final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
+        final result = await (isANewElement
+            ? _getCurrentProvider(context).createVitalSign(element, id)
+            : _getCurrentProvider(context).updateVitalSign(element));
+        CustomModal.showModal(
+          context: context,
+          title: null,
+          text: result.message!,
+          showCancelButton: false,
+        );
+      },
+      showDeleteButton: allowChanges,
+      onDelete: () async {
+        if (widget.action == ActionType.actualizar &&
+            widget.value.recordId != null) {
+          final deleteElement = await CustomModal.showModal(
+            context: context,
+            title: null,
+            text: "¿Está seguro que desea eliminar el elemento?",
+          );
+          if (!deleteElement) return;
+          final result = await _getCurrentProvider(context).deleteVitalSignById(
+              _getCurrentPatientData(context)
+                  .vitalSign![widget.keyy]
+                  .recordId
+                  .toString());
+          CustomModal.showModal(
+            context: context,
+            title: null,
+            text: result.message!,
+            showCancelButton: false,
+          );
+        }
         _getCurrentProvider(context).updatePatientData(
           _getCurrentPatientData(context).copyWith(
             vitalSign: _getCurrentPatientData(context)
@@ -163,7 +211,7 @@ class _ContentState extends State<_Content> {
         index: widget.keyy,
         vitalSign: widget.value,
         customSize: widget.customSize,
-        isCreating: widget.isCreating,
+        isCreating: allowChanges,
         freeSize: widget.freeSize,
       ),
     );

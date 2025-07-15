@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/content_options.dart';
@@ -18,14 +19,14 @@ class PatientDataContent extends StatelessWidget {
     super.key,
     required this.customSize,
     required this.traumaDataProvider,
-    required this.isCreating,
+    required this.action,
     required this.isCreatingPatientData,
     required this.freeSize,
   });
 
   final CustomSize customSize;
   final TraumaDataProvider traumaDataProvider;
-  final bool isCreating;
+  final ActionType action;
   final bool isCreatingPatientData;
   final bool freeSize;
 
@@ -37,7 +38,7 @@ class PatientDataContent extends StatelessWidget {
       expandedWidget: _Content(
         customSize: customSize,
         traumaDataProvider: traumaDataProvider,
-        isCreating: isCreating,
+        action: action,
         isCreatingPatientData: isCreatingPatientData,
         freeSize: freeSize,
       ),
@@ -49,14 +50,14 @@ class _Content extends StatefulWidget {
   const _Content({
     required this.customSize,
     required this.traumaDataProvider,
-    required this.isCreating,
+    required this.action,
     required this.isCreatingPatientData,
     required this.freeSize,
   });
 
   final CustomSize customSize;
   final TraumaDataProvider traumaDataProvider;
-  final bool isCreating;
+  final ActionType action;
   final bool isCreatingPatientData;
   final bool freeSize;
 
@@ -91,11 +92,30 @@ class _ContentState extends State<_Content> {
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges = widget.action == ActionType.crear ||
+        widget.action == ActionType.actualizar;
     return CustomContainer(
+      showUpdateButton: widget.action == ActionType.actualizar,
+      onUpdate: () async {
+        final element = _getCurrentPatientData(context);
+        final bool confirmFlow = await CustomModal.showModal(
+          context: context,
+          title: null,
+          text: "¿Desea confirmar la actualización?",
+        );
+        if (!confirmFlow) return;
+        final result = await _getCurrentProvider(context).updatePatientDataElement(element);
+        CustomModal.showModal(
+          context: context,
+          title: null,
+          text: result.message!,
+          showCancelButton: false,
+        );
+      },
       children: patientDataContent(
         customSize: widget.customSize,
         patientData: widget.traumaDataProvider.patientData!,
-        isCreating: widget.isCreating,
+        isCreating: allowChanges,
         isCreatingPatientData: widget.isCreatingPatientData,
         traumaDataProvider: widget.traumaDataProvider,
         freeSize: widget.freeSize,
@@ -465,5 +485,9 @@ class _ContentState extends State<_Content> {
 
   PatientData _getCurrentPatientData(BuildContext context) {
     return Provider.of<TraumaDataProvider>(context, listen: false).patientData!;
+  }
+
+  TraumaDataProvider _getCurrentProvider(BuildContext context) {
+    return Provider.of<TraumaDataProvider>(context, listen: false);
   }
 }

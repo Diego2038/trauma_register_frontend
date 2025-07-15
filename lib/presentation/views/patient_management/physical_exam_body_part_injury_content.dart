@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/content_options.dart';
@@ -12,24 +13,27 @@ import 'package:trauma_register_frontend/presentation/providers/trauma_data_prov
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/expandable_title_widget.dart';
 
 class PhysicalExamBodyPartInjuryContent extends StatelessWidget {
   const PhysicalExamBodyPartInjuryContent({
     super.key,
     required this.noDataWidget,
-    required this.isCreating,
+    required this.action,
     required this.freeSize,
     required this.customSize,
   });
 
   final NormalText noDataWidget;
-  final bool isCreating;
+  final ActionType action;
   final bool freeSize;
   final CustomSize customSize;
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges =
+        action == ActionType.crear || action == ActionType.actualizar;
     return ExpandableTitleWidget(
       title: "Exámenes físicos producto por lesión de partes del cuerpo",
       index: 19,
@@ -38,7 +42,7 @@ class PhysicalExamBodyPartInjuryContent extends StatelessWidget {
                   _getCurrentPatientData(context)
                       .physicalExamBodyPartInjury!
                       .isEmpty
-              ? isCreating
+              ? allowChanges
                   ? Center(child: _addNewElement(context))
                   : noDataWidget
               : SizedBox(
@@ -56,12 +60,12 @@ class PhysicalExamBodyPartInjuryContent extends StatelessWidget {
                             (entry) => _Content(
                               keyy: entry.key,
                               value: entry.value,
-                              isCreating: isCreating,
+                              action: action,
                               freeSize: freeSize,
                               customSize: customSize,
                             ),
                           ),
-                      if (isCreating) _addNewElement(context),
+                      if (allowChanges) _addNewElement(context),
                     ],
                   ),
                 ),
@@ -99,14 +103,14 @@ class _Content extends StatefulWidget {
   const _Content({
     required this.keyy,
     required this.value,
-    required this.isCreating,
+    required this.action,
     required this.freeSize,
     required this.customSize,
   });
 
   final int keyy;
   final PhysicalExamBodyPartInjury value;
-  final bool isCreating;
+  final ActionType action;
   final bool freeSize;
   final CustomSize customSize;
 
@@ -117,10 +121,58 @@ class _Content extends StatefulWidget {
 class _ContentState extends State<_Content> {
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges = widget.action == ActionType.crear ||
+        widget.action == ActionType.actualizar;
     return CustomContainer(
       maxWidth: 600,
-      showDeleteButton: widget.isCreating,
-      onDelete: () {
+      showUpdateButton: widget.action == ActionType.actualizar,
+      onUpdate: () async {
+        final bool isANewElement = widget.value.id == null;
+        final bool confirmFlow = await CustomModal.showModal(
+          context: context,
+          title: null,
+          text: isANewElement
+              ? "¿Desea crear el nuevo elemento?"
+              : "¿Desea confirmar la actualización?",
+        );
+        if (!confirmFlow) return;
+        final element = _getCurrentPatientData(context)
+            .physicalExamBodyPartInjury![widget.keyy];
+        final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
+        final result = await (isANewElement
+            ? _getCurrentProvider(context)
+                .createPhysicalExamBodyPartInjury(element, id)
+            : _getCurrentProvider(context)
+                .updatePhysicalExamBodyPartInjury(element));
+        CustomModal.showModal(
+          context: context,
+          title: null,
+          text: result.message!,
+          showCancelButton: false,
+        );
+      },
+      showDeleteButton: allowChanges,
+      onDelete: () async {
+        if (widget.action == ActionType.actualizar && widget.value.id != null) {
+          final deleteElement = await CustomModal.showModal(
+            context: context,
+            title: null,
+            text: "¿Está seguro que desea eliminar el elemento?",
+          );
+          if (!deleteElement) return;
+          final result = await _getCurrentProvider(context)
+              .deletePhysicalExamBodyPartInjuryById(
+                  _getCurrentPatientData(context)
+                      .physicalExamBodyPartInjury![widget.keyy]
+                      .id
+                      .toString());
+          CustomModal.showModal(
+            context: context,
+            title: null,
+            text: result.message!,
+            showCancelButton: false,
+          );
+        }
         _getCurrentProvider(context).updatePatientData(
           _getCurrentPatientData(context).copyWith(
             physicalExamBodyPartInjury: _getCurrentPatientData(context)
@@ -138,7 +190,7 @@ class _ContentState extends State<_Content> {
         context: context,
         index: widget.keyy,
         physicalExamBodyPartInjury: widget.value,
-        isCreating: widget.isCreating,
+        isCreating: allowChanges,
         freeSize: widget.freeSize,
         customSize: widget.customSize,
       ),

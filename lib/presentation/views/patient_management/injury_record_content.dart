@@ -22,14 +22,12 @@ class InjuryRecordContent extends StatelessWidget {
     super.key,
     required this.noDataWidget,
     required this.customSize,
-    // required this.isCreating,
     required this.freeSize,
     required this.action,
   });
 
   final NormalText noDataWidget;
   final CustomSize customSize;
-  // final bool isCreating;
   final bool freeSize;
   final ActionType action;
 
@@ -61,7 +59,6 @@ class InjuryRecordContent extends StatelessWidget {
               : noDataWidget
           : _Content(
               customSize: customSize,
-              // isCreating: isCreating,
               freeSize: freeSize,
               action: action,
             ),
@@ -80,13 +77,11 @@ class InjuryRecordContent extends StatelessWidget {
 class _Content extends StatefulWidget {
   const _Content({
     required this.customSize,
-    // required this.isCreating,
     required this.freeSize,
     required this.action,
   });
 
   final CustomSize customSize;
-  // final bool isCreating;
   final bool freeSize;
   final ActionType action;
 

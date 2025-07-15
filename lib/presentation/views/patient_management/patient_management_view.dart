@@ -85,7 +85,6 @@ class _PatientManagementViewState extends State<PatientManagementView> {
             ),
             child: query == ActionType.crear
                 ? _ContentDataPatient(
-                    isCreating: isCreating,
                     action: query,
                     freeSize: freeSize,
                     customSize: CustomSize.h5,
@@ -126,7 +125,6 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                         ),
                       if (patientData != null && startSearch && !isLoading)
                         _ContentDataPatient(
-                          isCreating: isCreating,
                           action: query,
                           freeSize: freeSize,
                           customSize: CustomSize.h5,
@@ -411,14 +409,12 @@ class _PatientManagementViewState extends State<PatientManagementView> {
 
 class _ContentDataPatient extends StatelessWidget {
   final CustomSize customSize;
-  final bool isCreating;
   final bool freeSize;
   final bool isCreatingPatientData;
   final ActionType action;
 
   const _ContentDataPatient({
     required this.customSize,
-    required this.isCreating,
     required this.freeSize,
     required this.isCreatingPatientData,
     required this.action,
@@ -435,7 +431,7 @@ class _ContentDataPatient extends StatelessWidget {
         PatientDataContent(
           traumaDataProvider: traumaProvider,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           isCreatingPatientData: isCreatingPatientData,
           freeSize: freeSize,
         ),
@@ -450,7 +446,6 @@ class _ContentDataPatient extends StatelessWidget {
         InjuryRecordContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          // isCreating: isCreating,
           action: action,
           freeSize: freeSize,
         ),
@@ -458,7 +453,6 @@ class _ContentDataPatient extends StatelessWidget {
         CollisionContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          // isCreating: isCreating,
           action: action,
           freeSize: freeSize,
         ),
@@ -466,27 +460,27 @@ class _ContentDataPatient extends StatelessWidget {
         DrugAbuseContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         VitalSignGcsQualifierContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         HospitalizationVariableContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         HospitalizationComplicationContent(
           noDataWidget: noDataWidget,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
           customSize: customSize,
         ),
@@ -494,83 +488,83 @@ class _ContentDataPatient extends StatelessWidget {
         TraumaRegisterIcd10Content(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         IntensiveCareUnitContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         ImagingContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         ApparentIntentInjuryContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         BurnInjuryContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         FirearmInjuryContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         PenetratingInjuryContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         PoisoningInjuryContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         ViolenceInjuryContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         DeviceContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         LaboratoryContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         PhysicalExamBodyPartInjuryContent(
           noDataWidget: noDataWidget,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
           customSize: customSize,
         ),
@@ -578,28 +572,28 @@ class _ContentDataPatient extends StatelessWidget {
         ProcedureContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         PrehospitalProcedureContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         TransportationModeContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
         const SizedBox(height: 10),
         VitalSignContent(
           noDataWidget: noDataWidget,
           customSize: customSize,
-          isCreating: isCreating,
+          action: action,
           freeSize: freeSize,
         ),
       ],

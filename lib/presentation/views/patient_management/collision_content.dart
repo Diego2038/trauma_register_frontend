@@ -21,14 +21,12 @@ class CollisionContent extends StatelessWidget {
     super.key,
     required this.noDataWidget,
     required this.customSize,
-    // required this.isCreating,
     required this.action,
     required this.freeSize,
   });
 
   final NormalText noDataWidget;
   final CustomSize customSize;
-  // final bool isCreating;
   final ActionType action;
   final bool freeSize;
 
@@ -103,7 +101,6 @@ class _Content extends StatefulWidget {
     required this.keyy,
     required this.value,
     required this.customSize,
-    // required this.isCreating,
     required this.action,
     required this.freeSize,
   });
@@ -111,7 +108,6 @@ class _Content extends StatefulWidget {
   final int keyy;
   final Collision value;
   final CustomSize customSize;
-  // final bool isCreating;
   final ActionType action;
   final bool freeSize;
 

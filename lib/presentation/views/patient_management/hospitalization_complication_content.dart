@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/enums/input_type.dart';
 import 'package:trauma_register_frontend/core/helpers/content_options.dart';
@@ -20,18 +21,20 @@ class HospitalizationComplicationContent extends StatelessWidget {
   const HospitalizationComplicationContent({
     super.key,
     required this.noDataWidget,
-    required this.isCreating,
-    required this.freeSize,
     required this.customSize,
+    required this.action,
+    required this.freeSize,
   });
 
   final NormalText noDataWidget;
-  final bool isCreating;
-  final bool freeSize;
   final CustomSize customSize;
+  final ActionType action;
+  final bool freeSize;
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges =
+        action == ActionType.crear || action == ActionType.actualizar;
     return ExpandableTitleWidget(
       title: "Complicaciones de hospitalización",
       index: 7,
@@ -40,7 +43,7 @@ class HospitalizationComplicationContent extends StatelessWidget {
                   _getCurrentPatientData(context)
                       .hospitalizationComplication!
                       .isEmpty
-              ? isCreating
+              ? allowChanges
                   ? Center(child: _addNewElement(context))
                   : noDataWidget
               : SizedBox(
@@ -58,12 +61,12 @@ class HospitalizationComplicationContent extends StatelessWidget {
                             (entry) => _Content(
                               keyy: entry.key,
                               value: entry.value,
-                              isCreating: isCreating,
-                              freeSize: freeSize,
                               customSize: customSize,
+                              action: action,
+                              freeSize: freeSize,
                             ),
                           ),
-                      if (isCreating) _addNewElement(context),
+                      if (allowChanges) _addNewElement(context),
                     ],
                   ),
                 ),
@@ -101,14 +104,14 @@ class _Content extends StatefulWidget {
   const _Content({
     required this.keyy,
     required this.value,
-    required this.isCreating,
+    required this.action,
     required this.freeSize,
     required this.customSize,
   });
 
   final int keyy;
   final HospitalizationComplication value;
-  final bool isCreating;
+  final ActionType action;
   final bool freeSize;
   final CustomSize customSize;
 
@@ -137,10 +140,58 @@ class _ContentState extends State<_Content> {
 
   @override
   Widget build(BuildContext context) {
+    final bool allowChanges = widget.action == ActionType.crear ||
+        widget.action == ActionType.actualizar;
     return CustomContainer(
       maxWidth: 600,
-      showDeleteButton: widget.isCreating,
-      onDelete: () {
+      showUpdateButton: widget.action == ActionType.actualizar,
+      onUpdate: () async {
+        final bool isANewElement = widget.value.id == null;
+        final bool confirmFlow = await CustomModal.showModal(
+          context: context,
+          title: null,
+          text: isANewElement
+              ? "¿Desea crear el nuevo elemento?"
+              : "¿Desea confirmar la actualización?",
+        );
+        if (!confirmFlow) return;
+        final element = _getCurrentPatientData(context)
+            .hospitalizationComplication![widget.keyy];
+        final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
+        final result = await (isANewElement
+            ? _getCurrentProvider(context)
+                .createHospitalizationComplication(element, id)
+            : _getCurrentProvider(context)
+                .updateHospitalizationComplication(element));
+        CustomModal.showModal(
+          context: context,
+          title: null,
+          text: result.message!,
+          showCancelButton: false,
+        );
+      },
+      showDeleteButton: allowChanges,
+      onDelete: () async {
+        if (widget.action == ActionType.actualizar && widget.value.id != null) {
+          final deleteElement = await CustomModal.showModal(
+            context: context,
+            title: null,
+            text: "¿Está seguro que desea eliminar el elemento?",
+          );
+          if (!deleteElement) return;
+          final result = await _getCurrentProvider(context)
+              .deleteHospitalizationComplicationById(
+                  _getCurrentPatientData(context)
+                      .hospitalizationComplication![widget.keyy]
+                      .id
+                      .toString());
+          CustomModal.showModal(
+            context: context,
+            title: null,
+            text: result.message!,
+            showCancelButton: false,
+          );
+        }
         _getCurrentProvider(context).updatePatientData(
           _getCurrentPatientData(context).copyWith(
             hospitalizationComplication: _getCurrentPatientData(context)
@@ -158,7 +209,7 @@ class _ContentState extends State<_Content> {
         context: context,
         index: widget.keyy,
         hospitalizationComplication: widget.value,
-        isCreating: widget.isCreating,
+        isCreating: allowChanges,
         freeSize: widget.freeSize,
         customSize: widget.customSize,
       ),
