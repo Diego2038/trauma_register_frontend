@@ -226,10 +226,11 @@ class _ContentState extends State<_Content> {
     required bool freeSize,
   }) {
     final traumaDataProvider = _getCurrentProvider(context);
+    final bool isACreatedElement = _getCurrentPatientData(context).vitalSign?[index].recordId != null; 
     return [
       CustomInputWithLabel(
         size: customSize,
-        readOnly: !isCreating,
+        readOnly: isACreatedElement,
         title: "ID del registro",
         hintText: "No registra",
         text: vitalSign.recordId != null
