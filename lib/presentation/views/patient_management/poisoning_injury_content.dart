@@ -124,7 +124,9 @@ class _ContentState extends State<_Content> {
       maxWidth: 600,
       showUpdateButton: widget.action == ActionType.actualizar,
       onUpdate: () async {
-        final bool isANewElement = widget.value.id == null;
+        final bool isANewElement =
+            _getCurrentPatientData(context).poisoningInjury![widget.keyy].id ==
+                null;
         final bool confirmFlow = await CustomModal.showModal(
           context: context,
           title: null,
@@ -139,6 +141,13 @@ class _ContentState extends State<_Content> {
         final result = await (isANewElement
             ? _getCurrentProvider(context).createPoisoningInjury(element, id)
             : _getCurrentProvider(context).updatePoisoningInjury(element));
+        if (isANewElement) {
+          _updateElements(
+            context: context,
+            id: result.idElement,
+            index: widget.keyy,
+          );
+        }
         CustomModal.showModal(
           context: context,
           title: null,
@@ -148,7 +157,10 @@ class _ContentState extends State<_Content> {
       },
       showDeleteButton: allowChanges,
       onDelete: () async {
-        if (widget.action == ActionType.actualizar && widget.value.id != null) {
+        final bool isANewElement =
+            _getCurrentPatientData(context).poisoningInjury![widget.keyy].id ==
+                null;
+        if (widget.action == ActionType.actualizar && !isANewElement) {
           final deleteElement = await CustomModal.showModal(
             context: context,
             title: null,
@@ -235,5 +247,20 @@ class _ContentState extends State<_Content> {
 
   TraumaDataProvider _getCurrentProvider(BuildContext context) {
     return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+
+  void _updateElements({
+    required BuildContext context,
+    required int? id,
+    required int index,
+  }) {
+    final traumaDataProvider = _getCurrentProvider(context);
+    final patientData = _getCurrentPatientData(context);
+    final elements = patientData.poisoningInjury;
+    if (elements == null) return;
+    elements[index] = elements[index].copyWith(id: id);
+    traumaDataProvider.updatePatientData(patientData.copyWith(
+      poisoningInjury: elements,
+    ));
   }
 }

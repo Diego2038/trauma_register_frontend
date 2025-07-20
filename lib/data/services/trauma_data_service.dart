@@ -331,10 +331,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -425,10 +427,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -519,10 +523,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -615,10 +621,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -711,10 +719,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -807,10 +817,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -903,10 +915,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -999,10 +1013,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1093,10 +1109,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1189,10 +1207,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1283,10 +1303,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1378,10 +1400,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1474,10 +1498,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1569,10 +1595,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1664,10 +1692,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1758,10 +1788,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1852,10 +1884,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -1948,10 +1982,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -2042,10 +2078,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -2138,10 +2176,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -2227,6 +2267,7 @@ class TraumaDataService {
           ...element.toJson(),
         },
       );
+      final int? id = response.data["record_id"];
       if ((response.statusCode ?? 400) >= 400) {
         return CustomHttpStatusResponse(
           code: response.statusCode,
@@ -2238,6 +2279,7 @@ class TraumaDataService {
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
