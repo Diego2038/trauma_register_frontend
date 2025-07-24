@@ -54,7 +54,7 @@ class TraumaDataService {
         path:
             "/medical_records/patient-data/${element.traumaRegisterRecordId}/",
         token: token,
-        data: element.toJson(),
+        data: patientDataJson,
       );
       if ((response.statusCode ?? 400) >= 400) {
         return CustomHttpStatusResponse(
