@@ -9,6 +9,7 @@ import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/burn_injury.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
+import 'package:trauma_register_frontend/data/services/navigation_service.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
@@ -134,6 +135,7 @@ class _ContentState extends State<_Content> {
               : "¿Desea confirmar la actualización?",
         );
         if (!confirmFlow) return;
+        CustomModal.loadModal(context: context);
         final element =
             _getCurrentPatientData(context).burnInjury![widget.keyy];
         final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
@@ -147,6 +149,7 @@ class _ContentState extends State<_Content> {
             index: widget.keyy,
           );
         }
+        NavigationService.pop();
         CustomModal.showModal(
           context: context,
           title: null,
@@ -165,11 +168,13 @@ class _ContentState extends State<_Content> {
             text: "¿Está seguro que desea eliminar el elemento?",
           );
           if (!deleteElement) return;
+          CustomModal.loadModal(context: context);
           final result = await _getCurrentProvider(context)
               .deleteBurnInjuryById(_getCurrentPatientData(context)
                   .burnInjury![widget.keyy]
                   .id
                   .toString());
+          NavigationService.pop();
           CustomModal.showModal(
             context: context,
             title: null,

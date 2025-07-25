@@ -17,4 +17,8 @@ class NavigationService {
       (Route<dynamic> route) => false, // Elimina todas las rutas anteriores
     );
   }
+
+  static pop() {
+    navigatorKey.currentState!.pop();
+  }
 }

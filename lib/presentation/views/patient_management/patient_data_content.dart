@@ -8,6 +8,7 @@ import 'package:trauma_register_frontend/core/helpers/content_options.dart';
 import 'package:trauma_register_frontend/core/helpers/transform_data.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
+import 'package:trauma_register_frontend/data/services/navigation_service.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_input_with_label.dart';
@@ -104,7 +105,10 @@ class _ContentState extends State<_Content> {
           text: "¿Desea confirmar la actualización?",
         );
         if (!confirmFlow) return;
-        final result = await _getCurrentProvider(context).updatePatientDataElement(element);
+        CustomModal.loadModal(context: context);
+        final result = await _getCurrentProvider(context)
+            .updatePatientDataElement(element);
+        NavigationService.pop();
         CustomModal.showModal(
           context: context,
           title: null,

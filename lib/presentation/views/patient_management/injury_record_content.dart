@@ -10,6 +10,7 @@ import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/injury_record.dart';
 import 'package:trauma_register_frontend/data/models/trauma_data/patient_data.dart';
+import 'package:trauma_register_frontend/data/services/navigation_service.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_container.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_icon_button.dart';
@@ -127,6 +128,7 @@ class _ContentState extends State<_Content> {
               : "¿Desea confirmar la actualización?",
         );
         if (!confirmFlow) return;
+        CustomModal.loadModal(context: context);
         final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
         final result = await (isANewElement
             ? _getCurrentProvider(context).createInjuryRecord(element, id)
@@ -137,6 +139,7 @@ class _ContentState extends State<_Content> {
             id: result.idElement,
           );
         }
+        NavigationService.pop();
         CustomModal.showModal(
           context: context,
           title: null,
@@ -155,9 +158,11 @@ class _ContentState extends State<_Content> {
             text: "¿Está seguro que desea eliminar el elemento?",
           );
           if (!deleteElement) return;
+          CustomModal.loadModal(context: context);
           final result = await _getCurrentProvider(context)
               .deleteInjuryRecordById(
                   _getCurrentPatientData(context).injuryRecord!.id.toString());
+          NavigationService.pop();
           CustomModal.showModal(
             context: context,
             title: null,

@@ -211,10 +211,12 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                   onPressedAccept: () async {
                                     print(
                                         ">>>>>>>               ${traumaDataProvider.patientData}");
+                                    CustomModal.loadModal(context: context);
                                     await traumaDataProvider.createPatientData(
                                         traumaDataProvider.patientData!);
                                     final response =
                                         traumaDataProvider.response;
+                                    NavigationService.pop();
                                     CustomModal.showModal(
                                       context: NavigationService
                                           .navigatorKey.currentContext!,
@@ -285,6 +287,8 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                                   text:
                                                       "¿Está seguro que desea eliminar éste usuario?",
                                                   onPressedAccept: () async {
+                                                    CustomModal.loadModal(
+                                                        context: context);
                                                     final bool result =
                                                         await traumaDataProvider
                                                             .deletePatientDataById(
@@ -295,6 +299,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                                     traumaDataProvider
                                                         .updatePatientData(
                                                             null);
+                                                    NavigationService.pop();
                                                     CustomModal.showModal(
                                                       context: NavigationService
                                                           .navigatorKey

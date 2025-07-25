@@ -75,7 +75,8 @@ class CustomModal {
                   if (showCancelButton)
                     InkWell(
                       onTap: () async {
-                        Navigator.of(context.mounted ? context : context).pop(false);
+                        Navigator.of(context.mounted ? context : context)
+                            .pop(false);
                         if (onPressedCancel != null) await onPressedCancel();
                       },
                       child: _customButton(isAcceptButton: false),
@@ -83,7 +84,8 @@ class CustomModal {
                   if (showAcceptButton)
                     InkWell(
                       onTap: () async {
-                        Navigator.of(context.mounted ? context : context).pop(true);
+                        Navigator.of(context.mounted ? context : context)
+                            .pop(true);
                         if (onPressedAccept != null) await onPressedAccept();
                       },
                       child: _customButton(isAcceptButton: true),
@@ -96,6 +98,70 @@ class CustomModal {
       ),
     );
     return result ?? false;
+  }
+
+  static Future<void> loadModal({
+    required BuildContext context,
+  }) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierColor: Colors.transparent,
+      builder: (context) => Dialog(
+        backgroundColor: AppColors.modalBackground,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(color: AppColors.black, width: 1),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          constraints: const BoxConstraints(
+            maxWidth: 400,
+            maxHeight: 300,
+          ),
+          decoration: BoxDecoration(
+            color: AppColors.modalBackground,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: AppColors.black, width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.25),
+                offset: const Offset(0, 4),
+                blurRadius: 4,
+              ),
+              BoxShadow(
+                color: Colors.black.withOpacity(0.25),
+                offset: const Offset(0, 0),
+                blurRadius: 1,
+              ),
+            ],
+          ),
+          child: const Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  strokeAlign: 7,
+                  color: AppColors.base,
+                ),
+              ),
+              SizedBox(height: 20),
+              Center(
+                child: H3(
+                  text: "Cargando...",
+                  color: AppColors.modalText,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   static Future<DateTime?> determineDate({
