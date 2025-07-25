@@ -143,10 +143,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -159,11 +161,11 @@ class TraumaDataService {
   }
 
   Future<CustomHttpStatusResponse> updateHealthcareRecord(
-      HealthcareRecord element, int patientDataId) async {
+      HealthcareRecord element) async {
     try {
       final String? token = LocalStorage.prefs.getString('token');
       final response = await EndpointHelper.putRequest(
-        path: "/medical_records/healthcare-record/$patientDataId/",
+        path: "/medical_records/healthcare-record/${element.id}/",
         token: token,
         data: element.toJson(),
       );
@@ -237,10 +239,12 @@ class TraumaDataService {
           message: _convertMessage(_getFirstString(response.data)),
         );
       }
+      final int? id = response.data["id"];
       return CustomHttpStatusResponse(
         code: response.statusCode,
         result: true,
         message: "Elemento creado con éxito.",
+        idElement: id,
       );
     } catch (e, s) {
       PrintError.makePrint(
@@ -253,11 +257,11 @@ class TraumaDataService {
   }
 
   Future<CustomHttpStatusResponse> updateInjuryRecord(
-      InjuryRecord element, int patientDataId) async {
+      InjuryRecord element) async {
     try {
       final String? token = LocalStorage.prefs.getString('token');
       final response = await EndpointHelper.putRequest(
-        path: "/medical_records/injury-record/$patientDataId/",
+        path: "/medical_records/injury-record/${element.id}/",
         token: token,
         data: element.toJson(),
       );
@@ -2267,7 +2271,7 @@ class TraumaDataService {
           ...element.toJson(),
         },
       );
-      final int? id = response.data["record_id"];
+      final int? id = response.data["id"];
       if ((response.statusCode ?? 400) >= 400) {
         return CustomHttpStatusResponse(
           code: response.statusCode,
@@ -2295,7 +2299,7 @@ class TraumaDataService {
     try {
       final String? token = LocalStorage.prefs.getString('token');
       final response = await EndpointHelper.putRequest(
-        path: "/medical_records/vital-sign/${element.recordId}/",
+        path: "/medical_records/vital-sign/${element.id}/",
         token: token,
         data: element.toJson(),
       );

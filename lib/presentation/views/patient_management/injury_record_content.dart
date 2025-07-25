@@ -117,7 +117,8 @@ class _ContentState extends State<_Content> {
       showUpdateButton: widget.action == ActionType.actualizar,
       onUpdate: () async {
         final element = _getCurrentPatientData(context).injuryRecord!;
-        final bool isANewElement = element.id == null;
+        final bool isANewElement =
+            _getCurrentPatientData(context).injuryRecord!.id == null;
         final bool confirmFlow = await CustomModal.showModal(
           context: context,
           title: null,
@@ -129,7 +130,13 @@ class _ContentState extends State<_Content> {
         final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
         final result = await (isANewElement
             ? _getCurrentProvider(context).createInjuryRecord(element, id)
-            : _getCurrentProvider(context).updateInjuryRecord(element, id));
+            : _getCurrentProvider(context).updateInjuryRecord(element));
+        if (isANewElement) {
+          _updateElement(
+            context: context,
+            id: result.idElement,
+          );
+        }
         CustomModal.showModal(
           context: context,
           title: null,
@@ -139,8 +146,9 @@ class _ContentState extends State<_Content> {
       },
       showDeleteButton: allowChanges,
       onDelete: () async {
-        final element = _getCurrentPatientData(context).injuryRecord!;
-        if (widget.action == ActionType.actualizar && element.id != null) {
+        final bool isANewElement =
+            _getCurrentPatientData(context).injuryRecord!.id == null;
+        if (widget.action == ActionType.actualizar && !isANewElement) {
           final deleteElement = await CustomModal.showModal(
             context: context,
             title: null,
@@ -148,9 +156,8 @@ class _ContentState extends State<_Content> {
           );
           if (!deleteElement) return;
           final result = await _getCurrentProvider(context)
-              .deleteInjuryRecordById(_getCurrentPatientData(context)
-                  .traumaRegisterRecordId
-                  .toString());
+              .deleteInjuryRecordById(
+                  _getCurrentPatientData(context).injuryRecord!.id.toString());
           CustomModal.showModal(
             context: context,
             title: null,
@@ -651,5 +658,18 @@ class _ContentState extends State<_Content> {
 
   TraumaDataProvider _getCurrentProvider(BuildContext context) {
     return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+
+  void _updateElement({
+    required BuildContext context,
+    required int? id,
+  }) {
+    final traumaDataProvider = _getCurrentProvider(context);
+    final patientData = _getCurrentPatientData(context);
+    final element = patientData.injuryRecord;
+    if (element == null) return;
+    traumaDataProvider.updatePatientData(patientData.copyWith(
+      injuryRecord: Optional<InjuryRecord?>.of(element.copyWith(id: id)),
+    ));
   }
 }

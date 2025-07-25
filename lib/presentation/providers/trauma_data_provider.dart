@@ -87,11 +87,11 @@ class TraumaDataProvider extends ChangeNotifier {
   }
 
   Future<CustomHttpStatusResponse> updateHealthcareRecord(
-      HealthcareRecord element, int patientDataId) async {
+      HealthcareRecord element) async {
     try {
       final traumaDataService = TraumaDataService();
       final CustomHttpStatusResponse result =
-          await traumaDataService.updateHealthcareRecord(element, patientDataId);
+          await traumaDataService.updateHealthcareRecord(element);
       return result;
     } catch (e, s) {
       PrintError.makePrint(
@@ -128,11 +128,11 @@ class TraumaDataProvider extends ChangeNotifier {
   }
 
   Future<CustomHttpStatusResponse> updateInjuryRecord(
-      InjuryRecord element, int patientDataId) async {
+      InjuryRecord element) async {
     try {
       final traumaDataService = TraumaDataService();
       final CustomHttpStatusResponse result =
-          await traumaDataService.updateInjuryRecord(element, patientDataId);
+          await traumaDataService.updateInjuryRecord(element);
       return result;
     } catch (e, s) {
       PrintError.makePrint(

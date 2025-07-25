@@ -216,7 +216,8 @@ class _ContentState extends State<_Content> {
       showUpdateButton: widget.action == ActionType.actualizar,
       onUpdate: () async {
         final element = _getCurrentPatientData(context).healthcareRecord!;
-        final bool isANewElement = element.id == null;
+        final bool isANewElement =
+            _getCurrentPatientData(context).healthcareRecord!.id == null;
         final bool confirmFlow = await CustomModal.showModal(
           context: context,
           title: null,
@@ -228,7 +229,13 @@ class _ContentState extends State<_Content> {
         final id = _getCurrentPatientData(context).traumaRegisterRecordId!;
         final result = await (isANewElement
             ? _getCurrentProvider(context).createHealthcareRecord(element, id)
-            : _getCurrentProvider(context).updateHealthcareRecord(element, id));
+            : _getCurrentProvider(context).updateHealthcareRecord(element));
+        if (isANewElement) {
+          _updateElement(
+            context: context,
+            id: result.idElement,
+          );
+        }
         CustomModal.showModal(
           context: context,
           title: null,
@@ -238,8 +245,9 @@ class _ContentState extends State<_Content> {
       },
       showDeleteButton: allowChanges,
       onDelete: () async {
-        final element = _getCurrentPatientData(context).healthcareRecord!;
-        if (widget.action == ActionType.actualizar && element.id != null) {
+        final bool isANewElement =
+            _getCurrentPatientData(context).healthcareRecord!.id == null;
+        if (widget.action == ActionType.actualizar && !isANewElement) {
           final deleteElement = await CustomModal.showModal(
             context: context,
             title: null,
@@ -248,7 +256,8 @@ class _ContentState extends State<_Content> {
           if (!deleteElement) return;
           final result = await _getCurrentProvider(context)
               .deleteHealthcareRecordById(_getCurrentPatientData(context)
-                  .traumaRegisterRecordId
+                  .healthcareRecord!
+                  .id
                   .toString());
           CustomModal.showModal(
             context: context,
@@ -1023,7 +1032,6 @@ class _ContentState extends State<_Content> {
             initialDate: DateTime.now(),
             firstDate: DateTime(1950),
             lastDate: DateTime.now(),
-            includeTime: true,
           );
           _fechaDeAdmisionController.text = resultDate != null
               ? DateFormat('dd/MM/yyyy').format(resultDate)
@@ -2618,7 +2626,6 @@ class _ContentState extends State<_Content> {
             initialDate: DateTime.now(),
             firstDate: DateTime(1950),
             lastDate: DateTime.now(),
-            includeTime: true,
           );
           _fechaDeReferenciaController.text = resultDate != null
               ? DateFormat('dd/MM/yyyy').format(resultDate)
@@ -2734,7 +2741,6 @@ class _ContentState extends State<_Content> {
             initialDate: DateTime.now(),
             firstDate: DateTime(1950),
             lastDate: DateTime.now(),
-            includeTime: true,
           );
           _fechaDeAceptacionDeReferenciaController.text = resultDate != null
               ? DateFormat('dd/MM/yyyy').format(resultDate)
@@ -3001,5 +3007,19 @@ class _ContentState extends State<_Content> {
 
   TraumaDataProvider _getCurrentProvider(BuildContext context) {
     return Provider.of<TraumaDataProvider>(context, listen: false);
+  }
+
+  void _updateElement({
+    required BuildContext context,
+    required int? id,
+  }) {
+    final traumaDataProvider = _getCurrentProvider(context);
+    final patientData = _getCurrentPatientData(context);
+    final element = patientData.healthcareRecord;
+    if (element == null) return;
+    traumaDataProvider.updatePatientData(patientData.copyWith(
+      healthcareRecord:
+          Optional<HealthcareRecord?>.of(element.copyWith(id: id)),
+    ));
   }
 }
