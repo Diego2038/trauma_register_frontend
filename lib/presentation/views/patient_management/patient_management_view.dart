@@ -249,25 +249,26 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                     top: 6,
                                     bottom: 6,
                                   ),
-                                  child: CustomCheckbox(
-                                    size: CustomSize.h5,
-                                    text: "Desplegar todas las secciones",
-                                    minWidthToCollapse: 440,
-                                    onChanged: (bool value) {
-                                      final expandableTitleProvider =
-                                          Provider.of<ExpandableTitleProvider>(
-                                        context,
-                                        listen: false,
-                                      );
-                                      expandableTitleProvider
-                                          .setAllExpanded(value);
-                                      final traumaDataProvider =
-                                          Provider.of<TraumaDataProvider>(
-                                        context,
-                                        listen: false,
-                                      );
-                                      print(traumaDataProvider.patientData);
-                                    },
+                                  child: Consumer<ExpandableTitleProvider>(
+                                    builder:
+                                        (context, expandableTitleProvider, _) =>
+                                            CustomCheckbox(
+                                      size: CustomSize.h5,
+                                      text: "Desplegar todas las secciones",
+                                      minWidthToCollapse: 440,
+                                      initialValue:
+                                          expandableTitleProvider.isAllExpanded,
+                                      onChanged: (bool value) {
+                                        expandableTitleProvider
+                                            .setAllExpanded(value);
+                                        final traumaDataProvider =
+                                            Provider.of<TraumaDataProvider>(
+                                          context,
+                                          listen: false,
+                                        );
+                                        print(traumaDataProvider.patientData);
+                                      },
+                                    ),
                                   ),
                                 ),
                                 Consumer<TraumaDataProvider>(
