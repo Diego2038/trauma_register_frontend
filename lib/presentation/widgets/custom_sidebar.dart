@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/enums/action_type.dart';
 import 'package:trauma_register_frontend/core/enums/custom_size.dart';
 import 'package:trauma_register_frontend/core/routes/app_router.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/data/services/navigation_service.dart';
 import 'package:trauma_register_frontend/presentation/providers/auth_provider.dart';
+import 'package:trauma_register_frontend/presentation/providers/trauma_data_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_button.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 
@@ -63,6 +65,9 @@ class CustomSidebar extends StatelessWidget {
                   icon: Icons.person_search_outlined,
                   text: "Gestión de paciente",
                   onPressed: () {
+                    final traumaDataProvider =
+                        Provider.of<TraumaDataProvider>(context, listen: false);
+                    traumaDataProvider.updateAction(ActionType.buscar);
                     if (contractWithTap) onToggle();
                     NavigationService.navigateAndRemoveUntil(
                         AppRouter.patientManagementView);
