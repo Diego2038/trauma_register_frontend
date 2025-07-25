@@ -2,6 +2,7 @@ import 'package:trauma_register_frontend/data/models/custom/time_of_day.dart';
 import 'package:trauma_register_frontend/data/models/shared/optional.dart';
 
 class VitalSign {
+  final int? id;
   final int? recordId;
   final DateTime? fechaYHoraDeSignosVitales;
   final bool? signosDeVida;
@@ -23,6 +24,7 @@ class VitalSign {
   final String? avup;
 
   VitalSign({
+    this.id,
     this.recordId,
     this.fechaYHoraDeSignosVitales,
     this.signosDeVida,
@@ -45,6 +47,7 @@ class VitalSign {
   });
 
   VitalSign copyWith({
+    int? id,
     Optional<int?>? recordId,
     Optional<DateTime?>? fechaYHoraDeSignosVitales,
     Optional<bool?>? signosDeVida,
@@ -66,6 +69,7 @@ class VitalSign {
     Optional<String?>? avup,
   }) =>
       VitalSign(
+        id: id ?? this.id,
         recordId: recordId?.isPresent == true ? recordId!.value : this.recordId,
         fechaYHoraDeSignosVitales: fechaYHoraDeSignosVitales?.isPresent == true
             ? fechaYHoraDeSignosVitales!.value
@@ -117,6 +121,7 @@ class VitalSign {
       );
 
   factory VitalSign.fromJson(Map<String, dynamic> json) => VitalSign(
+        id: json["id"],
         recordId: json["record_id"],
         fechaYHoraDeSignosVitales:
             json["fecha_y_hora_de_signos_vitales"] == null
@@ -149,6 +154,7 @@ class VitalSign {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "record_id": recordId,
         "fecha_y_hora_de_signos_vitales":
             fechaYHoraDeSignosVitales?.toIso8601String(),
