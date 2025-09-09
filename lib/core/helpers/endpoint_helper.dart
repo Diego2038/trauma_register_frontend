@@ -5,13 +5,22 @@ import 'package:trauma_register_frontend/core/constants/api.dart';
 import 'package:trauma_register_frontend/data/models/http_response/custom_http_response.dart';
 
 class EndpointHelper {
-  static final Dio _dio = Dio(
+  static Dio _dio = Dio(
     BaseOptions(
       baseUrl: API,
       contentType: 'application/json',
       validateStatus: (int? status) => status != null && status < 500,
     ),
   );
+
+  // Getter para fines de prueba
+  static Dio get dio => _dio;
+
+  // Setter para fines de prueba
+  // ignore: use_setters_to_change_properties
+  static set dio(Dio dio) {
+    _dio = dio;
+  }
 
   static Future<CustomHttpResponse> postRequest({
     required String path, 

@@ -9,8 +9,9 @@ class AuthService {
   static Future<UserModel?> login({
     required String username,
     required String password,
+    CustomHttpResponse? r, // Just to unit test
   }) async {
-    final CustomHttpResponse response = await EndpointHelper.postRequest(
+    final CustomHttpResponse response = r ?? await EndpointHelper.postRequest(
       path: "/user/login/",
       data: {
         "username": username,
@@ -39,9 +40,11 @@ class AuthService {
     LocalStorage.prefs.clear();
   }
 
-  static Future<bool> verifyToken() async {
+  static Future<bool> verifyToken({
+    CustomHttpResponse? r, // Just to unit test
+  }) async {
     final String? token = LocalStorage.prefs.getString('token');
-    final CustomHttpResponse response = await EndpointHelper.getRequest(
+    final CustomHttpResponse response = r ?? await EndpointHelper.getRequest(
       path: "/user/verify-token/",
       token: token,
     );

@@ -2,16 +2,18 @@ import 'package:intl/intl.dart';
 import 'package:trauma_register_frontend/core/helpers/endpoint_helper.dart';
 import 'package:trauma_register_frontend/core/helpers/local_storage.dart';
 import 'package:trauma_register_frontend/core/helpers/print_error.dart';
+import 'package:trauma_register_frontend/data/models/http_response/custom_http_response.dart';
 import 'package:trauma_register_frontend/data/models/stats/time_serie.dart';
 
 class TimeSeriesService {
   Future<TimeSeries?> getTraumaCountByDate({
     required DateTime? startDate,
     required DateTime? endDate,
+    CustomHttpResponse? r,
   }) async {
     try {
       final String? token = LocalStorage.prefs.getString('token');
-      final response = await EndpointHelper.putRequest(
+      final response = r ?? await EndpointHelper.putRequest(
         path: "/data_analysis/trauma-count-by-date-stats/0/",
         token: token,
         data: {
