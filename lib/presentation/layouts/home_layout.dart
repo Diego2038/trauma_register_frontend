@@ -15,6 +15,7 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   bool _isSidebarExpanded = true;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void didChangeDependencies() {
@@ -29,7 +30,15 @@ class _HomeLayoutState extends State<HomeLayout> {
     final isMobile = screenWidth < 800;
 
     return Scaffold(
+      key: _scaffoldKey,
       body: isMobile ? mobileContent(screenWidth, screenHeight) : webContent(),
+      drawer: isMobile
+          ? CustomSidebar(
+              isExpanded: true,
+              onToggle: () => _scaffoldKey.currentState?.closeDrawer(),
+              contractWithTap: true,
+            )
+          : null,
     );
   }
 
@@ -57,54 +66,13 @@ class _HomeLayoutState extends State<HomeLayout> {
   }
 
   Widget mobileContent(double screenWidth, double screenHeight) {
-    return Stack(
+    return Column(
       children: [
-        // Main content
-        Positioned.fill(
-          child: Column(
-            children: [
-              CustomNavbar(onMenuTap: _toggleSidebar),
-              Expanded(
-                child: Container(
-                  child: widget.child,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        // Opaque background
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 100),
-          top: 0,
-          bottom: 0,
-          left: _isSidebarExpanded ? 0 : -screenWidth,
-          width: screenWidth,
-          curve: Curves.easeInOutExpo,
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 100),
-            curve: Curves.easeInOutExpo,
-            opacity: _isSidebarExpanded ? 0.5 : 0.0,
-            child: GestureDetector(
-              onTap: _toggleSidebar,
-              child: Container(
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-
-        // Animated Sidebar
-        AnimatedPositioned(
-          duration: const Duration(milliseconds: 300),
-          top: 0,
-          bottom: 0,
-          left: _isSidebarExpanded ? 0 : -screenWidth * 0.7,
-          width: screenWidth * 0.7,
-          child: CustomSidebar(
-            isExpanded: true,
-            onToggle: _toggleSidebar,
-            contractWithTap: true,
+        CustomNavbar(
+            onMenuTap: () => _scaffoldKey.currentState?.openDrawer()),
+        Expanded(
+          child: Container(
+            child: widget.child,
           ),
         ),
       ],
