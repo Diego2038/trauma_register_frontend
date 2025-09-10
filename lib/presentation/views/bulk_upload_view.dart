@@ -14,7 +14,7 @@ import 'package:trauma_register_frontend/data/models/upload_file/upload_response
 import 'package:trauma_register_frontend/data/models/user/user_model.dart';
 import 'package:trauma_register_frontend/presentation/providers/bulk_upload_provider.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_button.dart';
-import 'package:trauma_register_frontend/presentation/widgets/custom_checkbox.dart';
+import 'package:trauma_register_frontend/presentation/widgets/custom_dropdown.dart';
 import 'package:trauma_register_frontend/presentation/widgets/custom_modal.dart';
 import 'package:trauma_register_frontend/presentation/widgets/text_block.dart';
 
@@ -88,29 +88,33 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
             spacing: 20,
             children: [
               loadFileWidget(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomCheckbox(
-                    size: CustomSize.h5,
-                    centerCheckBox: true,
-                    text: 'Permitir actualización de datos',
-                    initialValue: true,
-                    onChanged: (value) {
-                      allowUpdateElements = value;
-                    },
-                    minWidthToCollapse: 400,
-                  ),
-                  CustomCheckbox(
-                    size: CustomSize.h5,
-                    centerCheckBox: true,
-                    text: 'Permitir únicamente actualización',
-                    onChanged: (value) {
-                      allowOnlyUpdate = value;
-                    },
-                    minWidthToCollapse: 400,
-                  ),
+              CustomDropdown(
+                size: CustomSize.h5,
+                title: "Filtro de carga masiva",
+                hintText: "",
+                selectedValue: "Creación y actualización",
+                width: 275,
+                items: const [
+                  "Creación y actualización",
+                  "Únicamente creación",
+                  "Únicamente actualización",
                 ],
+                onItemSelected: (String? value) {
+                  if (value == null) return;
+                  switch (value) {
+                    case "Únicamente creación":
+                      allowUpdateElements = false;
+                      allowOnlyUpdate = false;
+                      break;
+                    case "Únicamente actualización":
+                      allowUpdateElements = true;
+                      allowOnlyUpdate = true;
+                      break;
+                    default:
+                      allowUpdateElements = true;
+                      allowOnlyUpdate = false;
+                  }
+                },
               )
             ],
           ),
@@ -169,7 +173,8 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    excelFileBytes != null || bulkUploadProvider.isLoadedSuccesful
+                    excelFileBytes != null ||
+                            bulkUploadProvider.isLoadedSuccesful
                         ? Icons.check_circle
                         : Icons.upload_file_outlined,
                     color: AppColors.base,
