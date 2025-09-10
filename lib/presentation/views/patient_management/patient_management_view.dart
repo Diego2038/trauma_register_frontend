@@ -602,6 +602,7 @@ class _ContentDataPatient extends StatelessWidget {
           action: action,
           freeSize: freeSize,
         ),
+        const SizedBox(height: 85),
       ],
     );
   }
