@@ -56,11 +56,7 @@ The output will be saved in the ```build/web``` directory within your project, a
 
 ## How to make unit tests
 
-1. **Open the terminal in the project root:**
-
-2. **Execute the unit tests:** <br>
-
-Run the following command to execute all unit tests in the project:
+In the project root, execute the unit tests through the following command to execute all unit tests in the project:
 ```bash
 flutter test
 ```
@@ -69,16 +65,14 @@ To execute a specific test file, provide its path (either folder or file), for e
 flutter test .\test\data\models\custom\time_of_day_test.dart
 ```
 
-3. **Calculate the coverage:** <br>
+## How to calculate the coverage of the unit tests
 
 Execute the tests with the `--coverage` flag to generate a coverage report:
 ```bash
 flutter test --coverage
 ```
 
-4. **Generate a report of the coverage:** <br>
-
-To generate a detailed coverage report in the terminal, you can use a tool like `lcov-summary`. First, install it using npm:
+To generate a detailed coverage report in the terminal, you can use a tool like `lcov-summary`, install it using npm:
 ```bash
 npm install -g lcov-summary
 ```
@@ -88,9 +82,7 @@ To see the unit test coverage run the following command:
 ```bash
 lcov-summary coverage/lcov.info
 ```
-5. **Important note**: <br>
-
-You can adjust coverage calculation, for example:
+**Important note**: You can adjust coverage calculation, for example:
 ```bash
 flutter test .\test\core\ --coverage
 ```
