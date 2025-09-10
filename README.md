@@ -16,7 +16,7 @@ The frontend is structured to provide a rich user experience and is organized in
 ## Project Components
 This frontend repository is complemented by the backend repository, which handles the server logic and data storage. You can find the backend project [here](https://github.com/Diego2038/trauma_register_backend).
 
-**Important clarification**: If you want to run this frontend repository with the backend repository mentioned above (or any backend), you must modify the ***API*** variable in the `api.dart` file with the URL where the backend application has been uploaded to ensure proper communication.
+**Important clarification**: If you want to run this frontend repository with the backend repository mentioned above (or any backend), you should not modify the ***API*** variable in the `api.dart`, unless you want to deploy the backend to a different URL and/or port.
 
 ## Technologies Used
 
