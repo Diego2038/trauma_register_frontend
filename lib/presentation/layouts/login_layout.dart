@@ -11,6 +11,7 @@ class LoginLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         color: AppColors.base,
@@ -18,7 +19,7 @@ class LoginLayout extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
+              if(width > 880) Expanded(
                 child: Container(
                   color: AppColors.white,
                   height: double.infinity,
