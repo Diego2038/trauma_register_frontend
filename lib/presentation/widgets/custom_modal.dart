@@ -69,28 +69,34 @@ class CustomModal {
                 ),
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  if (showCancelButton)
-                    InkWell(
-                      onTap: () async {
-                        Navigator.of(context.mounted ? context : context)
-                            .pop(false);
-                        if (onPressedCancel != null) await onPressedCancel();
-                      },
-                      child: _customButton(isAcceptButton: false),
-                    ),
-                  if (showAcceptButton)
-                    InkWell(
-                      onTap: () async {
-                        Navigator.of(context.mounted ? context : context)
-                            .pop(true);
-                        if (onPressedAccept != null) await onPressedAccept();
-                      },
-                      child: _customButton(isAcceptButton: true),
-                    ),
-                ],
+              SizedBox(
+                width: double.infinity,
+                child: Wrap(
+                  // runAlignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  alignment: WrapAlignment.spaceEvenly,
+                  runSpacing: 10,
+                  children: [
+                    if (showCancelButton)
+                      InkWell(
+                        onTap: () async {
+                          Navigator.of(context.mounted ? context : context)
+                              .pop(false);
+                          if (onPressedCancel != null) await onPressedCancel();
+                        },
+                        child: _customButton(isAcceptButton: false),
+                      ),
+                    if (showAcceptButton)
+                      InkWell(
+                        onTap: () async {
+                          Navigator.of(context.mounted ? context : context)
+                              .pop(true);
+                          if (onPressedAccept != null) await onPressedAccept();
+                        },
+                        child: _customButton(isAcceptButton: true),
+                      ),
+                  ],
+                ),
               )
             ],
           ),
