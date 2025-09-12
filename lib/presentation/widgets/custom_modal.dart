@@ -49,56 +49,58 @@ class CustomModal {
               ),
             ],
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (title != null)
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (title != null)
+                  Center(
+                      child: H1(
+                    text: title,
+                    textAlign: TextAlign.center,
+                    color: AppColors.modalTitle,
+                  )),
+                if (title != null) const SizedBox(height: 20),
                 Center(
-                    child: H1(
-                  text: title,
-                  textAlign: TextAlign.center,
-                  color: AppColors.modalTitle,
-                )),
-              if (title != null) const SizedBox(height: 20),
-              Center(
-                child: H2(
-                  text: text,
-                  color: AppColors.modalText,
-                  textAlign: TextAlign.center,
+                  child: H2(
+                    text: text,
+                    color: AppColors.modalText,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: Wrap(
-                  // runAlignment: WrapAlignment.center,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  alignment: WrapAlignment.spaceEvenly,
-                  runSpacing: 10,
-                  children: [
-                    if (showCancelButton)
-                      InkWell(
-                        onTap: () async {
-                          Navigator.of(context.mounted ? context : context)
-                              .pop(false);
-                          if (onPressedCancel != null) await onPressedCancel();
-                        },
-                        child: _customButton(isAcceptButton: false),
-                      ),
-                    if (showAcceptButton)
-                      InkWell(
-                        onTap: () async {
-                          Navigator.of(context.mounted ? context : context)
-                              .pop(true);
-                          if (onPressedAccept != null) await onPressedAccept();
-                        },
-                        child: _customButton(isAcceptButton: true),
-                      ),
-                  ],
-                ),
-              )
-            ],
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    // runAlignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.spaceEvenly,
+                    runSpacing: 10,
+                    children: [
+                      if (showCancelButton)
+                        InkWell(
+                          onTap: () async {
+                            Navigator.of(context.mounted ? context : context)
+                                .pop(false);
+                            if (onPressedCancel != null) await onPressedCancel();
+                          },
+                          child: _customButton(isAcceptButton: false),
+                        ),
+                      if (showAcceptButton)
+                        InkWell(
+                          onTap: () async {
+                            Navigator.of(context.mounted ? context : context)
+                                .pop(true);
+                            if (onPressedAccept != null) await onPressedAccept();
+                          },
+                          child: _customButton(isAcceptButton: true),
+                        ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
