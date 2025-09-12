@@ -88,51 +88,71 @@ class _BulkUploadViewContentState extends State<BulkUploadViewContent> {
             spacing: 20,
             children: [
               loadFileWidget(),
-              CustomDropdown(
-                size: CustomSize.h5,
-                title: "Filtro de carga masiva",
-                hintText: "",
-                selectedValue: "Creación y actualización",
-                width: 275,
-                items: const [
-                  "Creación y actualización",
-                  "Únicamente creación",
-                  "Únicamente actualización",
-                ],
-                onItemSelected: (String? value) {
-                  if (value == null) return;
-                  switch (value) {
-                    case "Únicamente creación":
-                      allowUpdateElements = false;
-                      allowOnlyUpdate = false;
-                      break;
-                    case "Únicamente actualización":
-                      allowUpdateElements = true;
-                      allowOnlyUpdate = true;
-                      break;
-                    default:
-                      allowUpdateElements = true;
-                      allowOnlyUpdate = false;
-                  }
-                },
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CustomDropdown(
+                      size: CustomSize.h5,
+                      title: "Filtro de carga masiva",
+                      hintText: "",
+                      selectedValue: "Creación y actualización",
+                      width: 275,
+                      items: const [
+                        "Creación y actualización",
+                        "Únicamente creación",
+                        "Únicamente actualización",
+                      ],
+                      onItemSelected: (String? value) {
+                        if (value == null) return;
+                        switch (value) {
+                          case "Únicamente creación":
+                            allowUpdateElements = false;
+                            allowOnlyUpdate = false;
+                            break;
+                          case "Únicamente actualización":
+                            allowUpdateElements = true;
+                            allowOnlyUpdate = true;
+                            break;
+                          default:
+                            allowUpdateElements = true;
+                            allowOnlyUpdate = false;
+                        }
+                      },
+                    ),
+                  ],
+                ),
               )
             ],
           ),
           const SizedBox(height: 15),
-          CustomButton(
-            size: CustomSize.h2,
-            onPressed: () async => CustomModal.showModal(
-              context: context,
-              title: "Subida de archivo",
-              text:
-                  "¿Está seguro que desea subir el archivo Excel? Recuerda que el tiempo de carga es proporcional a su contenido.",
-              onPressedAccept: () async => _startUpload(),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width > 450 ? null : 275,
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: CustomButton(
+                    size: CustomSize.h2,
+                    onPressed: () async => CustomModal.showModal(
+                      context: context,
+                      title: "Subida de archivo",
+                      text:
+                          "¿Está seguro que desea subir el archivo Excel? Recuerda que el tiempo de carga es proporcional a su contenido.",
+                      onPressedAccept: () async => _startUpload(),
+                    ),
+                    isAvailable: excelFileBytes != null,
+                    width: 383,
+                    height: 45,
+                    text: 'Subir archivo',
+                    centerButtonContent: true,
+                  ),
+                ),
+              ],
             ),
-            isAvailable: excelFileBytes != null,
-            width: 383,
-            height: 45,
-            text: 'Subir archivo',
-            centerButtonContent: true,
           ),
         ],
       ),
