@@ -12,10 +12,12 @@ class TraumaCountByDateContentView extends StatefulWidget {
   });
 
   @override
-  State<TraumaCountByDateContentView> createState() => _TraumaCountByDateContentViewState();
+  State<TraumaCountByDateContentView> createState() =>
+      _TraumaCountByDateContentViewState();
 }
 
-class _TraumaCountByDateContentViewState extends State<TraumaCountByDateContentView> {
+class _TraumaCountByDateContentViewState
+    extends State<TraumaCountByDateContentView> {
   DateTime? traumaCountByDateStartDate;
   DateTime? traumaCountByDateEndDate;
   late TraumaStatsProvider _traumaStatsProvider;
@@ -40,7 +42,8 @@ class _TraumaCountByDateContentViewState extends State<TraumaCountByDateContentV
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder(
       future: traumaStatsProvider.getTraumaCountByDate(
-        startDate: traumaCountByDateStartDate ?? traumaStatsProvider.globalStartDate,
+        startDate:
+            traumaCountByDateStartDate ?? traumaStatsProvider.globalStartDate,
         endDate: traumaCountByDateEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
@@ -67,8 +70,10 @@ class _TraumaCountByDateContentViewState extends State<TraumaCountByDateContentV
               data: timeSeries,
             ),
             DateRangePickerButtons(
-              startDate: traumaCountByDateStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: traumaCountByDateEndDate ?? traumaStatsProvider.globalEndDate,
+              startDate: traumaCountByDateStartDate ??
+                  traumaStatsProvider.globalStartDate,
+              endDate:
+                  traumaCountByDateEndDate ?? traumaStatsProvider.globalEndDate,
               updateStartDate: updateTraumaCountByDateStartDate,
               updateEndDate: updateTraumaCountByDateEndDate,
               clearDates: clearTraumaCountByDateDates,

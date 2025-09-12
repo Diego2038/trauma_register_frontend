@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/helpers/interpolate.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/stats/categorical_stats.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_stats_provider.dart';
@@ -59,18 +60,35 @@ class _GendersContentViewState extends State<GendersContentView> {
 
         final categoricalStats = snapshot.data!;
         final List<Datum> genderData = categoricalStats.data;
+        final double width = MediaQuery.of(context).size.width;
+        final bool isMobileView = width < 800;
 
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            CustomPieChart(
-              chartWidth: 400,
-              chartHeight: 400,
-              allowBadge: true,
-              data: genderData,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CustomPieChart(
+                    chartWidth: Interpolate.interpolate(
+                      xMin: isMobileView ? 400 : 800,
+                      xMax: isMobileView ? 600 : 1000,
+                      yMin: 200,
+                      yMax: 400,
+                      x: width,
+                    ),
+                    chartHeight: 400,
+                    allowBadge: true,
+                    data: genderData,
+                  ),
+                ],
+              ),
             ),
             DateRangePickerButtons(
-              startDate: gendersStartDate ?? traumaStatsProvider.globalStartDate,
+              startDate:
+                  gendersStartDate ?? traumaStatsProvider.globalStartDate,
               endDate: gendersEndDate ?? traumaStatsProvider.globalEndDate,
               updateStartDate: updateGendersStartDate,
               updateEndDate: updateGendersEndDate,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trauma_register_frontend/core/helpers/interpolate.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/stats/categorical_stats.dart';
 import 'package:trauma_register_frontend/presentation/providers/trauma_stats_provider.dart';
@@ -12,10 +13,12 @@ class InsuredPatientsContentView extends StatefulWidget {
   });
 
   @override
-  State<InsuredPatientsContentView> createState() => _InsuredPatientsContentViewState();
+  State<InsuredPatientsContentView> createState() =>
+      _InsuredPatientsContentViewState();
 }
 
-class _InsuredPatientsContentViewState extends State<InsuredPatientsContentView> {
+class _InsuredPatientsContentViewState
+    extends State<InsuredPatientsContentView> {
   DateTime? insuredPatientsStartDate;
   DateTime? insuredPatientsEndDate;
   late TraumaStatsProvider _traumaStatsProvider;
@@ -40,7 +43,8 @@ class _InsuredPatientsContentViewState extends State<InsuredPatientsContentView>
         Provider.of<TraumaStatsProvider>(context, listen: true);
     return FutureBuilder(
       future: traumaStatsProvider.getInsuredPatients(
-        startDate: insuredPatientsStartDate ?? traumaStatsProvider.globalStartDate,
+        startDate:
+            insuredPatientsStartDate ?? traumaStatsProvider.globalStartDate,
         endDate: insuredPatientsEndDate ?? traumaStatsProvider.globalEndDate,
       ),
       builder: (context, snapshot) {
@@ -58,18 +62,35 @@ class _InsuredPatientsContentViewState extends State<InsuredPatientsContentView>
         }
         final categoricalStats = snapshot.data!;
         final List<Datum> genderData = categoricalStats.data;
+        final double width = MediaQuery.of(context).size.width;
+        final bool isMobileView = width < 800;
         return Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            CustomPieChart(
-              chartWidth: 400,
-              chartHeight: 400,
-              data: genderData,
-              allowBadge: true,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  CustomPieChart(
+                    chartWidth: Interpolate.interpolate(
+                      xMin: isMobileView ? 400 : 800,
+                      xMax: isMobileView ? 600 : 1000,
+                      yMin: 200,
+                      yMax: 400,
+                      x: width,
+                    ),
+                    chartHeight: 400,
+                    data: genderData,
+                    allowBadge: true,
+                  ),
+                ],
+              ),
             ),
             DateRangePickerButtons(
-              startDate: insuredPatientsStartDate ?? traumaStatsProvider.globalStartDate,
-              endDate: insuredPatientsEndDate ?? traumaStatsProvider.globalEndDate,
+              startDate: insuredPatientsStartDate ??
+                  traumaStatsProvider.globalStartDate,
+              endDate:
+                  insuredPatientsEndDate ?? traumaStatsProvider.globalEndDate,
               updateStartDate: updateInsuredPatientsStartDate,
               updateEndDate: updateInsuredPatientsEndDate,
               clearDates: clearInsuredPatientsDates,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:trauma_register_frontend/core/helpers/interpolate.dart';
 import 'package:trauma_register_frontend/core/themes/app_colors.dart';
 import 'package:trauma_register_frontend/core/themes/app_text.dart';
 import 'package:trauma_register_frontend/data/models/stats/categorical_stats.dart';
@@ -28,6 +29,8 @@ class _CustomPieChartState extends State<CustomPieChart> {
   @override
   Widget build(BuildContext context) {
     final total = widget.data.fold<double>(0, (sum, item) => sum + item.total);
+    final double width = MediaQuery.of(context).size.width;
+    final bool isMobileView = width < 800;
 
     final List<PieChartSectionData> showingSections =
         widget.data.asMap().entries.map((entry) {
@@ -36,7 +39,20 @@ class _CustomPieChartState extends State<CustomPieChart> {
       final percentage = (data.total / total) * 100;
       const fontSize = 16.0;
       final isTouched = index == _touchedIndex;
-      final radius = isTouched ? 100.0 : 90.0;
+      final radius = Interpolate.interpolate(
+        xMin: isMobileView ? 400 : 800,
+        xMax: isMobileView ? 600 : 1000,
+        yMin: isTouched ? 20 : 10,
+        yMax: isTouched ? 100 : 90,
+        x: width,
+      );
+      final double badgePositionPercentageOffset = Interpolate.interpolate(
+        xMin: isMobileView ? 400 : 800,
+        xMax: isMobileView ? 600 : 1000,
+        yMin: 2.25,
+        yMax: 1.3,
+        x: width,
+      );
 
       return PieChartSectionData(
         color: _getColorForTag(index),
@@ -59,7 +75,8 @@ class _CustomPieChartState extends State<CustomPieChart> {
                     fontWeight: FontWeight.bold,
                   )
                 : null,
-        badgePositionPercentageOffset: !widget.allowBadge ? null : 1.3,
+        badgePositionPercentageOffset:
+            !widget.allowBadge ? null : badgePositionPercentageOffset,
         titleStyle: const TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,

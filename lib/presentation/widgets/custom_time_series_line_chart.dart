@@ -27,84 +27,92 @@ class CustomTimeSeriesLineChart extends StatelessWidget {
       return FlSpot(index, count);
     }).toList();
 
-    return SizedBox(
-      width: chartWidth,
-      height: chartHeight,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: LineChart(
-          LineChartData(
-            titlesData: FlTitlesData(
-              leftTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 42,
-                  getTitlesWidget: (value, meta) {
-                    return SideTitleWidget(
-                      axisSide: meta.axisSide,
-                      child: Text(
-                        value.toInt().toString(), // Show like a number
-                        style: const TextStyle(fontSize: 10),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: chartWidth,
+            height: chartHeight,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: LineChart(
+                LineChartData(
+                  titlesData: FlTitlesData(
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 42,
+                        getTitlesWidget: (value, meta) {
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            child: Text(
+                              value.toInt().toString(), // Show like a number
+                              style: const TextStyle(fontSize: 10),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ),
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 42,
+                        interval: 1,
+                        getTitlesWidget: (value, meta) {
+                          final int index = value.toInt();
+                          if (index < 0 || index >= data.length)
+                            return const SizedBox();
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            space: 10,
+                            child: Text(
+                              data[index].date,
+                              style: const TextStyle(fontSize: 10),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    topTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false)),
+                    rightTitles: const AxisTitles(
+                        sideTitles: SideTitles(showTitles: false)),
+                  ),
+                  lineTouchData: LineTouchData(
+                    touchTooltipData: LineTouchTooltipData(
+                      getTooltipColor: (_) => AppColors.base,
+                      getTooltipItems: (touchedSpots) {
+                        return touchedSpots.map((LineBarSpot touchedSpot) {
+                          return LineTooltipItem(
+                            touchedSpot.y.toInt().toString(),
+                            const TextStyle(
+                              color: AppColors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }).toList();
+                      },
+                    ),
+                  ),
+                  gridData: const FlGridData(show: true),
+                  borderData: FlBorderData(show: true),
+                  lineBarsData: [
+                    LineChartBarData(
+                      spots: spots,
+                      isCurved: false,
+                      dotData: const FlDotData(show: true),
+                      color: AppColors.base,
+                      belowBarData: BarAreaData(show: false),
+                    ),
+                  ],
                 ),
               ),
-              bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 42,
-                  interval: 1,
-                  getTitlesWidget: (value, meta) {
-                    final int index = value.toInt();
-                    if (index < 0 || index >= data.length)
-                      return const SizedBox();
-                    return SideTitleWidget(
-                      axisSide: meta.axisSide,
-                      space: 10,
-                      child: Text(
-                        data[index].date,
-                        style: const TextStyle(fontSize: 10),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    );
-                  },
-                ),
-              ),
-              topTitles:
-                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              rightTitles:
-                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
             ),
-            lineTouchData: LineTouchData(
-              touchTooltipData: LineTouchTooltipData(
-                getTooltipColor: (_) => AppColors.base,
-                getTooltipItems: (touchedSpots) {
-                  return touchedSpots.map((LineBarSpot touchedSpot) {
-                    return LineTooltipItem(
-                      touchedSpot.y.toInt().toString(),
-                      const TextStyle(
-                        color: AppColors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    );
-                  }).toList();
-                },
-              ),
-            ),
-            gridData: const FlGridData(show: true),
-            borderData: FlBorderData(show: true),
-            lineBarsData: [
-              LineChartBarData(
-                spots: spots,
-                isCurved: false,
-                dotData: const FlDotData(show: true),
-                color: AppColors.base,
-                belowBarData: BarAreaData(show: false),
-              ),
-            ],
           ),
-        ),
+        ],
       ),
     );
   }

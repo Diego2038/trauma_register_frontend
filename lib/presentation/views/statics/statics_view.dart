@@ -90,6 +90,7 @@ class _CustomFilterBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final traumaStatsProvider = Provider.of<TraumaStatsProvider>(context);
+    final width = MediaQuery.of(context).size.width;
     return Center(
       child: Container(
         // height: 140,
@@ -112,8 +113,8 @@ class _CustomFilterBox extends StatelessWidget {
               CustomStatsContainer(
                 title: "Filtro de fecha global",
                 minHeight: 100,
-                minWidth: 400,
-                maxWidth: 400,
+                minWidth: width > 420 ? 400 : width - 20,
+                maxWidth: width > 420 ? 400 : width - 20,
                 // internColor: AppColors.base200,
                 child: DateRangePickerButtons(
                   startDate: traumaStatsProvider.globalStartDate,
