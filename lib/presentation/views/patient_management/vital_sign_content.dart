@@ -532,66 +532,119 @@ class _ContentState extends State<_Content> {
           ));
         },
       ),
-      SizedBox(
-        width: freeSize ? null : 220,
-        child: Row(
-          children: [
-            CustomInputWithLabel(
-              size: customSize,
-              readOnly: !isCreating,
-              title: "Altura (metros)",
-              hintText: "No registra",
-              text: "${vitalSign.alturaMetros ?? ""}",
-              lines: 1,
-              width: freeSize ? null : 100,
-              height: freeSize ? null : 108,
-              inputType: InputType.double,
-              onChanged: (String? value) {
-                final patientData = _getCurrentPatientData(context);
-                traumaDataProvider.updatePatientData(patientData.copyWith(
-                  vitalSign: patientData.vitalSign
-                      ?.asMap()
-                      .entries
-                      .map((e) => e.key == index
-                          ? e.value.copyWith(
-                              alturaMetros: Optional<double?>.of(
-                                  TransformData.getTransformedValue<double>(
-                                      value)))
-                          : e.value)
-                      .toList(),
-                ));
-              },
-            ),
-            const SizedBox(width: 20),
-            CustomInputWithLabel(
-              size: customSize,
-              readOnly: !isCreating,
-              title: "Saturación de oxígeno",
-              hintText: "No registra",
-              text: "${vitalSign.saturacionDeOxigeno ?? ""}",
-              lines: 1,
-              width: freeSize ? null : 100,
-              height: freeSize ? null : 108,
-              inputType: InputType.double,
-              onChanged: (String? value) {
-                final patientData = _getCurrentPatientData(context);
-                traumaDataProvider.updatePatientData(patientData.copyWith(
-                  vitalSign: patientData.vitalSign
-                      ?.asMap()
-                      .entries
-                      .map((e) => e.key == index
-                          ? e.value.copyWith(
-                              saturacionDeOxigeno: Optional<double?>.of(
-                                  TransformData.getTransformedValue<double>(
-                                      value)))
-                          : e.value)
-                      .toList(),
-                ));
-              },
-            ),
-          ],
+      if (!freeSize)
+        SizedBox(
+          width: freeSize ? null : 220,
+          child: Row(
+            children: [
+              CustomInputWithLabel(
+                size: customSize,
+                readOnly: !isCreating,
+                title: "Altura (metros)",
+                hintText: "No registra",
+                text: "${vitalSign.alturaMetros ?? ""}",
+                lines: 1,
+                width: freeSize ? null : 100,
+                height: freeSize ? null : 108,
+                inputType: InputType.double,
+                onChanged: (String? value) {
+                  final patientData = _getCurrentPatientData(context);
+                  traumaDataProvider.updatePatientData(patientData.copyWith(
+                    vitalSign: patientData.vitalSign
+                        ?.asMap()
+                        .entries
+                        .map((e) => e.key == index
+                            ? e.value.copyWith(
+                                alturaMetros: Optional<double?>.of(
+                                    TransformData.getTransformedValue<double>(
+                                        value)))
+                            : e.value)
+                        .toList(),
+                  ));
+                },
+              ),
+              const SizedBox(width: 20),
+              CustomInputWithLabel(
+                size: customSize,
+                readOnly: !isCreating,
+                title: "Saturación de oxígeno",
+                hintText: "No registra",
+                text: "${vitalSign.saturacionDeOxigeno ?? ""}",
+                lines: 1,
+                width: freeSize ? null : 100,
+                height: freeSize ? null : 108,
+                inputType: InputType.double,
+                onChanged: (String? value) {
+                  final patientData = _getCurrentPatientData(context);
+                  traumaDataProvider.updatePatientData(patientData.copyWith(
+                    vitalSign: patientData.vitalSign
+                        ?.asMap()
+                        .entries
+                        .map((e) => e.key == index
+                            ? e.value.copyWith(
+                                saturacionDeOxigeno: Optional<double?>.of(
+                                    TransformData.getTransformedValue<double>(
+                                        value)))
+                            : e.value)
+                        .toList(),
+                  ));
+                },
+              ),
+            ],
+          ),
+        )
+      else ...[
+        CustomInputWithLabel(
+          size: customSize,
+          readOnly: !isCreating,
+          title: "Altura (metros)",
+          hintText: "No registra",
+          text: "${vitalSign.alturaMetros ?? ""}",
+          lines: 1,
+          width: freeSize ? null : 100,
+          height: freeSize ? null : 108,
+          inputType: InputType.double,
+          onChanged: (String? value) {
+            final patientData = _getCurrentPatientData(context);
+            traumaDataProvider.updatePatientData(patientData.copyWith(
+              vitalSign: patientData.vitalSign
+                  ?.asMap()
+                  .entries
+                  .map((e) => e.key == index
+                      ? e.value.copyWith(
+                          alturaMetros: Optional<double?>.of(
+                              TransformData.getTransformedValue<double>(value)))
+                      : e.value)
+                  .toList(),
+            ));
+          },
         ),
-      ),
+        CustomInputWithLabel(
+          size: customSize,
+          readOnly: !isCreating,
+          title: "Saturación de oxígeno",
+          hintText: "No registra",
+          text: "${vitalSign.saturacionDeOxigeno ?? ""}",
+          lines: 1,
+          width: freeSize ? null : 100,
+          height: freeSize ? null : 108,
+          inputType: InputType.double,
+          onChanged: (String? value) {
+            final patientData = _getCurrentPatientData(context);
+            traumaDataProvider.updatePatientData(patientData.copyWith(
+              vitalSign: patientData.vitalSign
+                  ?.asMap()
+                  .entries
+                  .map((e) => e.key == index
+                      ? e.value.copyWith(
+                          saturacionDeOxigeno: Optional<double?>.of(
+                              TransformData.getTransformedValue<double>(value)))
+                      : e.value)
+                  .toList(),
+            ));
+          },
+        ),
+      ],
       CustomInputWithLabel(
         size: customSize,
         readOnly: !isCreating,
@@ -667,126 +720,232 @@ class _ContentState extends State<_Content> {
           ));
         },
       ),
-      SizedBox(
-        width: freeSize ? null : 220,
-        child: Row(
-          children: [
-            CustomInputWithLabel(
-              size: customSize,
-              readOnly: !isCreating,
-              title: "GCS motora",
-              hintText: "No registra",
-              text: "${vitalSign.gcsMotora ?? ""}",
-              lines: 1,
-              width: freeSize ? null : 100,
-              height: freeSize ? null : 108,
-              inputType: InputType.integer,
-              onChanged: (String? value) {
-                final patientData = _getCurrentPatientData(context);
-                traumaDataProvider.updatePatientData(patientData.copyWith(
-                  vitalSign: patientData.vitalSign
-                      ?.asMap()
-                      .entries
-                      .map((e) => e.key == index
-                          ? e.value.copyWith(
-                              gcsMotora: Optional<int?>.of(
-                                  TransformData.getTransformedValue<int>(
-                                      value)))
-                          : e.value)
-                      .toList(),
-                ));
-              },
-            ),
-            const SizedBox(width: 20),
-            CustomInputWithLabel(
-              size: customSize,
-              readOnly: !isCreating,
-              title: "GCS ocular",
-              hintText: "No registra",
-              text: "${vitalSign.gcsOcular ?? ""}",
-              lines: 1,
-              width: freeSize ? null : 100,
-              height: freeSize ? null : 108,
-              inputType: InputType.integer,
-              onChanged: (String? value) {
-                final patientData = _getCurrentPatientData(context);
-                traumaDataProvider.updatePatientData(patientData.copyWith(
-                  vitalSign: patientData.vitalSign
-                      ?.asMap()
-                      .entries
-                      .map((e) => e.key == index
-                          ? e.value.copyWith(
-                              gcsOcular: Optional<int?>.of(
-                                  TransformData.getTransformedValue<int>(
-                                      value)))
-                          : e.value)
-                      .toList(),
-                ));
-              },
-            ),
-          ],
+      if (!freeSize)
+        SizedBox(
+          width: freeSize ? null : 220,
+          child: Row(
+            children: [
+              CustomInputWithLabel(
+                size: customSize,
+                readOnly: !isCreating,
+                title: "GCS motora",
+                hintText: "No registra",
+                text: "${vitalSign.gcsMotora ?? ""}",
+                lines: 1,
+                width: freeSize ? null : 100,
+                height: freeSize ? null : 108,
+                inputType: InputType.integer,
+                onChanged: (String? value) {
+                  final patientData = _getCurrentPatientData(context);
+                  traumaDataProvider.updatePatientData(patientData.copyWith(
+                    vitalSign: patientData.vitalSign
+                        ?.asMap()
+                        .entries
+                        .map((e) => e.key == index
+                            ? e.value.copyWith(
+                                gcsMotora: Optional<int?>.of(
+                                    TransformData.getTransformedValue<int>(
+                                        value)))
+                            : e.value)
+                        .toList(),
+                  ));
+                },
+              ),
+              const SizedBox(width: 20),
+              CustomInputWithLabel(
+                size: customSize,
+                readOnly: !isCreating,
+                title: "GCS ocular",
+                hintText: "No registra",
+                text: "${vitalSign.gcsOcular ?? ""}",
+                lines: 1,
+                width: freeSize ? null : 100,
+                height: freeSize ? null : 108,
+                inputType: InputType.integer,
+                onChanged: (String? value) {
+                  final patientData = _getCurrentPatientData(context);
+                  traumaDataProvider.updatePatientData(patientData.copyWith(
+                    vitalSign: patientData.vitalSign
+                        ?.asMap()
+                        .entries
+                        .map((e) => e.key == index
+                            ? e.value.copyWith(
+                                gcsOcular: Optional<int?>.of(
+                                    TransformData.getTransformedValue<int>(
+                                        value)))
+                            : e.value)
+                        .toList(),
+                  ));
+                },
+              ),
+            ],
+          ),
+        )
+      else ...[
+        CustomInputWithLabel(
+          size: customSize,
+          readOnly: !isCreating,
+          title: "GCS motora",
+          hintText: "No registra",
+          text: "${vitalSign.gcsMotora ?? ""}",
+          lines: 1,
+          width: freeSize ? null : 100,
+          height: freeSize ? null : 108,
+          inputType: InputType.integer,
+          onChanged: (String? value) {
+            final patientData = _getCurrentPatientData(context);
+            traumaDataProvider.updatePatientData(patientData.copyWith(
+              vitalSign: patientData.vitalSign
+                  ?.asMap()
+                  .entries
+                  .map((e) => e.key == index
+                      ? e.value.copyWith(
+                          gcsMotora: Optional<int?>.of(
+                              TransformData.getTransformedValue<int>(value)))
+                      : e.value)
+                  .toList(),
+            ));
+          },
         ),
-      ),
-      SizedBox(
-        width: freeSize ? null : 220,
-        child: Row(
-          children: [
-            CustomInputWithLabel(
-              size: customSize,
-              readOnly: !isCreating,
-              title: "GCS verbal",
-              hintText: "No registra",
-              text: "${vitalSign.gcsVerbal ?? ""}",
-              lines: 1,
-              width: freeSize ? null : 100,
-              height: freeSize ? null : 94,
-              inputType: InputType.integer,
-              onChanged: (String? value) {
-                final patientData = _getCurrentPatientData(context);
-                traumaDataProvider.updatePatientData(patientData.copyWith(
-                  vitalSign: patientData.vitalSign
-                      ?.asMap()
-                      .entries
-                      .map((e) => e.key == index
-                          ? e.value.copyWith(
-                              gcsVerbal: Optional<int?>.of(
-                                  TransformData.getTransformedValue<int>(
-                                      value)))
-                          : e.value)
-                      .toList(),
-                ));
-              },
-            ),
-            const SizedBox(width: 20),
-            CustomInputWithLabel(
-              size: customSize,
-              readOnly: !isCreating,
-              title: "GCS total",
-              hintText: "No registra",
-              text: "${vitalSign.gcsTotal ?? ""}",
-              lines: 1,
-              width: freeSize ? null : 100,
-              height: freeSize ? null : 94,
-              inputType: InputType.integer,
-              onChanged: (String? value) {
-                final patientData = _getCurrentPatientData(context);
-                traumaDataProvider.updatePatientData(patientData.copyWith(
-                  vitalSign: patientData.vitalSign
-                      ?.asMap()
-                      .entries
-                      .map((e) => e.key == index
-                          ? e.value.copyWith(
-                              gcsTotal: Optional<int?>.of(
-                                  TransformData.getTransformedValue<int>(
-                                      value)))
-                          : e.value)
-                      .toList(),
-                ));
-              },
-            ),
-          ],
+        CustomInputWithLabel(
+          size: customSize,
+          readOnly: !isCreating,
+          title: "GCS ocular",
+          hintText: "No registra",
+          text: "${vitalSign.gcsOcular ?? ""}",
+          lines: 1,
+          width: freeSize ? null : 100,
+          height: freeSize ? null : 108,
+          inputType: InputType.integer,
+          onChanged: (String? value) {
+            final patientData = _getCurrentPatientData(context);
+            traumaDataProvider.updatePatientData(patientData.copyWith(
+              vitalSign: patientData.vitalSign
+                  ?.asMap()
+                  .entries
+                  .map((e) => e.key == index
+                      ? e.value.copyWith(
+                          gcsOcular: Optional<int?>.of(
+                              TransformData.getTransformedValue<int>(value)))
+                      : e.value)
+                  .toList(),
+            ));
+          },
         ),
-      ),
+      ],
+      if (!freeSize)
+        SizedBox(
+          width: freeSize ? null : 220,
+          child: Row(
+            children: [
+              CustomInputWithLabel(
+                size: customSize,
+                readOnly: !isCreating,
+                title: "GCS verbal",
+                hintText: "No registra",
+                text: "${vitalSign.gcsVerbal ?? ""}",
+                lines: 1,
+                width: freeSize ? null : 100,
+                height: freeSize ? null : 94,
+                inputType: InputType.integer,
+                onChanged: (String? value) {
+                  final patientData = _getCurrentPatientData(context);
+                  traumaDataProvider.updatePatientData(patientData.copyWith(
+                    vitalSign: patientData.vitalSign
+                        ?.asMap()
+                        .entries
+                        .map((e) => e.key == index
+                            ? e.value.copyWith(
+                                gcsVerbal: Optional<int?>.of(
+                                    TransformData.getTransformedValue<int>(
+                                        value)))
+                            : e.value)
+                        .toList(),
+                  ));
+                },
+              ),
+              const SizedBox(width: 20),
+              CustomInputWithLabel(
+                size: customSize,
+                readOnly: !isCreating,
+                title: "GCS total",
+                hintText: "No registra",
+                text: "${vitalSign.gcsTotal ?? ""}",
+                lines: 1,
+                width: freeSize ? null : 100,
+                height: freeSize ? null : 94,
+                inputType: InputType.integer,
+                onChanged: (String? value) {
+                  final patientData = _getCurrentPatientData(context);
+                  traumaDataProvider.updatePatientData(patientData.copyWith(
+                    vitalSign: patientData.vitalSign
+                        ?.asMap()
+                        .entries
+                        .map((e) => e.key == index
+                            ? e.value.copyWith(
+                                gcsTotal: Optional<int?>.of(
+                                    TransformData.getTransformedValue<int>(
+                                        value)))
+                            : e.value)
+                        .toList(),
+                  ));
+                },
+              ),
+            ],
+          ),
+        )
+      else ...[
+        CustomInputWithLabel(
+          size: customSize,
+          readOnly: !isCreating,
+          title: "GCS verbal",
+          hintText: "No registra",
+          text: "${vitalSign.gcsVerbal ?? ""}",
+          lines: 1,
+          width: freeSize ? null : 100,
+          height: freeSize ? null : 94,
+          inputType: InputType.integer,
+          onChanged: (String? value) {
+            final patientData = _getCurrentPatientData(context);
+            traumaDataProvider.updatePatientData(patientData.copyWith(
+              vitalSign: patientData.vitalSign
+                  ?.asMap()
+                  .entries
+                  .map((e) => e.key == index
+                      ? e.value.copyWith(
+                          gcsVerbal: Optional<int?>.of(
+                              TransformData.getTransformedValue<int>(value)))
+                      : e.value)
+                  .toList(),
+            ));
+          },
+        ),
+        CustomInputWithLabel(
+          size: customSize,
+          readOnly: !isCreating,
+          title: "GCS total",
+          hintText: "No registra",
+          text: "${vitalSign.gcsTotal ?? ""}",
+          lines: 1,
+          width: freeSize ? null : 100,
+          height: freeSize ? null : 94,
+          inputType: InputType.integer,
+          onChanged: (String? value) {
+            final patientData = _getCurrentPatientData(context);
+            traumaDataProvider.updatePatientData(patientData.copyWith(
+              vitalSign: patientData.vitalSign
+                  ?.asMap()
+                  .entries
+                  .map((e) => e.key == index
+                      ? e.value.copyWith(
+                          gcsTotal: Optional<int?>.of(
+                              TransformData.getTransformedValue<int>(value)))
+                      : e.value)
+                  .toList(),
+            ));
+          },
+        ),
+      ],
       CustomInputWithLabel(
         size: customSize,
         readOnly: !isCreating,
