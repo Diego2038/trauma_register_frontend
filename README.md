@@ -95,5 +95,4 @@ lcov-summary coverage/lcov.info
 Execute the next command if you want to deploy in Github pages in the docs folder:
 ```bash
 flutter build web --release --web-renderer canvaskit --output docs
-flutter build web --release --web-renderer canvaskit --output docs --base-href /trauma_register_frontend/docs/
 ```
