@@ -94,5 +94,5 @@ lcov-summary coverage/lcov.info
 ## How to build the application
 Execute the next command:
 ```bash
-flutter build web --release --web-renderer canvaskit --output built_page
+flutter build web --release --web-renderer canvaskit --output docs
 ```
