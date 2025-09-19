@@ -29,6 +29,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
   bool isMounted = false;
   bool isCreating = false;
   bool freeSize = false;
+  String filterValue = "Buscar";
 
   @override
   void didChangeDependencies() {
@@ -217,6 +218,14 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                     final response =
                                         traumaDataProvider.response;
                                     NavigationService.pop();
+                                    if (response.result ?? false) {
+                                      filterValue = "Buscar";
+                                      Provider.of<TraumaDataProvider>(
+                                        context,
+                                        listen: false,
+                                      ).updateAction(ActionType.buscar);
+                                      setState(() => {});
+                                    }
                                     CustomModal.showModal(
                                       context: NavigationService
                                           .navigatorKey.currentContext!,
@@ -300,6 +309,16 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                                                         .updatePatientData(
                                                             null);
                                                     NavigationService.pop();
+                                                    if (result) {
+                                                      filterValue = "Buscar";
+                                                      Provider.of<
+                                                          TraumaDataProvider>(
+                                                        context,
+                                                        listen: false,
+                                                      ).updateAction(
+                                                          ActionType.buscar);
+                                                      setState(() => {});
+                                                    }
                                                     CustomModal.showModal(
                                                       context: NavigationService
                                                           .navigatorKey
@@ -333,7 +352,7 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                         title: "Selecciona la opción",
                         hintText: "Crear",
                         // selectedValue: query,
-                        selectedValue: "Buscar",
+                        selectedValue: filterValue,
                         width: 190,
                         items: const [
                           "Actualizar",
@@ -364,12 +383,15 @@ class _PatientManagementViewState extends State<PatientManagementView> {
                           switch (value) {
                             case "Actualizar":
                               actionSelected = ActionType.actualizar;
+                              filterValue = "Actualizar";
                               break;
                             case "Crear":
                               actionSelected = ActionType.crear;
+                              filterValue = "Crear";
                               break;
                             default:
                               actionSelected = ActionType.buscar;
+                              filterValue = "Buscar";
                           }
                           Provider.of<TraumaDataProvider>(context,
                                   listen: false)
