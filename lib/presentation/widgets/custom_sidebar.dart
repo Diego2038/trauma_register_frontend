@@ -107,7 +107,7 @@ class CustomSidebar extends StatelessWidget {
                 if (contractWithTap) onToggle();
                 CustomModal.showModal(
                   context: context,
-                  minHeight: 260,
+                  minHeight: 160,
                   title: null,
                   text: '¿Desea cerrar sesión?',
                   onPressedAccept: () async {
